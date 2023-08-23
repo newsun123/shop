@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ProductMapper">
+	<select id="prolist" resultType="com.example.demo.vo.ProductVo">
+		select * from product where pcode like concat(#{pcode},'%')
+		order by ${str} limit #{index},20
+	</select>
+	<select id="getChong" resultType="int">
+		select ceil(count(*)/20) from product where pcode like concat(#{param},'%')
+	</select>
+	<select id="getDaeName" resultType="String">
+		select name from dae where code=#{param}
+	</select>
+	<select id="getJungName" resultType="String">
+		select name from jung where daecode=#{param1} and code=#{param2}
+	</select>
+	<select id="getSoName" resultType="String">
+		select name from so where daejung=#{param1} and code=#{param2}
+	</select>
+	<select id="procontent" resultType="com.example.demo.vo.ProductVo">
+     	select * from product where pcode=#{pcode}
+  	</select>
+  	<select id="getComp" resultType="String">
+  		select name from comp where code=#{code}
+  	</select>
+  	<insert id="addjjim">
+  		insert into jjim(pcode,userid,writeday)
+  		values(#{pcode},#{userid},now())
+  	</insert>
+  	<delete id="deljjim">
+  		 delete from jjim where userid=#{userid} and pcode=#{pcode}
+  	</delete>
+  	<select id="isjjim" resultType="boolean">
+  		select count(*) from jjim where pcode=#{pcode} and userid=#{userid}
+  	</select>
+  	<insert id="cartAdd">
+  		insert into cart(pcode,su,userid,writeday)
+  		values(#{pcode},#{su},#{userid},now())
+  	</insert>
+  	<select id="isCart" resultType="com.example.demo.vo.ProductVo">
+  		select * from cart where pcode=#{pcode} and
+  		userid=#{userid}
+  	</select>
+  	<update id="cartUp">
+  		update cart set su=#{hap} where no=#{no}
+  	</update>
+  	<select id="cartView" resultType="HashMap">
+  		select p.title, p.pimg, p.price, p.bprice, p.su as psu, c.su, c.no from cart as c inner join product as p 
+  		on c.pcode=p.pcode and c.userid=#{userid} 
+  	</select>
+  	<update id="changeSu">
+  		 update cart set su=#{su} where no=#{no}
+  	</update>
+</mapper>
