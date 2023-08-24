@@ -103,7 +103,7 @@
 	.tot2{
 		height: 70px;
 		color:#111;
-		font-size: 14px;
+		font-size: 24px;
 	}
 	.tot2 .gry{
 		color:#888;
@@ -172,6 +172,17 @@
 	.corg{
 		color:#888;
 	}
+	table #st .pri img{
+	width: 15px;
+	vertical-align: middle;
+	display: inline-block;
+	cursor: pointer;
+	padding: 0;
+	position: relative;
+	top: -1px;
+	height: 20px;
+	margin-left: 3px;
+}
 </style>
 <script>
     function mainClick(mchk,n){
@@ -253,7 +264,6 @@
     	
     	if(su > 9){
     		document.getElementsByClassName("subtn")[n].style.display="inline-block";
- 
     	}else{
     		document.getElementsByClassName("su2")[n].style.display="none";
     		document.getElementsByClassName("su1")[n].style.display="inline-block";
@@ -319,6 +329,10 @@
     function comma(num){
    		return new Intl.NumberFormat().format(num);
     }
+    
+    function carteDel(no) {
+    		
+    }
 </script>
 </head>
 <body>
@@ -376,6 +390,7 @@
 		        </td>
 		        <td class="pri">
 		        	<span class="sangprice"><fmt:formatNumber value="${map.price*map.su}" type="number" pattern="#,###"/></span>원
+		        	<img src="/static/product/del.png" valign="middle" onclick="cartDel(${map.no})">
 		        </td>
 		        <td class="bpri">
 		        <c:if test="${map.bprice==0}">
@@ -387,17 +402,17 @@
 		        </td>
 			</tr>
 	    </c:forEach>  
-	      	<tr class="tot1">
-	        	<td colspan="5">상품가격 배송비 주문금액</td><!-- 상품가격,배송비,주문금액 -->
-	      	</tr>
-	      	<tr class="tot2">
+	      	<tr >
 	        	<td colspan="5">
 		        	<input type="checkbox" class="main" onclick="mainClick(this,0)">전체선택<span class="gry">(<span id="aa">0</span>/<span id="bb">${mapall.size()}</span>)</span>
 		        	<input type="button" value="전체삭제" class="alldel">
 	        	</td>
 	      	</tr>
 	      	<tr>
-	        	<td colspan="5"> </td> <!-- 총 상품가격,배송비, 주문금액 -->
+	        	<td colspan="5" align="center" class="tot2">
+	        		총 상품가격<span id="chongprice">0</span>원 + 총 배송비 <span id="chongbprice">0</span>원 =
+	        		총 주문금액<span id="chongjumun">0</span>원
+	        	</td> <!-- 총 상품가격,배송비, 주문금액 -->
 	      	</tr>
 	      	<tr class="sbtnbox">
 		        <td colspan="5">
