@@ -345,4 +345,19 @@ public class ProductServiceImpl implements ProductService{
 			return "1";
 		}
 	}
+
+	@Override
+	public String selectDel(HttpServletRequest request) {
+		String nos = request.getParameter("nos");
+		// ,로 구분된 값을 나눈다.
+		try {
+			String[] no = nos.split(",");
+			for (int i = 0; i < no.length; i++)
+				mapper.cartDel(no[i]);
+
+			return "0";
+		} catch (Exception e) {
+			return "1";
+		}
+	}
 }

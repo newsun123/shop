@@ -65,5 +65,9 @@ public class ProductController {
 		return service.cartDel(request);
 	}
 	
+	@RequestMapping("/product/selectDel")
+	public @ResponseBody String selectDel(HttpServletRequest request) {
+		return service.selectDel(request);
+	}
 	
 }

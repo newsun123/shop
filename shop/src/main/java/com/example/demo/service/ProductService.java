@@ -14,5 +14,6 @@ public interface ProductService {
 	public String cartView(HttpSession session,Model model);
 	public String changeSu(HttpServletRequest request);
 	public String cartDel(HttpServletRequest request);
+	public String selectDel(HttpServletRequest request);
 	 
 }

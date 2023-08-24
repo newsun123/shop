@@ -342,6 +342,26 @@
     	chk.open("GET","cartDel?no="+no);
     	chk.send();
     }
+    
+    function selectDel() {
+    	// 선택된 체크박스에 해당되는 상품의 no를 가져오기 => DB에서 삭제
+    	var sub = document.getElementsByClassName("sub");
+    	// var sub2 = querySelectorAll(input[type='checkbox']:checked);
+    	var len = sub.length;
+    	var delsub="";
+    	for(i=0; i<len; i++) {
+    		if(sub[i].checked) {
+    			delsub = delsub + sub[i].value+",";	
+    		}
+    	}
+    	var chk = new XMLHttpRequest();
+    	chk.onload=function() {
+    		alert(chk.responseText);
+    	}
+    	chk.open("GET", "selectDel?nos="+delsub);
+    	chk.send();
+    	// remove() 시킬 상품의 tr의 index
+    }
 </script>
 </head>
 <body>
@@ -356,8 +376,8 @@
 	        	<td>배송비</td>
 	        </tr>
 	    <c:forEach items="${mapall}" var="map" varStatus="sts"> <!-- 상품별 출력 -->
-	      	<tr class="st">
-		        <td class="chkb"><input type="checkbox" class="sub" onclick="subClick()"></td>
+	      	<tr class="st"> <!-- 상품당 tr이 출력됌 -->
+		        <td class="chkb"><input type="checkbox" class="sub" value="${map.no}" onclick="subClick()"></td>
 		        <td><img src="/static/pro/${map.pimg}" width="50"></td>
 		        <td>
 		        	<div class="probox">
@@ -414,7 +434,7 @@
 	      	<tr >
 	        	<td colspan="5">
 		        	<input type="checkbox" class="main" onclick="mainClick(this,0)">전체선택<span class="gry">(<span id="aa">0</span>/<span id="bb">${mapall.size()}</span>)</span>
-		        	<input type="button" value="전체삭제" class="alldel">
+		        	<input type="button" value="전체삭제" class="alldel" onclick="selectDel()">
 	        	</td>
 	      	</tr>
 	      	<tr>
