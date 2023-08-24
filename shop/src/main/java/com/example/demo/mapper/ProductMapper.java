@@ -27,5 +27,5 @@ public interface ProductMapper {
     public void cartDel(String no);
     public ArrayList<HashMap> jjimView(String userid);
     public void jjimToCart(String pcode,String userid,int su);
-    public void jjimDel(String pcode,String userid);
+    public void jjimDel(String no);
 }

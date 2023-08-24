@@ -84,4 +84,9 @@ public class ProductController {
 	public @ResponseBody String jjimDel(HttpServletRequest request, HttpSession session) {
 		return service.jjimDel(request,session);
 	}
+	
+	@RequestMapping("/product/selectDel2")
+	public @ResponseBody String selectDel2(HttpServletRequest request) {
+		return service.selectDel2(request);
+}
 }

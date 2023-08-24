@@ -66,6 +66,6 @@
   		values(#{pcode},#{userid},#{su},now())
   	</insert>
   	<delete id="jjimDel">
-  		delete from jjim where pcode=#{pcode} and userid=#{userid}
+  		delete from jjim where no=#{no}
   	</delete>
 </mapper>

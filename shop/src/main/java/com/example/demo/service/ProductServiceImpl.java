@@ -360,6 +360,8 @@ public class ProductServiceImpl implements ProductService{
 			return "1";
 		}
 	}
+	
+
 
 	@Override
 	public String jjimView(HttpSession session, Model model) {
@@ -380,10 +382,24 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public String jjimDel(HttpServletRequest request, HttpSession session) {
-		String pcode = request.getParameter("pcode");
-		String userid = session.getAttribute("userid").toString();
+		
+		String no = request.getParameter("no");
 		try {
-			mapper.jjimDel(pcode,userid);
+			mapper.jjimDel(no);
+			return "0";
+		}catch(Exception e) {
+			return "1";
+		}
+	}
+
+	@Override
+	public String selectDel2(HttpServletRequest request) {
+		String nos = request.getParameter("nos");
+		try {
+			String[] no = nos.split(",");
+			for(int i=0;i<no.length;i++) {
+				mapper.jjimDel(no[i]);
+			}
 			return "0";
 		}catch(Exception e) {
 			return "1";

@@ -195,15 +195,68 @@
 }
 </style>
 <script>
-	function jjimDel(pcode) {
+	function jjimDel(pcode,no) {
 		var cyd = new XMLHttpRequest();
 		cyd.onload = function() {
+			alert(cyd.responseText);
 			if(cyd.responseText == "1") {
 				alert("오류");
 			}
 		}
-		cyd.open("GET","jjimDel?pcode="+pcode);
+		cyd.open("GET","jjimDel?no="+no);
 		cyd.send();
+	}
+	function mainClick(mchk,n) {
+		var sub = document.getElementsByClassName("sub");
+		var len = sub.length;
+		for(i=0; i<len; i++) {
+			sub[i].checked = mchk.checked;
+		}
+		document.getElementsByClassName("main")[n].checked = mchk.checked;
+	}
+	
+	function subClick() {
+		var sub = document.getElementsByClassName("sub");
+		var len = sub.length;
+		var sel = 0;
+		for(i=0; i<len; i++) {
+			if(sub[i].checked){
+				sel++;
+			}
+			if(len==sel) {
+				document.getElementsByClassName("main")[0].checked=true;
+				document.getElementsByClassName("main")[1].checked=true;
+			}else {
+				document.getElementsByClassName("main")[0].checked=false;
+				document.getElementsByClassName("main")[1].checked=false;				
+			}
+		}
+	}
+	
+	function selectDel2() {
+		var sub = document.getElementsByClassName("sub");
+		var len = sub.length;
+		var delsub="";
+		var delpro="";
+		for(i=0;i<len;i++) {
+			if(sub[i].checked) {
+				delsub = delsub+sub[i].value+",";
+				delpro = delpro+i+",";
+			}
+			var imsi = delpro.split(",");
+			for(i=imsi.length-2;i>=0;i--) {
+				document.getElementsByClassName("st")[imsi[i]].remove();
+			}
+			var cyd = new XMLHttpRequest();
+			cyd.onload = function() {
+				alret(cyd.responseText);
+				if(cyd.responseText=="1"){
+					alert("오류");
+				}
+			}
+			cyd.open("GET","selectDel2?nos="+delsub);
+			cyd.send();
+		}
 	}
 </script>
 </head>
@@ -213,13 +266,13 @@
 		<caption><h3>찜 목록</h3></caption>
 			<tr>
 				<td>
-					<input type="checkbox" class="main">전체선택
+					<input type="checkbox" class="main" onclick="mainClick(this,1)">전체선택
 				</td>
 			</tr>
 			<c:forEach items="${mapall}" var="map">
-			<tr>
+			<tr class="st">
 				<td>
-					<input type="checkbox" class="sub">
+					<input type="checkbox" class="sub" onclick="subClick()">
 					<img src="/static/pro/${map.pimg}" width="50">
 				</td>
 				<td><!-- 상품정보 시작 -->
@@ -236,15 +289,15 @@
 				</td><!-- 상품정보 끝 -->
 				<td>
 					<input type="button" value="장바구니 담기" onclick="location='jjimToCart?pcode=${map.pcode}&no=${map.no}'"> <br>
-					<input type="button" value="삭제" onclick="jjimDel(${map.pcode})">
+					<input type="button" value="삭제" onclick="jjimDel(this.${map.pcode},${map.no})">
 				</td><!-- 장바구니 담기 -->
 				<td></td>
 			</tr>
 			</c:forEach>
 			<tr>
 				<td colspan="3">
-					<input type="checkbox" class="main"> 전체선택   
-            		<input type="button" value="선택삭제">  
+					<input type="checkbox" class="main" onclick="mainClick(this,0)"> 전체선택   
+            		<input type="button" value="선택삭제" onclick="selectDel2()">  
 				</td>
 			</tr>
 	</table>
