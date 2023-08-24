@@ -59,9 +59,9 @@ public class ProductServiceImpl implements ProductService{
 		
 	    model.addAttribute("sectiontop",sectiontop);
 	    
-	    for(int i=0;i<ppp.length;i++){
-	    	System.out.println(ppp[i]);
-	    }
+//	    for(int i=0;i<ppp.length;i++){
+//	    	System.out.println(ppp[i]);
+//	    }
 	    
 		//페이지 관련
 		int page=1;
@@ -357,6 +357,35 @@ public class ProductServiceImpl implements ProductService{
 
 			return "0";
 		} catch (Exception e) {
+			return "1";
+		}
+	}
+
+	@Override
+	public String jjimView(HttpSession session, Model model) {
+		String userid= session.getAttribute("userid").toString();
+		model.addAttribute("mapall", mapper.jjimView(userid));
+		return "/product/jjimView";
+	}
+
+	@Override
+	public String jjimToCart(HttpServletRequest request, HttpSession session) {
+		String pcode = request.getParameter("pcode");
+		String no = request.getParameter("no");
+		String userid = session.getAttribute("userid").toString();
+		
+		mapper.jjimToCart(pcode,userid,1);
+		return "redirect:/product/cartView";
+	}
+
+	@Override
+	public String jjimDel(HttpServletRequest request, HttpSession session) {
+		String pcode = request.getParameter("pcode");
+		String userid = session.getAttribute("userid").toString();
+		try {
+			mapper.jjimDel(pcode,userid);
+			return "0";
+		}catch(Exception e) {
 			return "1";
 		}
 	}

@@ -70,4 +70,18 @@ public class ProductController {
 		return service.selectDel(request);
 	}
 	
+	@RequestMapping("/product/jjimView")
+	public String jjimview(HttpSession session,Model model) {
+		return service.jjimView(session,model);
+	}
+	
+	@RequestMapping("/product/jjimToCart")
+	public String jjimToCart(HttpServletRequest request, HttpSession session) {
+		return service.jjimToCart(request,session);
+	}
+	
+	@RequestMapping("/product/jjimDel")
+	public @ResponseBody String jjimDel(HttpServletRequest request, HttpSession session) {
+		return service.jjimDel(request,session);
+	}
 }

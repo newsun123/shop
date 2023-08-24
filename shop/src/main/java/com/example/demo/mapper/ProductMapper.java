@@ -25,4 +25,7 @@ public interface ProductMapper {
     public ArrayList<HashMap> cartView(String userid);
     public void changeSu(String su,String no);
     public void cartDel(String no);
+    public ArrayList<HashMap> jjimView(String userid);
+    public void jjimToCart(String pcode,String userid,int su);
+    public void jjimDel(String pcode,String userid);
 }

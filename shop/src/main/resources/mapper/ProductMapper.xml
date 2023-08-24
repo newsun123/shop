@@ -56,5 +56,16 @@
   	<delete id="cartDel">
   		delete from cart where no=#{no}
   	</delete>
-  	
+  	   <select id="jjimView" resultType="HashMap">
+    	select p.pimg, p.title, p.bprice, p.price,p.pcode, j.no
+    	from jjim as j inner join product as p
+    	on j.pcode=p.pcode and userid=#{userid}
+    </select>
+  	<insert id="jjimToCart">
+  		insert into cart(pcode,userid,su,writeday)
+  		values(#{pcode},#{userid},#{su},now())
+  	</insert>
+  	<delete id="jjimDel">
+  		delete from jjim where pcode=#{pcode} and userid=#{userid}
+  	</delete>
 </mapper>

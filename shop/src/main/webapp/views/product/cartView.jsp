@@ -103,7 +103,8 @@
 	.tot2{
 		height: 70px;
 		color:#111;
-		font-size: 24px;
+		font-size: 20px;
+		border: 4px solid #ccc;
 	}
 	.tot2 .gry{
 		color:#888;
@@ -183,6 +184,15 @@
 	height: 20px;
 	margin-left: 3px;
 }
+#chongprice, #chongbae {
+	font-weight: 600;
+	font-size:20px;
+}
+#chongjumun {
+	font-weight: 600;
+	font-size:22px;
+	color:red;
+}
 </style>
 <script>
     function mainClick(mchk,n){
@@ -203,6 +213,8 @@
     		document.getElementById("aa").innerText=len;
     	else
     	    document.getElementById("aa").innerText=0;
+    	
+    	total(); // 8월 24일 추가 - chongjumun 구하기용
     }
     
     function subClick(){
@@ -228,6 +240,8 @@
     	//3.아래 전체선택에 있는 (선택건수/총건수)에 값을 전달
     	document.getElementById("bb").innerText=len;
     	document.getElementById("aa").innerText=sel;
+    	
+    	total(); // 8월 24일 추가 - chongjumun 구하기용
     }
     
     function changeSu(my,n,s,no){
@@ -242,7 +256,6 @@
     		
     		var su=my.value;
             var chk=new XMLHttpRequest();
-   		 	
             chk.onload=function(){
 
 	   			if(chk.responseText=="1")
@@ -250,7 +263,7 @@
 	   			
 	   			var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
    			 	document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
-	   		 	
+   			 total(); // 8월 24일 추가 - chongjumun 구하기용
 	   		}
             
 	   		chk.open("get","changeSu?su="+su+"&no="+no);
@@ -271,7 +284,7 @@
     		// su의 값을 select태그에 전달
     		
     		document.getElementsByClassName("su1")[n].value=su;
-    		
+
     		var chk=new XMLHttpRequest();
     		
     		chk.onload=function(){
@@ -281,6 +294,8 @@
 				
     			var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
      			document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
+     			
+     			total(); // 8월 24일 추가 - chongjumun 구하기용
     		}
     		
     		chk.open("get","changeSu?su="+su+"&no="+no);
@@ -292,6 +307,7 @@
     	
     	var su=document.getElementsByClassName("su2")[n].value;
     	
+    	
     	var chk=new XMLHttpRequest();
 		chk.onload=function(){
 			//alert(chk.responseText);
@@ -302,6 +318,9 @@
 			 
  			var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
  			document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
+ 			
+ 			total(); // 8월 24일 추가 - chongjumun 구하기용
+ 			
 		}
 		chk.open("get","changeSu?su="+su+"&no="+no);
 		chk.send();
@@ -335,6 +354,8 @@
     	chk.onload=function() {
     		if(chk.responseText=="0") {
     			document.getElementsByClassName("st")[n].remove();
+    			
+    			total(); // 8월 24일 추가 - chongjumun 구하기용
     		}else {
     			alert(chk.responseText);
     		}
@@ -358,7 +379,7 @@
     			// document.getElementsByClassName("st")[i].remove(); 오동작
     		}
     	}
-    	
+    	// remove() 시킬 상품의 tr의 index 구하기
     	// 앞에서 삭제하면 index값이 움직여서 오작동이 나므로, 뒤에서부터 삭제해보자
     	var aaa = delpro.split(",");
     	for (i=aaa.length-2; i>=0; i--) {
@@ -367,12 +388,30 @@
     	
     	var chk = new XMLHttpRequest();
     	chk.onload=function() {
-    		
+    		total(); // 8월 24일 추가 - chongjumun 구하기용
     	}
     	chk.open("GET", "selectDel?nos="+delsub);
     	chk.send();
-    	// remove() 시킬 상품의 tr의 index 구하기
-    	
+    }
+    
+    function total() { // 선택된 상품의 가격, 수량, 배송비를 이용하여 결제금액에 대한 처리 (8월 24일)
+    	//class="sub" 인 체크박스의 체크여부를 판단
+    	// checked가 true 인 경우 sangprice,bprice를 가져온다.
+    	var sub=document.getElementsByClassName("sub");
+    	var len = sub.length; // 체크된 상품의 갯수
+    	var totalprice=0; // 상품 총 금액
+    	var totalbprice=0; // 배송비 총 금액
+    	for(i=0; i<len; i++) {
+    		if(sub[i].checked)
+    			{
+    			totalprice = totalprice + parseInt(document.getElementsByClassName("sangprice")[i].innerText.replace(/,/g,""));
+    			totalbprice = totalbprice + parseInt(document.getElementsByClassName("bprice")[i].innerText.replace(/,/g,""));
+    			}
+    	}
+    	//chongprice+chongbae=chongjumum
+    	document.getElementById("chongprice").innerText=comma(totalprice);
+    	document.getElementById("chongbae").innerText=comma(totalbprice);
+    	document.getElementById("chongjumun").innerText=comma(totalprice+totalbprice);
     }
 </script>
 </head>
@@ -438,7 +477,7 @@
 		        	무료배송
 		        </c:if>
 		        <c:if test="${map.bprice!=0}">
-		        	<fmt:formatNumber value="${map.bprice}" type="number" pattern="#,###"/>원
+		        	<span class="bprice"><fmt:formatNumber value="${map.bprice}" type="number" pattern="#,###"/></span>원
 		        </c:if>
 		        </td>
 			</tr>
@@ -451,8 +490,8 @@
 	      	</tr>
 	      	<tr>
 	        	<td colspan="5" align="center" class="tot2">
-	        		총 상품가격<span id="chongprice">0</span>원 + 총 배송비 <span id="chongbprice">0</span>원 =
-	        		총 주문금액<span id="chongjumun">0</span>원
+	        		총 상품가격 <span id="chongprice">0</span>원 + 총 배송비 <span id="chongbae">0</span>원 =
+	        		총 주문금액 <span id="chongjumun">0</span>원
 	        	</td> <!-- 총 상품가격,배송비, 주문금액 -->
 	      	</tr>
 	      	<tr class="sbtnbox">
