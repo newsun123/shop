@@ -60,4 +60,10 @@ public class ProductController {
 		return service.changeSu(request);
 	}
 	
+	@RequestMapping("/product/cartDel")
+	public @ResponseBody String cartDel(HttpServletRequest request) {
+		return service.cartDel(request);
+	}
+	
+	
 }

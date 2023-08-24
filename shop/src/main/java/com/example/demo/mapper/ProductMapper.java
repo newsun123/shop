@@ -24,4 +24,5 @@ public interface ProductMapper {
     public void cartUp(int hap,int no);
     public ArrayList<HashMap> cartView(String userid);
     public void changeSu(String su,String no);
+    public void cartDel(String no);
 }

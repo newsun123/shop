@@ -53,4 +53,8 @@
   	<update id="changeSu">
   		 update cart set su=#{su} where no=#{no}
   	</update>
+  	<delete id="cartDel">
+  		delete from cart where no=#{no}
+  	</delete>
+  	
 </mapper>

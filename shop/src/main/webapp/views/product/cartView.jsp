@@ -59,11 +59,11 @@
 		text-align: center;
 		border-left: 1px solid #ddd;
 	}
-	table #st td{
+	table .st td{
 		border-bottom: 5px solid #eee;
 		font-size: 14px;
 	}
-	table #st img{
+	table .st img{
 		width: 120px;
 	    height: 110px;
 	    object-fit: contain;
@@ -172,7 +172,7 @@
 	.corg{
 		color:#888;
 	}
-	table #st .pri img{
+	table .st .pri img{
 	width: 15px;
 	vertical-align: middle;
 	display: inline-block;
@@ -330,8 +330,17 @@
    		return new Intl.NumberFormat().format(num);
     }
     
-    function carteDel(no) {
-    		
+    function cartDel(no,n) { // index : 출력된 상품의 tr인덱스와 동일
+    	var chk = new XMLHttpRequest();
+    	chk.onload=function() {
+    		if(chk.responseText=="0") {
+    			document.getElementsByClassName("st")[n].remove();
+    		}else {
+    			alert(chk.responseText);
+    		}
+    	}
+    	chk.open("GET","cartDel?no="+no);
+    	chk.send();
     }
 </script>
 </head>
@@ -347,7 +356,7 @@
 	        	<td>배송비</td>
 	        </tr>
 	    <c:forEach items="${mapall}" var="map" varStatus="sts"> <!-- 상품별 출력 -->
-	      	<tr id="st">
+	      	<tr class="st">
 		        <td class="chkb"><input type="checkbox" class="sub" onclick="subClick()"></td>
 		        <td><img src="/static/pro/${map.pimg}" width="50"></td>
 		        <td>
@@ -390,7 +399,7 @@
 		        </td>
 		        <td class="pri">
 		        	<span class="sangprice"><fmt:formatNumber value="${map.price*map.su}" type="number" pattern="#,###"/></span>원
-		        	<img src="/static/product/del.png" valign="middle" onclick="cartDel(${map.no})">
+		        	<img src="/static/product/del.png" valign="middle" onclick="cartDel(${map.no},${sts.index})">
 		        </td>
 		        <td class="bpri">
 		        <c:if test="${map.bprice==0}">

@@ -333,4 +333,16 @@ public class ProductServiceImpl implements ProductService{
 		   return "1";	
 		}
 	}
+
+	@Override
+	public String cartDel(HttpServletRequest request) {
+		// 카트에 저장된 상품을 삭제하기(08/24)
+		try {
+			String no = request.getParameter("no");
+			mapper.cartDel(no);
+			return "0";
+		} catch (Exception e) {
+			return "1";
+		}
+	}
 }
