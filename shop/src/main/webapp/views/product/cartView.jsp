@@ -349,18 +349,30 @@
     	// var sub2 = querySelectorAll(input[type='checkbox']:checked);
     	var len = sub.length;
     	var delsub="";
+    	var delpro="";
     	for(i=0; i<len; i++) {
     		if(sub[i].checked) {
-    			delsub = delsub + sub[i].value+",";	
+    			delsub = delsub + sub[i].value+",";
+    			delpro = delpro + i + ",";
+    			
+    			// document.getElementsByClassName("st")[i].remove(); 오동작
     		}
     	}
+    	
+    	// 앞에서 삭제하면 index값이 움직여서 오작동이 나므로, 뒤에서부터 삭제해보자
+    	var aaa = delpro.split(",");
+    	for (i=aaa.length-2; i>=0; i--) {
+    		document.getElementsByClassName("st")[aaa[i]].remove();
+    	}
+    	
     	var chk = new XMLHttpRequest();
     	chk.onload=function() {
-    		alert(chk.responseText);
+    		
     	}
     	chk.open("GET", "selectDel?nos="+delsub);
     	chk.send();
-    	// remove() 시킬 상품의 tr의 index
+    	// remove() 시킬 상품의 tr의 index 구하기
+    	
     }
 </script>
 </head>
