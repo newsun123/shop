@@ -85,4 +85,7 @@
   		insert into baesong(userid,name,phone,zip,juso,jusoEct,req,gibon)
   		values(#{userid},#{name},#{phone},#{zip},#{juso},#{jusoEct},#{req},#{gibon})
   	</insert>
+  	<update id="setGibon">
+  		update baesong set gibon=0 where userid=#{userid}
+  	</update>
 </mapper>

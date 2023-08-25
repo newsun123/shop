@@ -35,4 +35,5 @@ public interface ProductMapper {
     public void chgPhone(String phone,String userid);
     public ArrayList<BaesongVo> baelist(String userid);
     public void baeWriteOk(BaesongVo bvo);
+    public void setGibon(String userid);
 }

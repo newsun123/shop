@@ -455,7 +455,9 @@ public class ProductServiceImpl implements ProductService{
 		String userid=session.getAttribute("userid").toString();
 		
 		//입력되는 주소가 기본 배송지라면
-		if()
+		if(bvo.getGibon()==1) {
+			mapper.setGibon(userid);
+		}
 		
 		bvo.setUserid(userid);
 		mapper.baeWriteOk(bvo);

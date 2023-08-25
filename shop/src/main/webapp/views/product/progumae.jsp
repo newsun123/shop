@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,14 @@
 section {
 	width:1100px;
 	margin:auto;
+}
+#gibon {
+	font-size:12px;
+	border:2px solid #2E9AFE;
+	background:#2E9AFE;
+	color:white;
+	width:10px;
+	border-radius:6px;
 }
 </style>
 <script>
@@ -60,19 +70,36 @@ function baeOpen() {
   		   </h3></caption>
     <tr>
       <td>이 름</td>
-      <td>${bvo.name}</td>
+      <td class="name">${bvo.name}
+	      <c:if test="${bvo.gibon==1}">
+	      		<span id="gibon">기본배송지</span>
+	      </c:if>
+      </td>
     </tr>
     <tr>
       <td>주소</td>
-      <td>${bvo.juso}</td>
+      <td class="juso">${bvo.juso}</td>
  	</tr>
     <tr>
       <td>전화번호</td>
-      <td>${bvo.phone}</td>
+      <td class="phone">${bvo.phone}</td>
     </tr>
     <tr>
       <td>요청사항</td>
-      <td>${bvo.req}</td>
+      <td class="req">
+      	<c:if test="${bvo.req==0}">
+      		문 앞
+      	</c:if>
+      	<c:if test="${bvo.req==1}">
+      		직접 받고 부재시 문 앞
+      	</c:if>
+      	<c:if test="${bvo.req==2}">
+      		경비실
+      	</c:if>
+      	<c:if test="${bvo.req==3}">
+      		택배함
+      	</c:if>
+      </td>
     </tr>
 </table>
 <!-- 배송지정보 끝 -->
