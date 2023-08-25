@@ -399,13 +399,16 @@
     	// checked가 true 인 경우 sangprice,bprice를 가져온다.
     	var sub=document.getElementsByClassName("sub");
     	var len = sub.length; // 체크된 상품의 갯수
+    
     	var totalprice=0; // 상품 총 금액
     	var totalbprice=0; // 배송비 총 금액
     	for(i=0; i<len; i++) {
     		if(sub[i].checked)
     			{
     			totalprice = totalprice + parseInt(document.getElementsByClassName("sangprice")[i].innerText.replace(/,/g,""));
-    			totalbprice = totalbprice + parseInt(document.getElementsByClassName("bprice")[i].innerText.replace(/,/g,""));
+    			if(document.getElementsByClassName("bprice")[i].innerText !="무료배송"){
+    				totalbprice = totalbprice + parseInt(document.getElementsByClassName("bprice")[i].innerText.replace(/,/g,""));
+    			}
     			}
     	}
     	//chongprice+chongbae=chongjumum
@@ -474,7 +477,7 @@
 		        </td>
 		        <td class="bpri">
 		        <c:if test="${map.bprice==0}">
-		        	무료배송
+		        	<span class="bprice">무료배송</span>
 		        </c:if>
 		        <c:if test="${map.bprice!=0}">
 		        	<span class="bprice"><fmt:formatNumber value="${map.bprice}" type="number" pattern="#,###"/></span>원

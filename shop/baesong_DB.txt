@@ -1,0 +1,13 @@
+배송테이블: baesong
+create table baesong(
+no int auto_increment primary key,
+name char(10),
+phone char(20),
+zip char(5),
+juso varchar(100),
+jusoEct varchar(100),
+userid char(20),
+req int default 0,
+gibon int default 1);
+
+기본을 1로 주고, 변경시 0으로 변경하며 req를 1로 

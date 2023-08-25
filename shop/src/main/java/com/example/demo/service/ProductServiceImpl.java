@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.example.demo.mapper.ProductMapper;
+import com.example.demo.vo.BaesongVo;
+import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
 
 @Service
@@ -377,31 +379,60 @@ public class ProductServiceImpl implements ProductService{
 		String userid = session.getAttribute("userid").toString();
 		
 		mapper.jjimToCart(pcode,userid,1);
+		mapper.jjimDel(no);
 		return "redirect:/product/cartView";
 	}
 
 	@Override
 	public String jjimDel(HttpServletRequest request, HttpSession session) {
 		
-		String no = request.getParameter("no");
-		try {
+		String no = request.getParameter("nos");
 			mapper.jjimDel(no);
-			return "0";
-		}catch(Exception e) {
-			return "1";
-		}
+			
+			return "redirect:/product/jjimView";
+
 	}
 
 	@Override
 	public String selectDel2(HttpServletRequest request) {
-		String nos = request.getParameter("nos");
 		try {
+			String nos = request.getParameter("nos");
 			String[] no = nos.split(",");
 			for(int i=0;i<no.length;i++) {
 				mapper.jjimDel(no[i]);
 			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/product/jjimView";
+	}
+
+	@Override
+	public String progumae(ProductVo pvo, HttpSession session,Model model) {
+		// 구매자 정보를 구하여 views에 전달 (이름, 이메일, 주소) : member
+		String userid = session.getAttribute("userid").toString();
+		MemberVo mvo = mapper.getMember(userid);
+		model.addAttribute("mvo",mvo);
+		// 받는 사람의 정보를 구하여 views에 전달(이름, 주소, 연락처, 요청사항) : baesong
+		BaesongVo bvo = mapper.getBaesong(userid);
+		model.addAttribute("bvo",bvo);
+		// 배송되는 상품에 관련된 내용(도착요일, 도착예정일, 상품명, 수량, 배송비) : product
+		ProductVo bpvo = mapper.procontent(pvo.getPcode());
+		bpvo.setSu(pvo.getSu()); //사용자가 원하는 구매수량
+		model.addAttribute("bpvo",bpvo);
+		// 결제정보(상품가격, 적립금 사용여부(뒤에)) :
+		return "/product/progumae";
+	}
+
+	@Override
+	public String chgPhone(HttpServletRequest request,HttpSession session) {
+		String phone = request.getParameter("phone");
+		String userid=session.getAttribute("userid").toString();
+		try {
+			mapper.chgPhone(phone,userid);
 			return "0";
 		}catch(Exception e) {
+			
 			return "1";
 		}
 	}

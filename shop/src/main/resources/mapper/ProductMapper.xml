@@ -57,9 +57,10 @@
   		delete from cart where no=#{no}
   	</delete>
   	   <select id="jjimView" resultType="HashMap">
-    	select p.pimg, p.title, p.bprice, p.price,p.pcode, j.no
-    	from jjim as j inner join product as p
-    	on j.pcode=p.pcode and userid=#{userid}
+	     select p.pimg, p.title, p.bprice, p.price, j.no, j.pcode,
+	     (select count(*) from cart where cart.pcode=j.pcode and userid=#{userid}) as cnt
+	     from jjim as j inner join product as p
+	     on j.pcode=p.pcode  and userid=#{userid}
     </select>
   	<insert id="jjimToCart">
   		insert into cart(pcode,userid,su,writeday)
@@ -68,4 +69,13 @@
   	<delete id="jjimDel">
   		delete from jjim where no=#{no}
   	</delete>
+  	<select id="getMember" resultType="com.example.demo.vo.MemberVo">
+  		select * from member where userid=#{userid}
+  	</select>
+  	<select id="getBaesong" resultType="com.example.demo.vo.BaesongVo">
+  		select * from baesong where userid=#{userid} and gibon=0
+  	</select>
+  	<update id="chgPhone">
+  		update member set phone=#{phone} where userid=#{userid}
+  	</update>
 </mapper>

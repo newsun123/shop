@@ -4,6 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.example.demo.vo.ProductVo;
 
 public interface ProductService {
 	public String prolist(Model model,HttpServletRequest request);
@@ -19,4 +22,6 @@ public interface ProductService {
 	public String jjimToCart(HttpServletRequest request,HttpSession session);
 	public String jjimDel(HttpServletRequest request, HttpSession session);
 	public String selectDel2(HttpServletRequest request);
+	public String progumae(ProductVo pvo,HttpSession session,Model model);
+	public String chgPhone(HttpServletRequest request,HttpSession session);
 }

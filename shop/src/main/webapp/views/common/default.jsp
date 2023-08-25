@@ -205,7 +205,7 @@
 		</div>
 	</div>
 	<header>
-		<div id="left"><a href="/main/main">로고</a></div>
+		<div id="left"><a href="/main/main"><img src="/static/main/coopang.png"></a></div>
 		<div id="middle">검색창</div>
 		<div id="right">
 		<c:if test="${userid==null}">

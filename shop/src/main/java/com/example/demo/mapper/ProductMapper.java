@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.demo.vo.BaesongVo;
+import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
 
 @Mapper
@@ -28,4 +30,7 @@ public interface ProductMapper {
     public ArrayList<HashMap> jjimView(String userid);
     public void jjimToCart(String pcode,String userid,int su);
     public void jjimDel(String no);
+    public MemberVo	getMember(String userid);
+    public BaesongVo getBaesong(String userid);
+    public void chgPhone(String phone,String userid);
 }

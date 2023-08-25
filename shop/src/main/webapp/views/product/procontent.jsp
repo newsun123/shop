@@ -313,7 +313,7 @@
 			<span class="cbtn" onclick="delcartmove()">X</span>
 			<input type="button" value="장바구니 이동" onclick="location='cartView'">
 		</div>
-		<form method="post" action="progumae" name="pform">
+		<form method="post" action="/product/progumae" name="pform">
 			<input type="hidden" name="pcode" value="${pvo.pcode}">
 			<div id="content">
 				<div id="left">
@@ -364,7 +364,7 @@
 					</div>
 					<div id="btn">
 						<input type="button" value="장바구니" onclick="cartadd()">
-						<input type="button" value="바로구매">
+						<input type="submit" value="바로구매">
 					</div>
 				</div>
 			</div>

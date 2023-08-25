@@ -195,17 +195,10 @@
 }
 </style>
 <script>
-	function jjimDel(pcode,no) {
-		var cyd = new XMLHttpRequest();
-		cyd.onload = function() {
-			alert(cyd.responseText);
-			if(cyd.responseText == "1") {
-				alert("오류");
-			}
-		}
-		cyd.open("GET","jjimDel?no="+no);
-		cyd.send();
+	function jjimDel(nos) {
+		location="jjimDel?nos="+nos;
 	}
+	
 	function mainClick(mchk,n) {
 		var sub = document.getElementsByClassName("sub");
 		var len = sub.length;
@@ -233,31 +226,23 @@
 		}
 	}
 	
-	function selectDel2() {
-		var sub = document.getElementsByClassName("sub");
-		var len = sub.length;
-		var delsub="";
-		var delpro="";
-		for(i=0;i<len;i++) {
-			if(sub[i].checked) {
-				delsub = delsub+sub[i].value+",";
-				delpro = delpro+i+",";
-			}
-			var imsi = delpro.split(",");
-			for(i=imsi.length-2;i>=0;i--) {
-				document.getElementsByClassName("st")[imsi[i]].remove();
-			}
-			var cyd = new XMLHttpRequest();
-			cyd.onload = function() {
-				alret(cyd.responseText);
-				if(cyd.responseText=="1"){
-					alert("오류");
-				}
-			}
-			cyd.open("GET","selectDel2?nos="+delsub);
-			cyd.send();
-		}
-	}
+	function selectDel2(no)
+    {
+    	var sub=document.getElementsByClassName("sub");
+    	var len=sub.length;
+    	
+    	var delsub="";
+    	for(i=0;i<len;i++)
+    	{
+    		if(sub[i].checked)
+    		{
+    			delsub=delsub+sub[i].value+",";
+    		}	
+    	}	
+    	alert(delsub);
+    	location="selectDel2?nos="+delsub;
+    }
+
 </script>
 </head>
 <body>
@@ -272,7 +257,7 @@
 			<c:forEach items="${mapall}" var="map">
 			<tr class="st">
 				<td>
-					<input type="checkbox" class="sub" onclick="subClick()">
+					<input type="checkbox" class="sub" onclick="subClick()" value="${map.no}">
 					<img src="/static/pro/${map.pimg}" width="50">
 				</td>
 				<td><!-- 상품정보 시작 -->
@@ -288,8 +273,13 @@
 					<fmt:formatNumber value="${map.price}" type="number"/>원
 				</td><!-- 상품정보 끝 -->
 				<td>
+					<c:if test="${map.cnt==0}">
 					<input type="button" value="장바구니 담기" onclick="location='jjimToCart?pcode=${map.pcode}&no=${map.no}'"> <br>
-					<input type="button" value="삭제" onclick="jjimDel(this.${map.pcode},${map.no})">
+					</c:if>
+					<c:if test="${map.cnt!=0}">
+					<input type="button" value="장바구니 담기" onclick="location='jjimToCart?pcode=${map.pcode}&no=${map.no}'" disabled="disabled"> <br>
+					</c:if>
+					<input type="button" value="삭제" onclick="jjimDel(${map.no})">
 				</td><!-- 장바구니 담기 -->
 				<td></td>
 			</tr>
@@ -297,7 +287,7 @@
 			<tr>
 				<td colspan="3">
 					<input type="checkbox" class="main" onclick="mainClick(this,0)"> 전체선택   
-            		<input type="button" value="선택삭제" onclick="selectDel2()">  
+            		<input type="button" value="선택삭제" onclick="selectDel2(${map.no})">  
 				</td>
 			</tr>
 	</table>
