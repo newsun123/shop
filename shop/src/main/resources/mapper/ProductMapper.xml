@@ -73,7 +73,7 @@
   		select * from member where userid=#{userid}
   	</select>
   	<select id="getBaesong" resultType="com.example.demo.vo.BaesongVo">
-  		select * from baesong where userid=#{userid} and gibon=0
+  		select * from baesong where userid=#{userid} and gibon=1
   	</select>
   	<update id="chgPhone">
   		update member set phone=#{phone} where userid=#{userid}
@@ -81,4 +81,8 @@
   	<select id="baelist" resultType="com.example.demo.vo.BaesongVo">
   		select * from baesong where userid=#{userid}
   	</select>
+  	<insert id="baeWriteOk" parameterType="com.example.demo.vo.BaesongVo">
+  		insert into baesong(userid,name,phone,zip,juso,jusoEct,req,gibon)
+  		values(#{userid},#{name},#{phone},#{zip},#{juso},#{jusoEct},#{req},#{gibon})
+  	</insert>
 </mapper>

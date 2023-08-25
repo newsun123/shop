@@ -6,5 +6,5 @@ import lombok.Data;
 public class BaesongVo {
 
 	private int no, req, gibon;
-	private String name,phone,zip,juso,jusoEtc,userid;
+	private String name,phone,zip,juso,jusoEct,userid;
 }

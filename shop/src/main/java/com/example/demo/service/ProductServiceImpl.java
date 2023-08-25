@@ -449,4 +449,16 @@ public class ProductServiceImpl implements ProductService{
 		
 		return "/product/baeWrite";
 	}
+
+	@Override
+	public String baeWriteOk(BaesongVo bvo, HttpSession session) {
+		String userid=session.getAttribute("userid").toString();
+		
+		//입력되는 주소가 기본 배송지라면
+		if()
+		
+		bvo.setUserid(userid);
+		mapper.baeWriteOk(bvo);
+		return "redirect:/product/baelist";
+	}
 }

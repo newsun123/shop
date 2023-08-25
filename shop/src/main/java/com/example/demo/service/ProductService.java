@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.ProductVo;
 
 public interface ProductService {
@@ -26,4 +27,5 @@ public interface ProductService {
 	public String chgPhone(HttpServletRequest request,HttpSession session);
 	public String baelist(HttpSession session,HttpServletRequest request,Model model);
 	public String baeWrite();
+	public String baeWriteOk(BaesongVo bvo, HttpSession session);
 }

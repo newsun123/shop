@@ -12,7 +12,6 @@ body {
 	margin:0;
 }
 #top {
-	position: fixed;
 	left:0px;
 	top:0px;
 	width:100%;
@@ -33,8 +32,17 @@ body {
 	margin:auto;
 	
 }
-#임시 {
-	margin-top:40px;
+table {
+	width:500px;
+	border:1px solid #ccc;	
+}
+table tr {
+	height:30px;
+
+}
+table td {
+	border:1px solid #ccc;
+	outline:none;
 }
 </style>
 <script>
@@ -43,11 +51,24 @@ body {
 </head>
 <body>
 <div id="top">배송지 선택</div>
-<div id="임시">&nbsp;</div>
 	<c:if test="${blist.size()==0}">
 		<div align="center" style="margin-bottom:20px;">배송주소가 없습니다.</div>
 	</c:if>
 <c:forEach items="${blist}" var="bvo">
+<table>
+    <tr>
+      <td align="center">이 름</td>
+      <td>${bvo.name}</td>
+    </tr>
+    <tr>
+      <td align="center">주소</td>
+      <td>(${bvo.zip}) ${bvo.juso},${bvo.jusoEct}</td>
+    </tr>
+    <tr>
+      <td align="center">전화번호</td>
+      <td>${bvo.phone} </td>
+    </tr>
+</table>
 </c:forEach>
 <div id="chuga" onclick="location='baeWrite'">배송지 추가</div>
 </body>

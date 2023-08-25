@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ProductService;
+import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.ProductVo;
 
 @Controller
@@ -105,5 +106,10 @@ public class ProductController {
 	@RequestMapping("/product/baeWrite")
 	public String baeWrite() {
 		return service.baeWrite();
+	}
+	
+	@RequestMapping("/product/baeWriteOk")
+	public String baeWriteOk(BaesongVo bvo,HttpSession session) {
+		return service.baeWriteOk(bvo,session);
 	}
 }
