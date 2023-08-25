@@ -78,4 +78,7 @@
   	<update id="chgPhone">
   		update member set phone=#{phone} where userid=#{userid}
   	</update>
+  	<select id="baelist" resultType="com.example.demo.vo.BaesongVo">
+  		select * from baesong where userid=#{userid}
+  	</select>
 </mapper>

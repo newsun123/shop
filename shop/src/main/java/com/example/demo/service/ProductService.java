@@ -24,4 +24,6 @@ public interface ProductService {
 	public String selectDel2(HttpServletRequest request);
 	public String progumae(ProductVo pvo,HttpSession session,Model model);
 	public String chgPhone(HttpServletRequest request,HttpSession session);
+	public String baelist(HttpSession session,HttpServletRequest request,Model model);
+	public String baeWrite();
 }

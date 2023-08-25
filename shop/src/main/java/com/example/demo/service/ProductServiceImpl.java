@@ -436,4 +436,17 @@ public class ProductServiceImpl implements ProductService{
 			return "1";
 		}
 	}
+
+	@Override
+	public String baelist(HttpSession session,HttpServletRequest request,Model model) {
+		String userid=session.getAttribute("userid").toString();
+		model.addAttribute("blist",mapper.baelist(userid));
+		return "/product/baelist";
+	}
+
+	@Override
+	public String baeWrite() {
+		
+		return "/product/baeWrite";
+	}
 }

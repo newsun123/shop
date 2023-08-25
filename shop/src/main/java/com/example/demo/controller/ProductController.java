@@ -93,8 +93,17 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/product/chgPhone")
-	public @ResponseBody String chgPhong(HttpServletRequest request,HttpSession session) {
+	public @ResponseBody String chgPhone(HttpServletRequest request,HttpSession session) {
 		return service.chgPhone(request,session);
 	}
 	
+	@RequestMapping("/product/baelist")
+	public String baelist(HttpSession session,HttpServletRequest request,Model model) {
+		return service.baelist(session,request,model);
+	}
+	
+	@RequestMapping("/product/baeWrite")
+	public String baeWrite() {
+		return service.baeWrite();
+	}
 }

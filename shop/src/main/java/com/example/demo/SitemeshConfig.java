@@ -10,6 +10,9 @@ public class SitemeshConfig extends ConfigurableSiteMeshFilter{
 		
 		builder.addDecoratorPath("*", "/views/common/default.jsp");
 		
-		builder.addExcludedPath("/test");
+		// 제외시킬 패턴
+		builder.addExcludedPath("/product/baelist");
+		builder.addExcludedPath("/product/baeWrite");
+		
 	}
 }

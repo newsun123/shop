@@ -33,4 +33,5 @@ public interface ProductMapper {
     public MemberVo	getMember(String userid);
     public BaesongVo getBaesong(String userid);
     public void chgPhone(String phone,String userid);
+    public ArrayList<BaesongVo> baelist(String userid);
 }
