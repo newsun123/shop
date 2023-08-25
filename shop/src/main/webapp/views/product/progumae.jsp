@@ -23,7 +23,7 @@ function changePhone() {
 }
 
 function baeOpen() {
-	/* window. */open("","",""); //view,target이름,브라우저 설정(크기)
+	/* window. */open("baelist","","width=500,height=600"); //view,target이름,브라우저 설정(크기)
 }
 </script>
 </head>
