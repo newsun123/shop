@@ -422,18 +422,19 @@ public class ProductServiceImpl implements ProductService{
 		// 배송되는 상품에 관련된 내용(도착요일, 도착예정일, 상품명, 수량, 배송비) : product
 		ProductVo bpvo = mapper.procontent(pvo.getPcode());
 		bpvo.setSu(pvo.getSu()); //사용자가 원하는 구매수량
-		model.addAttribute("bpvo",bpvo);
+		
 		
 		//배송일자 및 요일 처리
-				int btime=pvo.getBtime(); //주문후 몇일 뒤에 배송되는가를 저장한 값
+				int btime=bpvo.getBtime(); //주문후 몇일 뒤에 배송되는가를 저장한 값
 				LocalDate today=LocalDate.now();
 				LocalDate xday=today.plusDays(btime);
 				
-				pvo.setWriteday(xday.toString().substring(5).replace("-","/"));
+				bpvo.setWriteday(xday.toString().substring(5).replace("-","/"));
 				
 				int cc=xday.getDayOfWeek().getValue();
 				
 				String yoil="";
+				
 				switch(cc) {
 					case 1: yoil="월"; break;
 					case 2: yoil="화"; break;
@@ -443,8 +444,10 @@ public class ProductServiceImpl implements ProductService{
 					case 6: yoil="토"; break;
 					case 7: yoil="일"; break;
 				}
-				pvo.setYoil(yoil);
 				
+				bpvo.setYoil(yoil);
+				
+				model.addAttribute("bpvo",bpvo);
 		// 결제정보(상품가격, 적립금 사용여부(뒤에)) :
 		return "/product/progumae";
 	}
