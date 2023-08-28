@@ -13,6 +13,7 @@ public class SitemeshConfig extends ConfigurableSiteMeshFilter{
 		// 제외시킬 패턴
 		builder.addExcludedPath("/product/baelist");
 		builder.addExcludedPath("/product/baeWrite");
+		builder.addExcludedPath("/product/baeupdate");
 		
 	}
 }

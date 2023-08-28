@@ -28,4 +28,7 @@ public interface ProductService {
 	public String baelist(HttpSession session,HttpServletRequest request,Model model);
 	public String baeWrite();
 	public String baeWriteOk(BaesongVo bvo, HttpSession session);
+	public String baeupdate(HttpServletRequest request, Model model);
+	public String baeUpdateOk(BaesongVo bvo,HttpSession session);
+	public String baeDelete(HttpServletRequest request);
 }

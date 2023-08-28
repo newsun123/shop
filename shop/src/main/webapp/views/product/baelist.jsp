@@ -119,7 +119,7 @@ function move(n) {
     </tr>
     <tr>
       <td colspan="2" align="center" style="border:none;">
-        <input type="button" value="수정">
+        <input type="button" value="수정" onclick="location='baeupdate?no=${bvo.no}'">
         <input type="button" value="선택" onclick="move(${sts.index})">
       </td>
     </tr>

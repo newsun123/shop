@@ -75,6 +75,9 @@
   	<select id="getBaesong" resultType="com.example.demo.vo.BaesongVo">
   		select * from baesong where userid=#{userid} and gibon=1
   	</select>
+  	<select id="getBaesong2" resultType="com.example.demo.vo.BaesongVo">
+  		select * from baesong where userid=#{userid} order by no desc limit 1
+  	</select>
   	<update id="chgPhone">
   		update member set phone=#{phone} where userid=#{userid}
   	</update>
@@ -88,4 +91,13 @@
   	<update id="setGibon">
   		update baesong set gibon=0 where userid=#{userid}
   	</update>
+  	<select id="baeupdate" resultType="com.example.demo.vo.BaesongVo">
+  		select * from baesong where no=#{no}
+  	</select>
+  	<update id="baeUpdateOk">
+  		update baesong set name=#{name},phone=#{phone},zip=#{zip},juso=#{juso},jusoEct=#{jusoEct},req=#{req},gibon=#{gibon} where no=#{no}
+  	</update>
+  	<delete id="baeDelete">
+  		delete from baesong where no=#{no}
+  	</delete>
 </mapper>

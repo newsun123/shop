@@ -32,8 +32,12 @@ public interface ProductMapper {
     public void jjimDel(String no);
     public MemberVo	getMember(String userid);
     public BaesongVo getBaesong(String userid);
+    public BaesongVo getBaesong2(String userid);
     public void chgPhone(String phone,String userid);
     public ArrayList<BaesongVo> baelist(String userid);
     public void baeWriteOk(BaesongVo bvo);
     public void setGibon(String userid);
+    public BaesongVo baeupdate(String no);
+    public void baeUpdateOk(BaesongVo bvo);
+    public void baeDelete(String no);
 }

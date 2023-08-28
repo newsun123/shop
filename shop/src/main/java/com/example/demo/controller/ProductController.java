@@ -112,4 +112,18 @@ public class ProductController {
 	public String baeWriteOk(BaesongVo bvo,HttpSession session) {
 		return service.baeWriteOk(bvo,session);
 	}
+	
+	@RequestMapping("/product/baeupdate")
+	public String baeupdate(HttpServletRequest request, Model model) {
+		return service.baeupdate(request,model);
+	}
+	
+	@RequestMapping("/product/baeUpdateOk")
+	public String baeUpdateOk(BaesongVo bvo,HttpSession session) {
+		return service.baeUpdateOk(bvo,session);
+	}
+	@RequestMapping("/product/baeDelete")
+	public String baeDelete(HttpServletRequest request) {
+		return service.baeDelete(request);
+	}
 }

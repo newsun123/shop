@@ -101,9 +101,20 @@ function baeOpen() {
       	</c:if>
       </td>
     </tr>
-</table>
-<!-- 배송지정보 끝 -->
+</table> <!-- 배송지정보 끝 -->
 <!-- 구매상품정보 -->
+<table width="1100" align="center">
+	<caption> <h3>배송 정보</h3> </caption>
+		<tr> <!-- 배송 예정일 -->
+			<td colspan="2">
+				${bpvo.}
+			</td>
+		</tr>
+		<tr> <!-- 상품 정보 -->
+			<td></td>
+			<td></td>
+		</tr>
+</table>
 <!-- 구매상품정보 끝 -->
 <!-- 결제 정보 -->
 <!-- 결제 정보 끝 -->
