@@ -349,11 +349,13 @@
    		return new Intl.NumberFormat().format(num);
     }
     
-    function cartDel(no,n) { // index : 출력된 상품의 tr인덱스와 동일
+    function cartDel(no,my) { // my는 img태그 src="del.png"
     	var chk = new XMLHttpRequest();
     	chk.onload=function() {
+    		
     		if(chk.responseText=="0") {
-    			document.getElementsByClassName("st")[n].remove();
+    			
+    			my.parentNode.parentNode.remove(); // 내 태그 . 의 부모 태그 . 의 부모태그 . 를 지운다.
     			
     			total(); // 8월 24일 추가 - chongjumun 구하기용
     		}else {
@@ -473,7 +475,7 @@
 		        </td>
 		        <td class="pri">
 		        	<span class="sangprice"><fmt:formatNumber value="${map.price*map.su}" type="number" pattern="#,###"/></span>원
-		        	<img src="/static/product/del.png" valign="middle" onclick="cartDel(${map.no},${sts.index})">
+		        	<img src="/static/product/del.png" valign="middle" onclick="cartDel(${map.no},this)">
 		        </td>
 		        <td class="bpri">
 		        <c:if test="${map.bprice==0}">
