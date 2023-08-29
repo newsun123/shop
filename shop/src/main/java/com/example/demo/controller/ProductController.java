@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ProductService;
 import com.example.demo.vo.BaesongVo;
+import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.ProductVo;
 
 @Controller
@@ -125,5 +126,20 @@ public class ProductController {
 	@RequestMapping("/product/baeDelete")
 	public String baeDelete(HttpServletRequest request) {
 		return service.baeDelete(request);
+	}
+	
+	@RequestMapping("/product/setReq")
+	public @ResponseBody String setReq(HttpServletRequest request) {
+		return service.setReq(request);
+	}
+	
+	@RequestMapping("/product/progumaeOk")
+	public String progumaeOk(GumaeVo gvo,HttpSession session) {
+		return service.progumaeOk(gvo,session);
+	}
+	
+	@RequestMapping("/product/jumunView")
+	public String jumunView(HttpServletRequest req,Model model) {
+		return service.jumunView(req,model);
 	}
 }

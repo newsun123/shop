@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.vo.BaesongVo;
+import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.ProductVo;
 
 public interface ProductService {
@@ -31,4 +32,7 @@ public interface ProductService {
 	public String baeupdate(HttpServletRequest request, Model model);
 	public String baeUpdateOk(BaesongVo bvo,HttpSession session);
 	public String baeDelete(HttpServletRequest request);
+	public String setReq(HttpServletRequest request);
+	public String progumaeOk(GumaeVo gvo,HttpSession session);
+	public String jumunView(HttpServletRequest req,Model model);
 }

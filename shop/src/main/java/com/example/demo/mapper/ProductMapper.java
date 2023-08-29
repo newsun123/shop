@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.vo.BaesongVo;
+import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
 
@@ -40,4 +41,11 @@ public interface ProductMapper {
     public BaesongVo baeupdate(String no);
     public void baeUpdateOk(BaesongVo bvo);
     public void baeDelete(String no);
+    public void setReq(String no, String req);
+    public int getCode(String jumuncode);
+    public void progumaeOk(GumaeVo gvo);
+    public GumaeVo jumunView(String jumuncode);
+    public BaesongVo getBaesong3(int no);
+    public ProductVo getProduct(String pcode);
+    
 }

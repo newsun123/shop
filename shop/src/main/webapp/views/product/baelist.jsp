@@ -68,11 +68,13 @@ input[type=button] {
 }
 </style>
 <script>
-function move(n) {
+function move(n,no) {
 	opener.document.getElementsByClassName("name")[0].innerHTML=document.getElementsByClassName("name")[n].innerHTML;
 	opener.document.getElementsByClassName("juso")[0].innerText=document.getElementsByClassName("juso")[n].innerText;
 	opener.document.getElementsByClassName("phone")[0].innerText=document.getElementsByClassName("phone")[n].innerText;
-	opener.document.getElementsByClassName("req")[0].innerTextt=document.getElementsByClassName("req")[n].innerText;
+	opener.document.getElementById("req").innerText=document.getElementsByClassName("req")[n].innerText;
+	//배송테이블의 no값을 전달
+	opener.document.getElementById("baeno").value=no;
 	close();
 }
 </script>
@@ -120,7 +122,7 @@ function move(n) {
     <tr>
       <td colspan="2" align="center" style="border:none;">
         <input type="button" value="수정" onclick="location='baeupdate?no=${bvo.no}'">
-        <input type="button" value="선택" onclick="move(${sts.index})">
+        <input type="button" value="선택" onclick="move(${sts.index},${bvo.no})">
       </td>
     </tr>
 </table>

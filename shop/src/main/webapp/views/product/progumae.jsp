@@ -11,6 +11,21 @@
 section {
 	width:1100px;
 	margin:auto;
+	position:relative;
+}
+section #baeReq {
+	position:absolute;
+	left:240px;
+	top:460px;
+	width:180px;
+	height:150px;
+	border:1px solid white;
+	background:white;
+	font-size: 14px;
+	visibility:hidden;
+}
+section #baeReq div {
+	margin-top:3px;
 }
 #gibon {
 	font-size:12px;
@@ -41,6 +56,24 @@ tr td {
 	font-weight: bold;
 	color:#333;
 }
+.payment {
+	display:none;
+}
+.payment:first-child {
+	display:block;
+}
+#gumaebtn {
+   	width:500px;
+     height:40px;
+	border:2px solid #2E9AFE;
+	background:#2E9AFE;
+     color:white;
+     cursor:pointer;
+     border-radius:2px;
+     font-size:18px;
+     font-weight:900;
+     margin-top:40px;
+}
 </style>
 <script>
 function changePhone() {
@@ -56,10 +89,61 @@ function changePhone() {
 function baeOpen() {
 	/* window. */open("baelist","","width=500,height=600"); //view,target이름,브라우저 설정(크기)
 }
+
+function chgPayment(n) {
+	var pay = document.getElementsByClassName("payment");
+	//다른것 숨기기
+	for(i=0;i<pay.length;i++){
+		pay[i].style.display="none";
+	}
+	//n에 해당하는 인덱스 보이게 하기
+	pay[n].style.display="block";
+}
+
+function chgReq() {
+	document.getElementById("baeReq").style.visibility="visible";
+}
+
+function setReq() { // baesong테이블에서 req를 변경
+	//변경될 req, 변경할 레코드의 no
+	var req = document.gform.req.value;
+	var no = document.gform.baeno.value;
+	alert(req+" "+no);
+	var cyd = new XMLHttpRequest();
+	cyd.onload=function() {
+		if(cyd.responseText==0){
+			document.getElementById("req").innerText = document.getElementsByClassName("abc")[req].innerText;
+			document.getElementById("baeReq").style.visibility ="hidden";
+		}else{
+			alert("오류");
+		}
+	}
+	cyd.open("GET","setReq?req="+req+"&no="+no);
+	cyd.send();
+	
+}
+
+function check() {
+	
+}
 </script>
 </head>
 <body>
 <section>
+<!-- 배송 요청변경사항 레이어 -->
+<form method="post" name="gform" action="progumaeOk" onsubmit="return check(this)">
+<input type="hidden" name="pcode" value="${bpvo.pcode}">
+<input type="hidden" name="su" value="${bpvo.su}"
+<input type="hidden" name="juk" value="0"> <!-- 구매시 사용한 적립금 -->
+<input type="hidden" name="chongprice" value="<fmt:formatNumber value="${((bpvo.price-(bpvo.price*bpvo.halin/100))*bpvo.su)+bpvo.bprice}" type="number" pattern="###"/>">
+<div id="baeReq">
+	<div class="abc"><input type="radio" name="req" value="0">문앞</div> <p>
+	<div class="abc"><input type="radio" name="req" value="1">직접받고 부재시 문앞</div> <p>
+	<div class="abc"><input type="radio" name="req" value="2">경비실</div> <p>
+	<div class="abc"><input type="radio" name="req" value="3">택배함</div> <p>
+	<div align="center"><input type="button" value="변경" onclick="setReq()"></div>
+	
+</div>
 <h2 align="center"> 주문 결제</h2>
 <!-- 구매자정보 -->
 <table width="1100" align="center" id="table1">
@@ -85,7 +169,7 @@ function baeOpen() {
 <table width="1100" align="center" id="table2">
   <caption><h3 align="left">배송지 정보
   			<c:if test="${bvo==null}">
-  				<span style="color:blue;font-size:14px;">등록된 기본배송지가 없거나 등록된 주소가 없습니다.</span>
+  				<span style="color:blue;font-size:12px;">등록된 기본배송지가 없거나 등록된 주소가 없습니다.</span>
   			</c:if>
   			 <input type="button" value="배송지 추가/변경" onclick="baeOpen()">
   		   </h3></caption>
@@ -99,7 +183,7 @@ function baeOpen() {
     </tr>
     <tr>
       <td>주소</td>
-      <td class="juso">${bvo.juso}</td>
+      <td class="juso">${bvo.juso}, ${bvo.jusoEct }</td>
  	</tr>
     <tr>
       <td>전화번호</td>
@@ -107,7 +191,8 @@ function baeOpen() {
     </tr>
     <tr>
       <td>요청사항</td>
-      <td class="req">
+      <td>
+      	<span id="req">
       	<c:if test="${bvo.req==0}">
       		문 앞
       	</c:if>
@@ -117,9 +202,12 @@ function baeOpen() {
       	<c:if test="${bvo.req==2}">
       		경비실
       	</c:if>
-      	<c:if test="${bvo.req==3}">
+      	<c:if test="${bvo.req==3}">	
       		택배함
       	</c:if>
+      	</span>
+      	<input type="button" value="변경" onclick="chgReq()">
+      	<input type="hidden" value="${bvo.no}" name="baeno" id="baeno"> <!-- 배송지테이블 no -->
       </td>
     </tr>
 </table> <!-- 배송지정보 끝 -->
@@ -168,19 +256,79 @@ function baeOpen() {
 	<tr>
 		<td rowspan="2">결제방법</td>
 		<td>
-			<input type="radio">계좌이체
-			<input type="radio">신용/체크카드
-			<input type="radio">법인카드
-			<input type="radio">휴대폰
-			<input type="radio">무통장입금
+			<input type="radio" checked name="pay" value="0"  onclick="chgPayment(0)">계좌이체
+			<input type="radio" name="pay" value="1" onclick="chgPayment(1)">신용/체크카드
+			<input type="radio" name="pay" value="2" onclick="chgPayment(2)">법인카드
+			<input type="radio" name="pay" value="3" onclick="chgPayment(3)">휴대폰
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td style="background:white;">
+			<div class="payment">
+              <span id="sel"> * 은행선택 </span>  
+              <select name="bank">
+                <option value="0"> 신한은행 </option>
+                <option value="1"> 농협은행 </option>
+                <option value="2"> 우리은행 </option>
+                <option value="3"> 하나은행 </option>
+                <option value="4"> KB은행 </option>
+                <option value="5"> 한국은행 </option>
+              </select> <p>
+              <input type="checkbox" checked value="0" name="sudan">기본 결제 수단으로 사용
+           </div>   <!-- document.getElementsByClassName("payment")[0] -->
+           <div class="payment">
+             <span id="sel"> * 카드선택 </span> 
+             <select name="card">
+                <option value="0"> 신한카드 </option>
+                <option value="1"> 농협카드 </option>
+                <option value="2"> 우리카드 </option>
+                <option value="3"> 하나카드 </option>
+                <option value="4"> KB카드 </option>
+                <option value="5"> 한국카드 </option>
+             </select> <p>
+             <span id="sel"> * 할부기간  </span> 
+             <select name="halbu">
+                <option value="0"> 일시불 </option>
+                <option value="3"> 3개월 </option>
+                <option value="6"> 6개월 </option>
+                <option value="9"> 9개월 </option>
+                <option value="12"> 12개월 </option>
+             </select> <p>
+             <input type="checkbox" checked value="1" name="sudan">기본 결제 수단으로 사용
+           </div>
+           <div class="payment">
+             <span id="sel">  * 카드선택 </span>  
+             <select name="card">
+                <option value="0"> 신한카드 </option>
+                <option value="1"> 농협카드 </option>
+                <option value="2"> 우리카드 </option>
+                <option value="3"> 하나카드 </option>
+                <option value="4"> KB카드 </option>
+                <option value="5"> 한국카드 </option>
+             </select> <p>
+             <span id="sel"> * 할부기간 </span>  
+             <select name="halbu">
+                <option value=""> 일시불 </option>
+             </select> 법인카드는 일시불 결제만 가능합니다.
+             <p>
+             <input type="checkbox" checked value="2" name="sudan">기본 결제 수단으로 사용
+           </div>
+           <div class="payment">
+             <span id="sel"> * 통신사 종류 </span> 
+             <select name="tongsin">
+               <option value="0"> SKT </option>
+               <option value="1"> KT </option>
+               <option value="2"> LG </option>
+               <option value="3"> 그 외 </option>
+             </select> <p>
+             <input type="checkbox" checked value="3" name="sudan">기본 결제 수단으로 사용
+           </div> 
 		</td>
 	</tr>
 </table>
 <!-- 결제 정보 끝 -->
+<div align="center"> <input type="submit" value="구매하기" id="gumaebtn">  </div>
+</form>
 </section>
 </body>
 </html>

@@ -1,0 +1,24 @@
+구매테이블 
+구매자정보
+배송지정보 - baesong no
+상품정보 - pcode , su
+결제정보 - pay int(계좌이체냐 신용,법인 등)
+총결제금액 - chongprice , juk(결제시 사용한 적립금)
+주문코드 - j년월일001
+
+create table gumae(
+no int auto_increment primary key,
+userid char(20),
+baeno int,
+pcode char(12),
+su int,
+pay int,
+bank int,
+card int,
+halbu int,
+tongsin int,
+sudan int,
+chongprice int,
+juk int,
+writeday date,
+jumuncode char(12));
