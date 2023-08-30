@@ -24,7 +24,7 @@ public interface ProductService {
 	public String jjimToCart(HttpServletRequest request,HttpSession session);
 	public String jjimDel(HttpServletRequest request, HttpSession session);
 	public String selectDel2(HttpServletRequest request);
-	public String progumae(ProductVo pvo,HttpSession session,Model model);
+	public String progumae(HttpServletRequest request,HttpSession session,Model model);
 	public String chgPhone(HttpServletRequest request,HttpSession session);
 	public String baelist(HttpSession session,HttpServletRequest request,Model model);
 	public String baeWrite();
@@ -34,5 +34,5 @@ public interface ProductService {
 	public String baeDelete(HttpServletRequest request);
 	public String setReq(HttpServletRequest request);
 	public String progumaeOk(GumaeVo gvo,HttpSession session);
-	public String jumunView(HttpServletRequest req,Model model);
+	public String jumunView(HttpServletRequest request,Model model);
 }

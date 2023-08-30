@@ -132,10 +132,9 @@ function check() {
 <section>
 <!-- 배송 요청변경사항 레이어 -->
 <form method="post" name="gform" action="progumaeOk" onsubmit="return check(this)">
-<input type="hidden" name="pcode" value="${bpvo.pcode}">
-<input type="hidden" name="su" value="${bpvo.su}"
-<input type="hidden" name="juk" value="0"> <!-- 구매시 사용한 적립금 -->
-<input type="hidden" name="chongprice" value="<fmt:formatNumber value="${((bpvo.price-(bpvo.price*bpvo.halin/100))*bpvo.su)+bpvo.bprice}" type="number" pattern="###"/>">
+<input type="hidden" name="pcode" value="${pcode}">
+<input type="hidden" name="sus" value="${su}">
+
 <div id="baeReq">
 	<div class="abc"><input type="radio" name="req" value="0">문앞</div> <p>
 	<div class="abc"><input type="radio" name="req" value="1">직접받고 부재시 문앞</div> <p>
@@ -214,6 +213,13 @@ function check() {
 <!-- 구매상품정보 -->
 <table width="1100" align="center" class="gumetable"  id="table4">
 	<caption> <h3 align="left">배송 정보</h3> </caption>
+	<c:set var="sp" value="0"/>  <!-- 상품별: product.price필드*수량에 상품별로 합을 구함. -->
+	<c:set var="bsb" value="0"/> <!-- 배송비: product.bprice의 상품별 합을 구함 -->
+	<c:set var="juk" value="0"/> <!-- 적립금: product.juk을 이용하려 상품별 적립금을 구함 -->
+	<c:set var="cp" value="0"/>  <!-- 총금액: sp-할인금액, 상품별 합 -->
+	<c:set var="jukh" value=""/> <!-- 상품별 적립금을 , 로 구분할 변수 -->
+	<c:set var="chongprice" value=""/> <!-- 상품별 결제금액을  , 로 구분할 변수 -->
+	<c:forEach items="${plist}" var="bpvo">
 		<tr> <!-- 배송 예정일 -->
 			<td colspan="2">
 				${bpvo.yoil}요일 (${bpvo.writeday}) 도착 예정
@@ -226,31 +232,42 @@ function check() {
 				무료배송
 				</c:if>
 				<c:if test="${bpvo.bprice!=0}">
-				배송비 <fmt:formatNumber value="${bpvo.bprice }" type="number"/>원
+				배송비 <fmt:formatNumber value="${bpvo.bprice}" type="number"/>원
 				</c:if>
 			</td>
 		</tr>
+	<c:set var="sp" value="${sp+((bpvo.price-(bpvo.price*bpvo.halin/100))*bpvo.su)}"/>  <!-- 포문 안에서 값 누적시키기 -->
+	<c:set var="bsb" value="${bsb+bpvo.bprice}"/> 
+	<c:set var="juk" value="${juk+(bpvo.price*(bpvo.juk/100))}"/> 
+	<c:set var="cp" value="${cp+(((bpvo.price-(bpvo.price*bpvo.halin/100))*bpvo.su)+bpvo.bprice)}"/>  
+	<c:set var="jukh" value="${jukh}${bpvo.price*(bpvo.juk/100)},"/>
+	<c:set var="chongprice" value="${chongprice}${((bpvo.price-(bpvo.price*bpvo.halin/100))*bpvo.su)+bpvo.bprice},"/>
+	</c:forEach>
 </table>
 <!-- 구매상품정보 끝 -->
+
+<input type="hidden" name="juks" value="${jukh}"> <!-- 구매시 사용한 적립금 -->
+<input type="hidden" name="chongprices" value="${chongprice}">
+
 <!-- 결제 정보 -->
 <table width="1100" align="center">
 	<caption> <h3 align="left"> 결제정보 </h3> </caption>
 	<tr>
 		<td>총 상품가격</td> <!-- 할인율을 포함시키기 -->
-		<td> <fmt:formatNumber value="${(bpvo.price-(bpvo.price*bpvo.halin/100))*bpvo.su}" type="Number" pattern="##,###"/>원 </td>
+		<td> <fmt:formatNumber value="${sp}" type="Number" pattern="##,###"/>원 </td>
 	</tr>
 	<tr>
 		<td>배송비</td>
-		<td><fmt:formatNumber value="${bpvo.bprice}" type="number"/>원 </td>
+		<td><fmt:formatNumber value="${bsb}" type="number"/>원 </td>
 	</tr>
 	<tr>
 		<td>적립금</td>
-		<td> <fmt:formatNumber value="${bpvo.price*(bpvo.juk/100)}" type="number"/>원 적립예정 </td>
+		<td> <fmt:formatNumber value="${juk}" type="number"/>원 적립예정 </td>
 	</tr>
 	<tr>
 		<td>총 결제가격</td>
 		<td>
-			<fmt:formatNumber value="${((bpvo.price-(bpvo.price*bpvo.halin/100))*bpvo.su)+bpvo.bprice}" type="number" pattern="##,###" />원
+			<fmt:formatNumber value="${cp}" type="number" pattern="##,###" />원
 		</td>
 	</tr>
 	<tr>

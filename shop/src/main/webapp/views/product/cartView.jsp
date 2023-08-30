@@ -418,6 +418,23 @@
     	document.getElementById("chongbae").innerText=comma(totalbprice);
     	document.getElementById("chongjumun").innerText=comma(totalprice+totalbprice);
     }
+    
+    function moveGumae() { // 구입하는 상품들의 pcode와 수량을 , 로 구분하여 progumae에 전달하기
+    	
+    	//몇번째 체크박스가 체크되었나 확인하여 해당하는 인덱스의 pcode,su를 변수에 누적하기.
+    	var sub = document.getElementsByClassName("sub");
+    	var len = sub.length;
+    	
+    	var pcode ="";
+    	var su="";
+    	for(i=0;i<len;i++) {
+    		if(sub[i].checked) { //체크박스가 체크되었다면 구매하는 상품이므로 pcode와 su를 저장
+    			pcode= pcode+ document.getElementsByClassName("pcode")[i].value+",";
+    			su = su+document.getElementsByClassName("su1")[i].value+",";
+    		}
+    	}
+    	location="progumae?pcode="+pcode+"&su="+su;
+    }
 </script>
 </head>
 <body>
@@ -432,6 +449,7 @@
 	        	<td>배송비</td>
 	        </tr>
 	    <c:forEach items="${mapall}" var="map" varStatus="sts"> <!-- 상품별 출력 -->
+	    <input type="hidden" class="pcode" value="${map.pcode}"> <!-- 상품별 pcode 출력 -->
 	      	<tr class="st"> <!-- 상품당 tr이 출력됌 -->
 		        <td class="chkb"><input type="checkbox" class="sub" value="${map.no}" onclick="subClick()"></td>
 		        <td><img src="/static/pro/${map.pimg}" width="50"></td>
@@ -502,7 +520,7 @@
 	      	<tr class="sbtnbox">
 		        <td colspan="5">
 					<input type="button" value="계속 쇼핑하기" class="sbtn sbtn1">
-					<input type="submit" value="구매하기" class="sbtn sbtn2">
+					<input type="button" value="구매하기" class="sbtn sbtn2" id="gumae" onclick="moveGumae()">
 		        </td>
 	      	</tr>
    		</table>

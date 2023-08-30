@@ -90,8 +90,8 @@ public class ProductController {
 	}
 
 	@RequestMapping("/product/progumae")
-	public String progumae(ProductVo pvo,HttpSession session,Model model) {
-		return service.progumae(pvo,session,model);
+	public String progumae(HttpServletRequest request,HttpSession session,Model model) {
+		return service.progumae(request,session,model);
 	}
 	
 	@RequestMapping("/product/chgPhone")
@@ -139,7 +139,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/product/jumunView")
-	public String jumunView(HttpServletRequest req,Model model) {
-		return service.jumunView(req,model);
+	public String jumunView(HttpServletRequest request,Model model) {
+		return service.jumunView(request,model);
 	}
 }

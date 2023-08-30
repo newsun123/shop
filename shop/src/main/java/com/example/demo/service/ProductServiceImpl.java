@@ -443,8 +443,16 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String progumae(ProductVo pvo, HttpSession session, Model model) {
+	public String progumae(HttpServletRequest request, HttpSession session, Model model) {
 		// 구매자 정보를 구하여 views에 전달 (이름, 이메일, 주소) : member
+		String pcode=request.getParameter("pcode");
+		System.out.println(pcode);
+		String su = request.getParameter("su");
+		
+		model.addAttribute("pcode",pcode);
+		model.addAttribute("su",su);
+		
+		
 		String userid = session.getAttribute("userid").toString();
 		MemberVo mvo = mapper.getMember(userid);
 		model.addAttribute("mvo", mvo);
@@ -455,47 +463,55 @@ public class ProductServiceImpl implements ProductService {
 		}
 		model.addAttribute("bvo", bvo);
 		// 배송되는 상품에 관련된 내용(도착요일, 도착예정일, 상품명, 수량, 배송비) : product
-		ProductVo bpvo = mapper.procontent(pvo.getPcode());
-		bpvo.setSu(pvo.getSu()); // 사용자가 원하는 구매수량
+		String[] pcodee = pcode.split(",");
+		String[] sus = su.split(",");
+		ArrayList<ProductVo> plist = new ArrayList<ProductVo>(); 
+		
+		for(int i=0;i<pcodee.length;i++) {
+			ProductVo pvo=mapper.procontent(pcodee[i]);
+			pvo.setSu(Integer.parseInt(sus[i]));
+			
+			// 배송일자 및 요일 처리
+			int btime = pvo.getBtime(); // 주문후 몇일 뒤에 배송되는가를 저장한 값
+			LocalDate today = LocalDate.now();
+			LocalDate xday = today.plusDays(btime);
+			
+			pvo.setWriteday(xday.toString().substring(5).replace("-", "/"));
+			
+			int cc = xday.getDayOfWeek().getValue();
 
-		// 배송일자 및 요일 처리
-		int btime = bpvo.getBtime(); // 주문후 몇일 뒤에 배송되는가를 저장한 값
-		LocalDate today = LocalDate.now();
-		LocalDate xday = today.plusDays(btime);
+			String yoil = "";
 
-		bpvo.setWriteday(xday.toString().substring(5).replace("-", "/"));
+			switch (cc) {
+			case 1:
+				yoil = "월";
+				break;
+			case 2:
+				yoil = "화";
+				break;
+			case 3:
+				yoil = "수";
+				break;
+			case 4:
+				yoil = "목";
+				break;
+			case 5:
+				yoil = "금";
+				break;
+			case 6:
+				yoil = "토";
+				break;
+			case 7:
+				yoil = "일";
+				break;
+			}
 
-		int cc = xday.getDayOfWeek().getValue();
-
-		String yoil = "";
-
-		switch (cc) {
-		case 1:
-			yoil = "월";
-			break;
-		case 2:
-			yoil = "화";
-			break;
-		case 3:
-			yoil = "수";
-			break;
-		case 4:
-			yoil = "목";
-			break;
-		case 5:
-			yoil = "금";
-			break;
-		case 6:
-			yoil = "토";
-			break;
-		case 7:
-			yoil = "일";
-			break;
+			pvo.setYoil(yoil);
+			
+			plist.add(pvo);
 		}
-
-		bpvo.setYoil(yoil);
-
-		model.addAttribute("bpvo", bpvo);
+		
+		model.addAttribute("plist", plist);
 		// 결제정보(상품가격, 적립금 사용여부(뒤에)) :
 		return "/product/progumae";
 	}
@@ -597,46 +613,72 @@ public class ProductServiceImpl implements ProductService {
 
 		gvo.setUserid(userid);
 		gvo.setJumuncode(jumuncode);
+		
+		//, 나누기
+		String[] pcode = gvo.getPcode().split(",");
+		String[] su = gvo.getSus().split(",");
+		String[] juk = gvo.getJuks().split(",");
+		String[] chongprice = gvo.getChongprices().split(",");
+		
+		for(int i=0;i<pcode.length;i++) {
+			//배열에 있는 값을 gvo의 pcode,su,juk,chongprice에 setter
+			gvo.setPcode(pcode[i]);
+			gvo.setSu((int)Double.parseDouble(su[i]));
+			gvo.setJuk((int)Double.parseDouble(juk[i]));
+			gvo.setChongprice((int)Double.parseDouble(chongprice[i]));
+			mapper.progumaeOk(gvo);
+		}
 
-		mapper.progumaeOk(gvo);
 		return "redirect:/product/jumunView?jumuncode=" + jumuncode;
 	}
 
 	@Override
-	public String jumunView(HttpServletRequest req, Model model) {
+	public String jumunView(HttpServletRequest request, Model model) {
 		
-		String jumuncode = req.getParameter("jumuncode");
-		GumaeVo gvo = mapper.jumunView(jumuncode);
-		// 배송지정보 가져오기
-		BaesongVo bvo = mapper.getBaesong3(gvo.getBaeno());
-		// 구매한 상품정보 가져오기
-		ProductVo pvo = mapper.getProduct(gvo.getPcode());
-
-		model.addAttribute("gvo", gvo);
-		model.addAttribute("bvo", bvo);
-		model.addAttribute("pvo", pvo);
-		// 배송되는 요일과 일자 생성
-		int btime = pvo.getBtime(); // 주문후 몇일 뒤에 배송되는가를 저장한 값
-		LocalDate today = LocalDate.now();
-		LocalDate xday = today.plusDays(btime);
-
-		pvo.setWriteday(xday.toString().substring(5).replace("-", "/"));
-
-		int cc = xday.getDayOfWeek().getValue();
-
-		String yoil = "";
-		switch (cc) {
-		case 1:	yoil = "월";	break;
-		case 2:	yoil = "화";	break;
-		case 3:	yoil = "수";	break;
-		case 4:	yoil = "목";	break;
-		case 5:	yoil = "금";	break;
-		case 6:	yoil = "토";	break;
-		case 7:	yoil = "일";	break;
-		}
-
-		pvo.setYoil(yoil);
-
+		String jumuncode=request.getParameter("jumuncode");
+		
+		ArrayList<GumaeVo> glist=mapper.jumunview(jumuncode);
+		model.addAttribute("glist",glist);
+		// 배송지 정보
+	    BaesongVo bvo=mapper.getBaesong3(glist.get(0).getBaeno());
+	    model.addAttribute("bvo",bvo);
+	    
+	    // 상품정보
+	    ArrayList<ProductVo> plist=new ArrayList<ProductVo>();
+	    
+	    for(int i=0;i<glist.size();i++)
+	    {
+	    	ProductVo pvo=mapper.getProduct(glist.get(i).getPcode());
+	    	
+	    	int btime=pvo.getBtime(); // 주문후 몇일 뒤에 배송되는가를 저장한 값
+			LocalDate today=LocalDate.now();
+			LocalDate xday=today.plusDays(btime);
+			
+			// ProductVo의 writeday변수를 이용하여 처리 : prolist에서 등록일을 사용하지 않는다..
+			pvo.setWriteday(xday.toString().substring(5).replace("-","/"));
+			               
+			int cc=xday.getDayOfWeek().getValue();  // 1~7까지의 값 (월~일)
+			String yoil="";
+			switch(cc)
+			{
+			   case 1: yoil="월"; break;
+			   case 2: yoil="화"; break;
+			   case 3: yoil="수"; break;
+			   case 4: yoil="목"; break;
+			   case 5: yoil="금"; break;
+			   case 6: yoil="토"; break;
+			   case 7: yoil="일"; break;
+			}
+			pvo.setYoil(yoil);
+	    	
+			pvo.setSu(glist.get(i).getSu());
+			
+	    	plist.add(pvo);
+	    }
+	    
+ 	    model.addAttribute("plist",plist);
+	    
 		return "/product/jumunView";
+	
 	}
 }

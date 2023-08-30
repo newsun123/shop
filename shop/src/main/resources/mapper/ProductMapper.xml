@@ -47,7 +47,7 @@
   		update cart set su=#{hap} where no=#{no}
   	</update>
   	<select id="cartView" resultType="HashMap">
-  		select p.title, p.pimg, p.price, p.bprice, p.su as psu, c.su, c.no from cart as c inner join product as p 
+  		select p.title, p.pimg, p.price, p.bprice, p.pcode, p.su as psu, c.su, c.no from cart as c inner join product as p 
   		on c.pcode=p.pcode and c.userid=#{userid} 
   	</select>
   	<update id="changeSu">
@@ -112,9 +112,9 @@
   		insert into gumae(userid,baeno,pcode,su,pay,bank,card,halbu,tongsin,sudan,chongprice,juk,writeday,jumuncode)
   		values(#{userid},#{baeno},#{pcode},#{su},#{pay},#{bank},#{card},#{halbu},#{tongsin},#{sudan},#{chongprice},#{juk},now(),#{jumuncode})
   	</insert>
-  	<select id="jumunView" resultType="com.example.demo.vo.GumaeVo">
-  		select * from gumae where jumuncode=#{jumuncode}
-  	</select>
+  <select id="jumunview" resultType="com.example.demo.vo.GumaeVo">
+     select * from gumae where jumuncode=#{jumuncode}
+  </select>
   	<select id="getBaesong3" resultType="com.example.demo.vo.BaesongVo">
   		select * from baesong where no=#{no}
   	</select>

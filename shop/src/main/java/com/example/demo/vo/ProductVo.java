@@ -20,4 +20,6 @@ public class ProductVo {
    //review의 수를 저잘하는 필드
    private int review;
    
+   
+   
 }

@@ -44,7 +44,7 @@ public interface ProductMapper {
     public void setReq(String no, String req);
     public int getCode(String jumuncode);
     public void progumaeOk(GumaeVo gvo);
-    public GumaeVo jumunView(String jumuncode);
+    public ArrayList<GumaeVo> jumunview(String jumuncode);
     public BaesongVo getBaesong3(int no);
     public ProductVo getProduct(String pcode);
     
