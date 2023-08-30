@@ -211,13 +211,18 @@
 	    object-fit: contain;
 	    padding: 20px;
 	}
+	#msg {
+		font-size:12px;
+		color:red;
+		font-weight: 600;
+	}
 </style>
 <script>
 	$(function(){
        	 
 		$("#su").spinner({
 			min:1,
-			max:99,
+			max:${pvo.su},
 			spin:function(e,ui){//버튼이 클릭되었을 때 동작하는 메소드
 				$("#cntprice").text(comma(${pvo.price}*ui.value)+"원");
 				$("#halprice").text(comma(${pvo.price-(pvo.price*(pvo.halin)/100)}*ui.value)+"원");
@@ -360,6 +365,12 @@
 					<div id="suouter"> <!-- 구입수량 -->
 						<div class="lf">
 							<input type="text" name="su" size="1" value="1" id="su" readonly>
+							<c:if test="${pvo.su<10}">
+								<span id="msg"> 품절임박! 잔여 : ${pvo.su}개</span>
+							</c:if>
+							<c:if test="${pvo.su==0}">
+								<span id="msg"> 품절!</span>
+							</c:if>
 						</div>
 					</div>
 					<div id="btn">

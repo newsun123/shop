@@ -627,11 +627,13 @@ public class ProductServiceImpl implements ProductService {
 			gvo.setJuk((int)Double.parseDouble(juk[i]));
 			gvo.setChongprice((int)Double.parseDouble(chongprice[i]));
 			mapper.progumaeOk(gvo);
+			
+			mapper.productSubSu(su[i],pcode[i]); // 수량만큼 빼기
 		}
 
 		return "redirect:/product/jumunView?jumuncode=" + jumuncode;
 	}
-
+/*
 	@Override
 	public String jumunView(HttpServletRequest request, Model model) {
 		
@@ -681,4 +683,49 @@ public class ProductServiceImpl implements ProductService {
 		return "/product/jumunView";
 	
 	}
+*/
+
+	@Override
+	public String jumunView(HttpServletRequest request, Model model) {
+		// inner join을 이용하여 하나의 집합으로 가져와서 처리하기
+		String jumuncode = request.getParameter("jumuncode");
+		ArrayList<HashMap> mapall = mapper.jumunview(jumuncode);
+		
+		//배송날짜, 배송요일 => p.btime을 이용하여 처리
+		
+		for(int i=0; i<mapall.size(); i++) {
+			int btime=(int)mapall.get(i).get("btime");
+			
+			LocalDate today=LocalDate.now();
+			LocalDate xday=today.plusDays(btime);
+			
+			// ProductVo의 writeday변수를 이용하여 처리 : prolist에서 등록일을 사용하지 않는다..
+			mapall.get(i).put("baeday", xday.toString().substring(5).replace("-","/"));
+			
+			int cc=xday.getDayOfWeek().getValue();  // 1~7까지의 값 (월~일)
+			String yoil="";
+			switch(cc)
+			{
+			   case 1: yoil="월"; break;
+			   case 2: yoil="화"; break;
+			   case 3: yoil="수"; break;
+			   case 4: yoil="목"; break;
+			   case 5: yoil="금"; break;
+			   case 6: yoil="토"; break;
+			   case 7: yoil="일"; break;
+			}
+			mapall.get(i).put("yoil", yoil);
+		}
+		
+		model.addAttribute("mapall",mapall);
+		
+		return "/product/jumunView";
+	}
+	
+	
+	
+	
+	
+	
+	
 }

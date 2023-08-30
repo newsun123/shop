@@ -16,24 +16,24 @@
 		<caption><h3>상품 배송정보</h3></caption>
 		<c:set var="happrice" value="0"/>
      	<c:set var="baeprice" value="0"/>
-		<c:forEach items="${mapall}" var="map">
+		<c:forEach items="${plist}" var="pvo">
 			<tr>  
 				<td colspan="2">
-					${map.writeday}(${map.yoil})도착 예정(상품 1개)
+					${pvo.writeday}(${pvo.yoil})도착 예정(상품 1개)
 				</td>
 			</tr>
 			<tr>
-				<td><img src="/static/pro/${map.pimg}" width="100"></td>
+				<td><img src="/static/pro/${pvo.pimg}" width="100"></td>
 			</tr>
 			<tr>
 				<td>
-					${map.title}<p>
-					<fmt:formatNumber value="${map.price}"/>원 <span id="chg">(할인율 : ${map.halin}%) </span> <p>
-					구매수량: ${map.su}개<p>
+					${pvo.title}<p>
+					<fmt:formatNumber value="${pvo.price}"/>원 <span id="chg">(할인율 : ${pvo.halin}%) </span> <p>
+					구매수량: ${pvo.su}개<p>
 				</td>
 			</tr>
-		<c:set var="happrice" value="${happrice+map.price}"/>
-		<c:set var="baeprice" value="${baeprice+map.bprice}"/>	
+		<c:set var="happrice" value="${happrice+pvo.price}"/>
+		<c:set var="baeprice" value="${baeprice+pvo.bprice}"/>	
 		</c:forEach>
 	</table>
 <!-- 받는 사람과 결제정보 테이블 -->
@@ -44,7 +44,7 @@
 		</tr>
 		<tr>
 			<td>받는 사람</td>
-			<td>${mapall.get(0).name}/${mapall.get(0).phone}</td>
+			<td>${bvo.name}/${bvo.phone}</td>
 			<td></td>
 			<td>주문금액</td>
 			<td>
@@ -53,14 +53,14 @@
 		</tr>
 		<tr>
 			<td>받는 주소</td>
-			<td>(${mapall.get(0).zip}) ${mapall.get(0).juso}, ${mapall.get(0).jusoEct}</td>
+			<td>(${bvo.zip}) ${bvo.juso}, ${bvo.jusoEct}</td>
 			<td>변경하기</td>
 			<td>배송비</td>
 			<td><fmt:formatNumber value="${baeprice}"/>원</td>
 		</tr>
 		<tr>
 			<td>전화번호</td>
-			<td>${mapall.get(0).phone}</td>
+			<td>${bvo.phone}</td>
 			<td>변경하기</td>
 			<td>결제금액</td>
 			<td><fmt:formatNumber value="${happrice+baeprice}"/>원</td>
