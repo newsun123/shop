@@ -45,7 +45,7 @@
 			<div><input type="hidden" name="pcode" value="${pcode}"></div>
 			<div><input type="hidden" name="su" value="${su}"></div>
 			<div><input type="text" name="userid" id="userid" placeholder="아이디" value="chldbseh"></div>
-			<div><input type="password" name="pwd" id="pwd" placeholder="비밀번호" value="12341234"></div>
+			<div><input type="password" name="pwd" id="pwd" placeholder="비밀번호" value="123123"></div>
 			<div><input type="submit" value="로그인"></div>
 		</form>
 	</section>
