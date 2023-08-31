@@ -630,6 +630,15 @@ public class ProductServiceImpl implements ProductService {
 			
 			mapper.productSubSu(su[i],pcode[i]); // 수량만큼 빼기
 		}
+		
+		//구매가 완료된 cart테이블의 상품도 삭제해야 한다. 0831
+		for(int i=0;i<pcode.length;i++)
+			mapper.cartGumaeDel(pcode[i],gvo.getUserid());
+		
+		//구매가 된 상품의 수량을 product테이블의 pansu필드에 누적을 시킨다.
+		//update product set pansu=pansu+구매수량 where pcode=상품코드
+		for(int i=0;i<pcode.length;i++)
+			mapper.addPansu(su[i],pcode[i]);
 
 		return "redirect:/product/jumunView?jumuncode=" + jumuncode;
 	}

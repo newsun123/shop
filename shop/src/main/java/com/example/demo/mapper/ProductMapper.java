@@ -49,5 +49,6 @@ public interface ProductMapper {
     public BaesongVo getBaesong3(int no);
     public ProductVo getProduct(String pcode);
     public void productSubSu(String su, String pcode);
-    
+    public void cartGumaeDel(String pcode,String userid);
+    public void addPansu(String su, String pcode);
 }

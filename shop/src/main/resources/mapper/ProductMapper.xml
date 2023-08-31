@@ -131,4 +131,10 @@
   	<update id="productSubSu">
   		update product set su=su-${su} where pcode=#{pcode}
   	</update>
+  	<delete id="cartGumaeDel">
+  		delete from cart where pcode=#{pcode} and userid=#{userid}
+  	</delete>
+  	<update id="addPansu">
+  		update product set pansu=pansu+#{su} where pcode=#{pcode}
+  	</update>
 </mapper>
