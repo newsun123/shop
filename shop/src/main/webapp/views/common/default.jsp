@@ -174,6 +174,27 @@
 	    display: block;
 	    font-size: 12px;
 	}
+	header #mypage {
+		position:relative;
+	}
+	header #mypagemenu {
+	    position: absolute;
+	    padding-left: 0px;
+	    top: 30px;
+	    left: 3px;
+	    background:white;
+	    visibility:hidden;
+	}
+	header #mypagemenu li {
+		list-style-type: none;
+	    width: 65px;
+	    height: 26px;
+	    line-height: 26px;
+	    text-align: center;
+		height:26px;
+		line-height: 26px;
+		text-align: center;
+	}
 </style>
 <script>
 	function daeview(){
@@ -193,6 +214,12 @@
 	}
 	function sohide(n){
 		document.getElementsByClassName("so")[n].style.visibility="hidden";
+	}
+	function viewMypage() {
+		document.getElementById("mypagemenu").style.visibility="visible";
+	}
+	function hideMypage() {
+		document.getElementById("mypagemenu").style.visibility="hidden";
 	}
 </script>
 <sitemesh:write property="head"/>
@@ -216,7 +243,14 @@
 			<span>${name}님</span>
 			<a href="../product/cartView" class="carta"><img src="/static/product/cart.png" class="cart"></a>
 			<a href="../member/logout">로그아웃</a>
-			<a>Mypage</a>
+			<a id="mypage" onmouseover="viewMypage()" onmouseout="hideMypage()">마이페이지
+				<ul id="mypagemenu">
+					<li>회원정보</li>
+					<li>구매내역</li>
+					<li>나의 글</li>
+					<li>찜 확인</li>
+				</ul>
+			</a><!-- 회원정보,구매내역,나의 글, 찜리스트 -->
 		</c:if>
 			<a>고객센터</a>
 		</div>
