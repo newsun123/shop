@@ -21,4 +21,12 @@
   		insert into cart(pcode,su,userid,writeday)
   		values(#{pcode},#{su},#{userid},now())
   	</insert>
+  	
+  	<!-- 달력예제=test -->
+  	<select id="getCal" resultType="HashMap">
+  		select * from cal where xday like concat(#{day},'%') order by xday asc
+  	</select>
+  	 <select id="getCal2" resultType="HashMap">
+     select chk, right(xday,2) as xday from cal where xday like concat(#{day},'%') and chk=1
+  </select> <!-- chk=1인 레코드만 가져온다 -->
 </mapper>

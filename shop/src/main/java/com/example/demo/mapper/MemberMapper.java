@@ -1,5 +1,8 @@
 package com.example.demo.mapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.vo.MemberVo;
@@ -11,4 +14,8 @@ public interface MemberMapper {
 	public String loginOk(MemberVo mvo);
 	public void addjjim(String pcode,String userid);
 	public void addCart(String pcode,String su,String userid);
+	
+	//달력 예제
+	public ArrayList<HashMap> getCal(String day);
+	public ArrayList<HashMap> getCal2(String day);
 }

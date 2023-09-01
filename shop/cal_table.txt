@@ -1,0 +1,4 @@
+create table cal(
+no int auto_increment primary key,
+chk int,
+xday date);
