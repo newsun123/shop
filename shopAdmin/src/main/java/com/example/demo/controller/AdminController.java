@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.AdminService;
+import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.ProductVo;
 
 @Controller
@@ -54,8 +55,19 @@ public class AdminController {
 		return as.productAddOk(request);
 	}
 	
+	@RequestMapping("/gumae/gumaeState")
+	public String gumaeState(Model model) {
+		return as.gumaeState(model);
+	}
 	
+	@RequestMapping("gumae/getProduct")
+	public @ResponseBody ProductVo getProduct(HttpServletRequest req) {
+		
+		return as.getProduct(req);
+	}
 	
-	
-	
+	@RequestMapping("gumae/getBaesong")
+	public @ResponseBody BaesongVo getBaesong(HttpServletRequest req) {
+		return as.getBaesong(req);
+	}
 }

@@ -26,4 +26,14 @@
 	insert into product(pcode,pimg,dimg,title,price,halin,su,bprice,btime,juk,writeday
 	 values(#{pcode},#{pimg},#{dimg},#{title},#{price},#{halin},#{su},#{bprice},#{btime},#{juk},now())
 </insert>
+<select id="gumaeState" resultType="com.example.demo.vo.GumaeVo">
+	select * from gumae order by no desc
+</select>
+<select id="getProduct" resultType="com.example.demo.vo.ProductVo">
+	select * from product where pcode=#{pcode}
+</select>
+<select id="getBaesong" resultType="com.example.demo.vo.BaesongVo">
+	select * from baesong where no=#{no}
+</select>
+
 </mapper>

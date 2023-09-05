@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
+import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.ProductVo;
 
 public interface AdminService {
@@ -14,4 +15,7 @@ public interface AdminService {
 	public String getPcode(HttpServletRequest request);
 	public void test();
 	public String productAddOk(HttpServletRequest request);
+	public String gumaeState(Model model);
+	public ProductVo getProduct(HttpServletRequest req);
+	public BaesongVo getBaesong(HttpServletRequest req);
 }

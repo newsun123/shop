@@ -12,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 
 import com.example.demo.mapper.AdminMapper;
+import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.CompVo;
 import com.example.demo.vo.DaeVo;
+import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.JungVo;
 import com.example.demo.vo.ProductVo;
 import com.example.demo.vo.SoVo;
@@ -117,6 +119,30 @@ public class AdminServiceImpl implements AdminService {
 		
 		return "redirect:/product/plist";
 	}
+
+	@Override
+	public String gumaeState(Model model) {
+		ArrayList<GumaeVo> glist = mapper.gumaeState();
+		model.addAttribute("glist",glist);
+		return "gumae/gumaeState";
+	}
+
+	@Override
+	public ProductVo getProduct(HttpServletRequest req) {
+		String pcode = req.getParameter("pcode"); 
+		ProductVo pvo = mapper.getProduct(pcode);
+		System.out.println(pcode);
+		return pvo;
+	}
+
+	@Override
+	public BaesongVo getBaesong(HttpServletRequest req) {
+		String no = req.getParameter("no");
+		BaesongVo bvo = mapper.getBaesong(no);
+		System.out.println(no);
+		return bvo;
+	}
+
 	
 	
 	
