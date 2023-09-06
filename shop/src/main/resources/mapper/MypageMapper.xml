@@ -31,4 +31,16 @@ order by g.writeday desc
 <update id="stateChange">
 	update gumae set state=#{state} where no=#{no}
 </update>
+<insert id="reviewOk">
+	insert into review(title,content,userid,pcode,writeday,star,gumaeno)
+	values(#{title},#{content},#{userid},#{pcode},now(),#{star},#{gumaeno})
+</insert>
+<update id="chgProduct">
+	update product set star=(select avg(star) from review where pcode=#{pcode})
+	,review=review+1
+	where pcode=#{pcode}
+</update>
+<update id="chgGumae">
+	update gumae set sangp=1 where no=#{no}
+</update>
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 
 import com.example.demo.mapper.MypageMapper;
 import com.example.demo.vo.MemberVo;
+import com.example.demo.vo.ReviewVo;
 
 @Service
 @Qualifier("my")
@@ -122,6 +123,31 @@ public class MypageServiceImpl implements MypageService{
 		String no = req.getParameter("no");
 		mapper.stateChange(state,no);
 	    System.out.println(state+" "+no);
+		return "redirect:/mypage/mygumae";
+	}
+
+	@Override
+	public String review(HttpServletRequest req,Model model) {
+		String pcode = req.getParameter("pcode");
+		String gumaeno = req.getParameter("gumaeno");
+		
+		model.addAttribute("pcode",pcode);
+		model.addAttribute("gumaeno",gumaeno);
+		return "/mypage/review";
+	}
+
+	@Override
+	public String reviewOk(ReviewVo rvo,HttpSession ss) {
+		String userid=ss.getAttribute("userid").toString();
+		rvo.setUserid(userid);
+		mapper.reviewOk(rvo);
+		
+		// 현재 상품의 star를 review테이블에서 전부 가져온다. 
+		// 그 후 평균을 낸 뒤, product table의 star 필드를 update한다.
+		// product 테이블에 review 필드에 1을 누적시키기
+		mapper.chgProduct(rvo.getPcode());
+		// 상품평을 등록했으면 gumae 테이블에 sangp필드의 값을 1로 변경한다.
+		mapper.chgGumae(rvo.getGumaeno());
 		return "redirect:/mypage/mygumae";
 	}
 	

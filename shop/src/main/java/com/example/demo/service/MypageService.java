@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
 
+import com.example.demo.vo.ReviewVo;
+
 public interface MypageService {
 
 	public String myinfo(HttpSession session,Model model);
@@ -15,4 +17,6 @@ public interface MypageService {
 	public String chgPwd(HttpServletRequest req, HttpSession ss);
 	public String mygumae(HttpSession ss, Model model);
 	public String stateChange(HttpServletRequest req);
+	public String review(HttpServletRequest req,Model model) ;
+	public String reviewOk(ReviewVo rvo,HttpSession ss);
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.MypageService;
+import com.example.demo.vo.ReviewVo;
 
 @Controller
 public class MypageController {
@@ -58,4 +59,15 @@ public class MypageController {
 	public String stateChange(HttpServletRequest req) {
 		return service.stateChange(req);
 	}
+	
+	@RequestMapping("/mypage/review")
+	public String review(HttpServletRequest req,Model model) {
+		return service.review(req,model);
+	}
+	
+	@RequestMapping("/mypage/reviewOk")
+	public String reviewOk(ReviewVo rvo,HttpSession ss) {
+		return service.reviewOk(rvo,ss);
+	}
+	
 }
