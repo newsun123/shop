@@ -17,4 +17,5 @@ public interface MypageMapper {
 	public String getPwd(String userid);
 	public void chgPwd(String pwd, String userid);
 	public ArrayList<HashMap> mygumae(String userid);
+	public void stateChange(String state,String no);
 }

@@ -1,0 +1,13 @@
+ 상품평: review
+ -product에서 jsp 작성
+ 
+create table review(
+no int auto_increment primary key,
+userid char(20),
+star int,
+content text,
+title varchar(100),
+pcode char(12),
+gumaeno int,
+writeday date);
+ 

@@ -113,19 +113,31 @@ function getBaesong(no) {
 					<input type="button" value="배송중" disabled>
 					</c:if>
 					<c:if test="${gvo.state==0}">
-					<input type="button" value="배송중">
+					<input type="button" value="배송중" onclick="location='stateChange?state=1&no=${gvo.no}'">
 					</c:if>
 					<c:if test="${gvo.state!=1}">
 					<input type="button" value="배송완료" disabled>
 					</c:if>
 					<c:if test="${gvo.state==1}">
-					<input type="button" value="배송완료">
+					<input type="button" value="배송완료" onclick="location='stateChange?state=2&no=${gvo.no}'">
 					</c:if>
 					<c:if test="${!(gvo.state==3 || gvo.state==5 || gvo.state==7)}">
 					<input type="button" value="취소완료" disabled>
 					</c:if>
 					<c:if test="${gvo.state==3 || gvo.state==5 || gvo.state==7}">
-					<input type="button" value="취소완료">
+						<c:if test="${gvo.state==3 }"> <!-- state가 3일때 취소신청 -> 4 -->
+							<c:set var="aa" value="4"/>
+							<c:set var="bb" value="취소"/>
+						</c:if>
+						<c:if test="${gvo.state==5 }"> <!-- state가 5일때 교환신청 => 6 -->
+							<c:set var="aa" value="6"/>
+							<c:set var="bb" value="교환"/>
+						</c:if>
+						<c:if test="${gvo.state==7 }"> <!-- state가 7인경우 반품신청 => 8 -->
+							<c:set var="aa" value="7"/>
+							<c:set var="bb" value="반품"/>
+						</c:if>
+							<input type="button" value="취소승인" onclick="location='stateChange?state=${aa}&no=${gvo.no}'">
 					</c:if>
 				</td>
 			</tr>

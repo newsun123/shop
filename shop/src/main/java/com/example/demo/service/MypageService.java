@@ -14,4 +14,5 @@ public interface MypageService {
 	public String checkPwd(HttpServletRequest req, HttpSession ss);
 	public String chgPwd(HttpServletRequest req, HttpSession ss);
 	public String mygumae(HttpSession ss, Model model);
+	public String stateChange(HttpServletRequest req);
 }

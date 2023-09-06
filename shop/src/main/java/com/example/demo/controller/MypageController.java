@@ -49,8 +49,13 @@ public class MypageController {
 		return service.chgPwd(req,ss);
 	}
 	
-	@RequestMapping("/mypage/myguame")
+	@RequestMapping("/mypage/mygumae")
 	public String mygumae(HttpSession ss, Model model) {
 		return service.mygumae(ss,model);
+	}
+	
+	@RequestMapping("/mypage/stateChange")
+	public String stateChange(HttpServletRequest req) {
+		return service.stateChange(req);
 	}
 }

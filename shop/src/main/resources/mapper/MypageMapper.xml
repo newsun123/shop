@@ -23,9 +23,12 @@
 </update>
 
 <select id="mygumae" resultType="HashMap">
-select p.title, p.halin, p.pimg, p.price, p.btime, p.bprice, g.writeday, g.su, g.state, g.jumuncode, g.sangp from
+select p.title, p.halin, p.pimg, p.price,p.pcode, p.btime, p.bprice,g.no, g.writeday, g.su, g.state, g.jumuncode, g.sangp from
 gumae as g inner join product as p
 on g.pcode=p.pcode and userid=#{userid}
 order by g.writeday desc
 </select>
+<update id="stateChange">
+	update gumae set state=#{state} where no=#{no}
+</update>
 </mapper>

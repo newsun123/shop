@@ -60,14 +60,22 @@ public class AdminController {
 		return as.gumaeState(model);
 	}
 	
-	@RequestMapping("gumae/getProduct")
+	@RequestMapping("/gumae/getProduct")
 	public @ResponseBody ProductVo getProduct(HttpServletRequest req) {
 		
 		return as.getProduct(req);
 	}
 	
-	@RequestMapping("gumae/getBaesong")
+	@RequestMapping("/gumae/getBaesong")
 	public @ResponseBody BaesongVo getBaesong(HttpServletRequest req) {
 		return as.getBaesong(req);
 	}
+	
+	@RequestMapping("/gumae/stateChange")
+	public String stateChange(HttpServletRequest req) {
+		return as.stateChange(req);
+	}
+	
+	
+	
 }

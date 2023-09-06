@@ -25,4 +25,5 @@ public interface AdminMapper {
 	public ArrayList<GumaeVo> gumaeState();
 	public ProductVo getProduct(String pcode);
 	public BaesongVo getBaesong(String no);
+	public void stateChange(String state,String no);
 }

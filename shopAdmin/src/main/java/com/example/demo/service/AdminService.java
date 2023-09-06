@@ -18,4 +18,5 @@ public interface AdminService {
 	public String gumaeState(Model model);
 	public ProductVo getProduct(HttpServletRequest req);
 	public BaesongVo getBaesong(HttpServletRequest req);
+	public String stateChange(HttpServletRequest req);
 }

@@ -143,6 +143,14 @@ public class AdminServiceImpl implements AdminService {
 		return bvo;
 	}
 
+	@Override
+	public String stateChange(HttpServletRequest req) {
+		String state = req.getParameter("state");
+		String no = req.getParameter("no");
+		mapper.stateChange(state,no);
+		return "redirect:/gumae/gumaeState";
+	}
+
 	
 	
 	

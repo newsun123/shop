@@ -294,7 +294,7 @@ footer {
 					<!-- 회원정보,구매내역,나의글,찜리스트 --> 마이페이지
 					<ul id="mypagemenu">
 						<li><a href="../mypage/myinfo">회원정보</a></li>
-						<li><a href="../mypage/myguame">구매내역</a></li>
+						<li><a href="../mypage/mygumae">구매내역</a></li>
 						<li>나의글</li>
 						<li>찜확인</li>
 					</ul>

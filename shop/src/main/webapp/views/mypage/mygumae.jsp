@@ -106,36 +106,45 @@
          <div class="price"><fmt:formatNumber value="${map.price-(map.price*map.halin/100)}" type="number" pattern="#,###"/>원 ${map.su}개</div>
         </div>
         <div id="right">
-        	<c:if test="${map.state==3}">
-	          <input type="button" value="취소신청"><br>
-        	</c:if>
-        	<c:if test="${map.state!=3}">
-	          <input type="button" value="취소신청" disabled><br>
-        	</c:if>
-        	<c:if test="${map.state==1 || map.state==2}">
-	          <input type="button" value="교환신청"><br>
-        	</c:if>
-        	<c:if test="${map.state!=1 && map.state!=2}">
-	          <input type="button" value="교환신청" disabled><br>
-        	</c:if>
-        	<c:if test="${map.state==2}">
-	          <input type="button" value="반품신청"><br>
-        	</c:if>
-        	<c:if test="${map.state!=2}">
-	          <input type="button" value="반품신청" disabled><br>
-        	</c:if>
-        	<c:if test="${map.state==0}">
-	          <input type="button" value="신청취소"><br>
-        	</c:if>
         	<c:if test="${map.state!=0}">
-	          <input type="button" value="신청취소" disabled><br>
-        	</c:if>
-        	<c:if test="${map.state==2 && map.sangp==0}">
-	          <input type="button" value="상품평"><br>
-        	</c:if>
-        	<c:if test="${map.state!=2 || map.sangp==1}">
-	          <input type="button" value="상품평" disabled><br>
-        	</c:if>
+            <input type="button" value="취소신청" disabled><br>
+          </c:if>
+          <c:if test="${map.state==0}">
+            <input type="button" value="취소신청" onclick="location='stateChange?state=3&no=${map.no}'"><br>
+          </c:if>
+          
+          <c:if test="${map.state!=1 and map.state!=2}">
+            <input type="button" value="교환신청" disabled><br>
+          </c:if>
+          <c:if test="${map.state==1 or map.state==2}">
+            <input type="button" value="교환신청" onclick="location='stateChange?state=5&no=${map.no}'"><br>
+          </c:if>
+          
+          <c:if test="${map.state!=2}">
+            <input type="button" value="반품신청" disabled><br>
+          </c:if>
+          <c:if test="${map.state==2}">
+            <input type="button" value="반품신청" onclick="location='stateChange?state=7&no=${map.no}'"><br>
+          </c:if>
+           
+          <c:if test="${ !(map.state==3 or map.state==5 or map.state==7) }">
+            <input type="button" value="신청취소" disabled><br>
+          </c:if>
+          <c:if test="${map.state==3 or map.state==5 or map.state==7}">
+          	<c:if test="${map.state==3 }">
+          		<c:set var="aa" value="0"/>
+          	</c:if>
+          	<c:if test="${map.state!=3}">
+          		<c:set var="aa" value="2"/>
+          	</c:if>
+            <input type="button" value="신청취소" onclick="location='stateChange?state=${aa}&no=${map.no}'"><br>
+          </c:if>
+          <c:if test="${map.state!=2 || map.sangp==1}">
+            <input type="button" value="상품평" disabled><br>
+          </c:if>
+          <c:if test="${map.state==2 and map.sangp==0}">
+            <input type="button" value="상품평" onclick="location='review?pcode=${map.pcode}&gumaeno=${map.no}'"><br>
+          </c:if>
         </div>
       </div> 
      </c:forEach>

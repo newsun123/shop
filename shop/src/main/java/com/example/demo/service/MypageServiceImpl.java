@@ -115,6 +115,15 @@ public class MypageServiceImpl implements MypageService{
 		model.addAttribute("mapall",mapall);
 		return "/mypage/mygumae";
 	}
+
+	@Override
+	public String stateChange(HttpServletRequest req) {
+		String state=req.getParameter("state");
+		String no = req.getParameter("no");
+		mapper.stateChange(state,no);
+	    System.out.println(state+" "+no);
+		return "redirect:/mypage/mygumae";
+	}
 	
 	
 	

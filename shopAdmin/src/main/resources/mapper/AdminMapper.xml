@@ -35,5 +35,7 @@
 <select id="getBaesong" resultType="com.example.demo.vo.BaesongVo">
 	select * from baesong where no=#{no}
 </select>
-
+<update id="stateChange">
+	update gumae set state=#{state} where no=#{no}
+</update>
 </mapper>
