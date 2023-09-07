@@ -195,246 +195,250 @@
 }
 </style>
 <script>
-    function mainClick(mchk,n){
-    	
-    	var sub=document.getElementsByClassName("sub");
-    	var len=sub.length;
-    	
-    	for(i=0;i<len;i++){
-    		sub[i].checked=mchk.checked;
-    	}	
-    	
-    	//클릭된 class="main" 말고 다른 main의 인덱스 : n
-    	document.getElementsByClassName("main")[n].checked=mchk.checked;
-    	
-    	//아래 전체선택에 있는 (선택건수/총건수)에 값을 전달한다..
-    	document.getElementById("bb").innerText=len;
-    	if(mchk.checked)
-    		document.getElementById("aa").innerText=len;
-    	else
-    	    document.getElementById("aa").innerText=0;
-    	
-    	total(); // 8월 24일 추가 - chongjumun 구하기용
-    }
-    
-    function subClick(){
-    	
-    	//체크된 sub의 갯수를 파악한다.
-    	var sub=document.getElementsByClassName("sub");
-    	var len=sub.length;
-    	var sel=0;
-    	
-    	for(i=0;i<len;i++){
-    		if(sub[i].checked)
-    			sel++; 
-    	}
-    	//1.모든 sub가 체크되었다면 class="main"을 체크,아니면 해제
-    	if(len==sel){
-    		document.getElementsByClassName("main")[0].checked=true;
-    		document.getElementsByClassName("main")[1].checked=true;
-    	}else {
-    		document.getElementsByClassName("main")[0].checked=false;
-    		document.getElementsByClassName("main")[1].checked=false;
-    	}	
-    	
-    	//3.아래 전체선택에 있는 (선택건수/총건수)에 값을 전달
-    	document.getElementById("bb").innerText=len;
-    	document.getElementById("aa").innerText=sel;
-    	
-    	total(); // 8월 24일 추가 - chongjumun 구하기용
-    }
-    
-    function changeSu(my,n,s,no){
+  function mainClick(mchk,n){
+  	
+  	var sub=document.getElementsByClassName("sub");
+  	var len=sub.length;
+  	
+  	for(i=0;i<len;i++){
+  		sub[i].checked=mchk.checked;
+  	}	
+  	
+  	//클릭된 class="main" 말고 다른 main의 인덱스 : n
+  	document.getElementsByClassName("main")[n].checked=mchk.checked;
+  	
+  	//아래 전체선택에 있는 (선택건수/총건수)에 값을 전달한다..
+  	document.getElementById("bb").innerText=len;
+  	if(mchk.checked)
+  		document.getElementById("aa").innerText=len;
+  	else
+  	    document.getElementById("aa").innerText=0;
+  	
+  	total(); // 8월 24일 추가 - chongjumun 구하기용
+  }
+  
+  function subClick(){
+  	
+  	//체크된 sub의 갯수를 파악한다.
+  	var sub=document.getElementsByClassName("sub");
+  	var len=sub.length;
+  	var sel=0;
+  	
+  	for(i=0;i<len;i++){
+  		if(sub[i].checked)
+  			sel++; 
+  	}
+  	//1.모든 sub가 체크되었다면 class="main"을 체크,아니면 해제
+  	if(len==sel){
+  		document.getElementsByClassName("main")[0].checked=true;
+  		document.getElementsByClassName("main")[1].checked=true;
+  	}else {
+  		document.getElementsByClassName("main")[0].checked=false;
+  		document.getElementsByClassName("main")[1].checked=false;
+  	}	
+  	
+  	//3.아래 전체선택에 있는 (선택건수/총건수)에 값을 전달
+  	document.getElementById("bb").innerText=len;
+  	document.getElementById("aa").innerText=sel;
+  	
+  	total(); // 8월 24일 추가 - chongjumun 구하기용
+  }
+  
+  function changeSu(my,n,s,no){
 
-    	if(my.value==10){
-    		my.style.display="none";
-    		document.getElementsByClassName("su2")[n].style.display="inline-block";
-    		document.getElementsByClassName("su2")[n].value=s;
-    		//document.getElementsByClassName("subtn")[n].style.display="inline";
-    		
-    	}else{//변경된 수량을 DB에 update
-    		
-    		var su=my.value;
-            var chk=new XMLHttpRequest();
-            chk.onload=function(){
+  	if(my.value==10){
+  		my.style.display="none";
+  		document.getElementsByClassName("su2")[n].style.display="inline-block";
+  		document.getElementsByClassName("su2")[n].value=s;
+  		//document.getElementsByClassName("subtn")[n].style.display="inline";
+  		
+  	}else{//변경된 수량을 DB에 update
+  		
+  		var su=my.value;
+          var chk=new XMLHttpRequest();
+          chk.onload=function(){
 
-	   			if(chk.responseText=="1")
-	   				alert("오류발생");
-	   			
-	   			var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
-   			 	document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
-   			 total(); // 8월 24일 추가 - chongjumun 구하기용
-	   		}
-            
-	   		chk.open("get","changeSu?su="+su+"&no="+no);
-	   		chk.send();
-    	}
-    }
-    
-    function txtChange(my,n,no){//10미만인지 이상인지 여부를 체크해서 type="text" , select
-    	
-    	var su=my.value;
-    	
-    	if(su > 9){
-    		document.getElementsByClassName("subtn")[n].style.display="inline-block";
-    	}else{
-    		document.getElementsByClassName("su2")[n].style.display="none";
-    		document.getElementsByClassName("su1")[n].style.display="inline-block";
-    		document.getElementsByClassName("subtn")[n].style.display="none";
-    		// su의 값을 select태그에 전달
-    		
-    		document.getElementsByClassName("su1")[n].value=su;
+  			if(chk.responseText=="1")
+  				alert("오류발생");
+  			
+  			var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
+ 			 	document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
+ 			 total(); // 8월 24일 추가 - chongjumun 구하기용
+  		}
+          
+  		chk.open("get","changeSu?su="+su+"&no="+no);
+  		chk.send();
+  	}
+  }
+  
+  function txtChange(my,n,no){//10미만인지 이상인지 여부를 체크해서 type="text" , select
+  	
+  	var su=my.value;
+  	
+  	if(su > 9){
+  		document.getElementsByClassName("subtn")[n].style.display="inline-block";
+  	}else{
+  		document.getElementsByClassName("su2")[n].style.display="none";
+  		document.getElementsByClassName("su1")[n].style.display="inline-block";
+  		document.getElementsByClassName("subtn")[n].style.display="none";
+  		// su의 값을 select태그에 전달
+  		
+  		document.getElementsByClassName("su1")[n].value=su;
 
-    		var chk=new XMLHttpRequest();
-    		
-    		chk.onload=function(){
-    			 //alert(chk.responseText);
-    			if(chk.responseText=="1")
-    			    alert("오류발생");
-				
-    			var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
-     			document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
-     			
-     			total(); // 8월 24일 추가 - chongjumun 구하기용
-    		}
-    		
-    		chk.open("get","changeSu?su="+su+"&no="+no);
-    		chk.send();
-    	}	
-    }
-    
-    function changeSu2(n,no){
-    	
-    	var su=document.getElementsByClassName("su2")[n].value;
-    	
-    	
-    	var chk=new XMLHttpRequest();
-		chk.onload=function(){
-			//alert(chk.responseText);
-			if(chk.responseText=="1")
-				 alert("오류발생");
-			 
-			document.getElementsByClassName("subtn")[n].style.display="none";
-			 
- 			var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
- 			document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
- 			
- 			total(); // 8월 24일 추가 - chongjumun 구하기용
- 			
-		}
-		chk.open("get","changeSu?su="+su+"&no="+no);
-		chk.send();
-    }
-    
-    window.onload=function(){
-    	
-    	var plen=${mapall.size()}; //상품의 갯수
-    	
-    	var msu=[${str}];
+  		var chk=new XMLHttpRequest();
+  		
+  		chk.onload=function(){
+  			 //alert(chk.responseText);
+  			if(chk.responseText=="1")
+  			    alert("오류발생");
+		
+  			var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
+   			document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
+   			
+   			total(); // 8월 24일 추가 - chongjumun 구하기용
+  		}
+  		
+  		chk.open("get","changeSu?su="+su+"&no="+no);
+  		chk.send();
+  	}	
+  }
+  
+  function changeSu2(n,no){
+  	
+  	var su=document.getElementsByClassName("su2")[n].value;
+  	
+  	
+  	var chk=new XMLHttpRequest();
+chk.onload=function(){
+	//alert(chk.responseText);
+	if(chk.responseText=="1")
+		 alert("오류발생");
+	 
+	document.getElementsByClassName("subtn")[n].style.display="none";
+	 
+		var danga=document.getElementsByClassName("danga")[n].innerText.replace(/,/g,"");
+		document.getElementsByClassName("sangprice")[n].innerText=comma(danga*su);
+		
+		total(); // 8월 24일 추가 - chongjumun 구하기용
+		
+}
+chk.open("get","changeSu?su="+su+"&no="+no);
+chk.send();
+  }
+  
+  window.onload=function(){
+  	
+  	var plen=${mapall.size()}; //상품의 갯수
+  	
+  	var msu=[${str}];
 
-    	for(i=0;i<plen;i++){
-    		
-    		if(msu[i]<10){
-    			document.getElementsByClassName("su1")[i].value=msu[i];
-    		}else{
-    			document.getElementsByClassName("su1")[i].style.display="none";
-    			document.getElementsByClassName("su2")[i].style.display="inline-block";
-    			document.getElementsByClassName("su2")[i].value=msu[i];
-    			//document.getElementsByClassName("subtn")[i].style.display="inline-block";
-    		}
-    	}
-    }
-    
-    function comma(num){
-   		return new Intl.NumberFormat().format(num);
-    }
-    
-    function cartDel(no,my) { // my는 img태그 src="del.png"
-    	var chk = new XMLHttpRequest();
-    	chk.onload=function() {
-    		
-    		if(chk.responseText=="0") {
-    			
-    			my.parentNode.parentNode.remove(); // 내 태그 . 의 부모 태그 . 의 부모태그 . 를 지운다.
-    			
-    			total(); // 8월 24일 추가 - chongjumun 구하기용
-    		}else {
-    			alert(chk.responseText);
-    		}
-    	}
-    	chk.open("GET","cartDel?no="+no);
-    	chk.send();
-    }
-    
-    function selectDel() {
-    	// 선택된 체크박스에 해당되는 상품의 no를 가져오기 => DB에서 삭제
-    	var sub = document.getElementsByClassName("sub");
-    	// var sub2 = querySelectorAll(input[type='checkbox']:checked);
-    	var len = sub.length;
-    	var delsub="";
-    	var delpro="";
-    	for(i=0; i<len; i++) {
-    		if(sub[i].checked) {
-    			delsub = delsub + sub[i].value+",";
-    			delpro = delpro + i + ",";
-    			
-    			// document.getElementsByClassName("st")[i].remove(); 오동작
-    		}
-    	}
-    	// remove() 시킬 상품의 tr의 index 구하기
-    	// 앞에서 삭제하면 index값이 움직여서 오작동이 나므로, 뒤에서부터 삭제해보자
-    	var aaa = delpro.split(",");
-    	for (i=aaa.length-2; i>=0; i--) {
-    		document.getElementsByClassName("st")[aaa[i]].remove();
-    	}
-    	
-    	var chk = new XMLHttpRequest();
-    	chk.onload=function() {
-    		total(); // 8월 24일 추가 - chongjumun 구하기용
-    	}
-    	chk.open("GET", "selectDel?nos="+delsub);
-    	chk.send();
-    }
-    
-    function total() { // 선택된 상품의 가격, 수량, 배송비를 이용하여 결제금액에 대한 처리 (8월 24일)
-    	//class="sub" 인 체크박스의 체크여부를 판단
-    	// checked가 true 인 경우 sangprice,bprice를 가져온다.
-    	var sub=document.getElementsByClassName("sub");
-    	var len = sub.length; // 체크된 상품의 갯수
-    
-    	var totalprice=0; // 상품 총 금액
-    	var totalbprice=0; // 배송비 총 금액
-    	for(i=0; i<len; i++) {
-    		if(sub[i].checked)
-    			{
-    			totalprice = totalprice + parseInt(document.getElementsByClassName("sangprice")[i].innerText.replace(/,/g,""));
-    			if(document.getElementsByClassName("bprice")[i].innerText !="무료배송"){
-    				totalbprice = totalbprice + parseInt(document.getElementsByClassName("bprice")[i].innerText.replace(/,/g,""));
-    			}
-    			}
-    	}
-    	//chongprice+chongbae=chongjumum
-    	document.getElementById("chongprice").innerText=comma(totalprice);
-    	document.getElementById("chongbae").innerText=comma(totalbprice);
-    	document.getElementById("chongjumun").innerText=comma(totalprice+totalbprice);
-    }
-    
-    function moveGumae() { // 구입하는 상품들의 pcode와 수량을 , 로 구분하여 progumae에 전달하기
-    	
-    	//몇번째 체크박스가 체크되었나 확인하여 해당하는 인덱스의 pcode,su를 변수에 누적하기.
-    	var sub = document.getElementsByClassName("sub");
-    	var len = sub.length;
-    	
-    	var pcode ="";
-    	var su="";
-    	for(i=0;i<len;i++) {
-    		if(sub[i].checked) { //체크박스가 체크되었다면 구매하는 상품이므로 pcode와 su를 저장
-    			pcode= pcode+ document.getElementsByClassName("pcode")[i].value+",";
-    			su = su+document.getElementsByClassName("su1")[i].value+",";
-    		}
-    	}
-    	location="progumae?pcode="+pcode+"&su="+su;
-    }
+  	for(i=0;i<plen;i++){
+  		
+  		if(msu[i]<10){
+  			document.getElementsByClassName("su1")[i].value=msu[i];
+  		}else{
+  			document.getElementsByClassName("su1")[i].style.display="none";
+  			document.getElementsByClassName("su2")[i].style.display="inline-block";
+  			document.getElementsByClassName("su2")[i].value=msu[i];
+  			//document.getElementsByClassName("subtn")[i].style.display="inline-block";
+  		}
+  	}
+  }
+  
+  function comma(num){
+ 		return new Intl.NumberFormat().format(num);
+  }
+  
+  function cartDel(no,my,index) { // my는 img태그 src="del.png"
+  	
+  	var pcode = document.getElementsByClassName("pcode")[index].value;
+  	var su = document.getElementsByClassName("su1")[index].value;
+  	
+  	var chk = new XMLHttpRequest();
+  	chk.onload=function() {
+  		
+  		if(chk.responseText=="0") {
+  			
+  			my.parentNode.parentNode.remove(); // 내 태그 . 의 부모 태그 . 의 부모태그 . 를 지운다.
+  			
+  			total(); // 8월 24일 추가 - chongjumun 구하기용
+  		}else {
+  			alert(chk.responseText);
+  		}
+  	}
+  	chk.open("GET","cartDel?no="+no+"&pcode="+pcode+"&su="+su);
+  	chk.send();
+  }
+  
+  function selectDel() {
+  	// 선택된 체크박스에 해당되는 상품의 no를 가져오기 => DB에서 삭제
+  	var sub = document.getElementsByClassName("sub");
+  	// var sub2 = querySelectorAll(input[type='checkbox']:checked);
+  	var len = sub.length;
+  	var delsub="";
+  	var delpro="";
+  	for(i=0; i<len; i++) {
+  		if(sub[i].checked) {
+  			delsub = delsub + sub[i].value+",";
+  			delpro = delpro + i + ",";
+  			
+  			// document.getElementsByClassName("st")[i].remove(); 오동작
+  		}
+  	}
+  	// remove() 시킬 상품의 tr의 index 구하기
+  	// 앞에서 삭제하면 index값이 움직여서 오작동이 나므로, 뒤에서부터 삭제해보자
+  	var aaa = delpro.split(",");
+  	for (i=aaa.length-2; i>=0; i--) {
+  		document.getElementsByClassName("st")[aaa[i]].remove();
+  	}
+  	
+  	var chk = new XMLHttpRequest();
+  	chk.onload=function() {
+  		total(); // 8월 24일 추가 - chongjumun 구하기용
+  	}
+  	chk.open("GET", "selectDel?nos="+delsub);
+  	chk.send();
+  }
+  
+  function total() { // 선택된 상품의 가격, 수량, 배송비를 이용하여 결제금액에 대한 처리 (8월 24일)
+  	//class="sub" 인 체크박스의 체크여부를 판단
+  	// checked가 true 인 경우 sangprice,bprice를 가져온다.
+  	var sub=document.getElementsByClassName("sub");
+  	var len = sub.length; // 체크된 상품의 갯수
+  
+  	var totalprice=0; // 상품 총 금액
+  	var totalbprice=0; // 배송비 총 금액
+  	for(i=0; i<len; i++) {
+  		if(sub[i].checked)
+  			{
+  			totalprice = totalprice + parseInt(document.getElementsByClassName("sangprice")[i].innerText.replace(/,/g,""));
+  			if(document.getElementsByClassName("bprice")[i].innerText !="무료배송"){
+  				totalbprice = totalbprice + parseInt(document.getElementsByClassName("bprice")[i].innerText.replace(/,/g,""));
+  			}
+  			}
+  	}
+  	//chongprice+chongbae=chongjumum
+  	document.getElementById("chongprice").innerText=comma(totalprice);
+  	document.getElementById("chongbae").innerText=comma(totalbprice);
+  	document.getElementById("chongjumun").innerText=comma(totalprice+totalbprice);
+  }
+  
+  function moveGumae() { // 구입하는 상품들의 pcode와 수량을 , 로 구분하여 progumae에 전달하기
+  	
+  	//몇번째 체크박스가 체크되었나 확인하여 해당하는 인덱스의 pcode,su를 변수에 누적하기.
+  	var sub = document.getElementsByClassName("sub");
+  	var len = sub.length;
+  	
+  	var pcode ="";
+  	var su="";
+  	for(i=0;i<len;i++) {
+  		if(sub[i].checked) { //체크박스가 체크되었다면 구매하는 상품이므로 pcode와 su를 저장
+  			pcode= pcode+ document.getElementsByClassName("pcode")[i].value+",";
+  			su = su+document.getElementsByClassName("su1")[i].value+",";
+  		}
+  	}
+  	location="progumae?pcode="+pcode+"&su="+su;
+  }
 </script>
 </head>
 <body>
@@ -493,7 +497,7 @@
 		        </td>
 		        <td class="pri">
 		        	<span class="sangprice"><fmt:formatNumber value="${map.price*map.su}" type="number" pattern="#,###"/></span>원
-		        	<img src="/static/product/del.png" valign="middle" onclick="cartDel(${map.no},this)">
+		        	<img src="/static/product/del.png" valign="middle" onclick="cartDel(${map.no},this,${sts.index})">
 		        </td>
 		        <td class="bpri">
 		        <c:if test="${map.bprice==0}">

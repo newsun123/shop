@@ -288,15 +288,21 @@
 			if(chk.responseText==1){
 				alert("오류발생");	
 				
+			}else if(chk.responseText==2){
+				
+				location="../member/login?pcode="+pcode+"&su="+su;
 			}else{
+				
 				//장바구니 이동 레이어를 보이게 하기
 				document.getElementById("cartmove").style.visibility="visible";
 		        
 		        setTimeout(function() {
 		        	document.getElementById("cartmove").style.visibility="hidden";
-		        },3000);
+		        	
+		        },3000)
 			}
 		}
+		
 		chk.open("get","cartAdd?pcode="+pcode+"&su="+su);
 		chk.send();
 	}

@@ -137,4 +137,10 @@
   	<update id="addPansu">
   		update product set pansu=pansu+#{su} where pcode=#{pcode}
   	</update>
+	<select id="getCart" resultType="HashMap">
+	     select p.pcode,p.title, p.pimg, p.price, p.bprice,
+	     p.su as psu 
+	     from  product as p 
+	     where p.pcode=#{pcode}
+	  </select>
 </mapper>

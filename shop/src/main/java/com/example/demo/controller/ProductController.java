@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,49 @@ public class ProductController {
 	}
 
 	@RequestMapping("/product/procontent")
-	public String procontent(HttpServletRequest request, Model model, HttpSession session) {
+	public String procontent(HttpServletRequest request, Model model, HttpSession session,HttpServletResponse res) {
+		
+		/*
+		 * //cookie 생성 - 쿠키 받으려면 response로 받아야함. String imsi =
+		 * "p01010102001:2/p01010205007:3/p0050304004:5/"; Cookie cookie = new
+		 * Cookie("cart",imsi); // 생성자("변수","값"); cookie.setMaxAge(600); //초 단위
+		 * res.addCookie(cookie);
+		 */
+		//cookie 삭제
+		/*
+		 * Cookie cookie = new Cookie("cart",""); cookie.setMaxAge(0);
+		 * res.addCookie(cookie);
+		 */
+		
 		return service.procontent(request, model, session);
 
 	}
+	//쿠키 화인용 공부
+	
+	@RequestMapping("/product/viewCookie")
+	public void viewCookie(HttpServletRequest req) { // 쿠키를 읽어오기
+		
+		Cookie[] cookies = req.getCookies();
+
+		for (int i = 0; i < cookies.length; i++) {
+			// System.out.println(cookies[i].getName()); // 변수명을 가져오기
+			// System.out.println(cookies[i].getValue()); // 값을 가져오기
+			if (cookies[i].getName().equals("cart")) {
+				// System.out.println(cookies[i].getValue()); String cart =
+				String cart = cookies[i].getValue();
+				String[] carts = cart.split("/"); // p01010102002:2
+				System.out.println(cart);
+				for (int j = 0; j < carts.length; j++) {
+					String pcode = carts[j].substring(0, 12);
+					String su = carts[j].substring(13);
+					
+					System.out.println(pcode+" " +su);
+				}
+			}
+
+		}
+	}
+	
 
 	@RequestMapping("/product/addjjim")
 	public @ResponseBody String addjjim(HttpServletRequest request, HttpSession session) {
@@ -44,14 +85,14 @@ public class ProductController {
 	}
 
 	@RequestMapping("/product/cartAdd")
-	public @ResponseBody String cartAdd(HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String cartAdd(HttpServletRequest request, HttpSession session,HttpServletResponse response) {
 
-		return service.cartAdd(request, session);
+		return service.cartAdd(request, session,response);
 	}
 
 	@RequestMapping("/product/cartView")
-	public String cartView(HttpSession session, Model model) {
-		return service.cartView(session, model);
+	public String cartView(HttpSession session, Model model,HttpServletRequest req) {
+		return service.cartView(session, model,req);
 	}
 
 	@RequestMapping("/product/changeSu")
@@ -60,8 +101,8 @@ public class ProductController {
 	}
 
 	@RequestMapping("/product/cartDel")
-	public @ResponseBody String cartDel(HttpServletRequest request) {
-		return service.cartDel(request);
+	public @ResponseBody String cartDel( HttpServletResponse response, HttpServletRequest request) {
+		return service.cartDel(response,request);
 	}
 
 	@RequestMapping("/product/selectDel")

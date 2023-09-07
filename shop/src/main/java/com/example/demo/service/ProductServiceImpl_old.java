@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,8 +20,8 @@ import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
 
 @Service
-@Qualifier("ps")
-public class ProductServiceImpl implements ProductService {
+@Qualifier("ps2")
+public class ProductServiceImpl_old implements ProductService {
 
 	@Autowired
 	private ProductMapper mapper;
@@ -316,97 +315,37 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public String cartAdd(HttpServletRequest request, HttpSession session,HttpServletResponse response) {
-		
-		String pcode = request.getParameter("pcode");
-		int su = Integer.parseInt(request.getParameter("su"));
-		
-		if(session.getAttribute("userid")==null) { // 로그인을 하지 않은 사용자의 cartAdd를 cookie를 사용해 처리
-			
-			// Cookie에 추가  == 상품코드1:수량/상품코드2:수량/ ....
-			// Cookie 읽기 (cart라는 이름의 쿠키)
-			String cart = null;  // cart쿠키의 값을 읽어온 후 저장
-			String[] carts; // 상품별로 나누어 배열로 저장
-			
-			Cookie[] cookies = request.getCookies();
-			for(int i=0;i<cookies.length;i++) {
-				if(cookies[i].getName().equals("cart")) {
-					cart = cookies[i].getValue();
-					//동일한 상품이 아닐경우
-					if(cart.indexOf(pcode)== -1) {
-						cart = cart+pcode+":"+su+"/";
-					}
-				}
-			}
-			
-			if(cart != null) {
-				// 1. 기존에 cart 쿠키가 존재할 경우
-				Cookie cookie = new Cookie("cart",cart);
-				cookie.setMaxAge(600);
-				response.addCookie(cookie);
-			}else {
-				// 2. cart쿠키가 없을 경우
-				Cookie cookie = new Cookie("cart",pcode+":"+su+"/");
-				cookie.setMaxAge(600);
-				response.addCookie(cookie);
-			}
-			return "2";
-			
-			
-		}else { //로그인을 한 사람의 cartAdd처리
-			
+
+		try {
+			String pcode = request.getParameter("pcode");
+			int su = Integer.parseInt(request.getParameter("su"));
 			String userid = session.getAttribute("userid").toString();
-			
+
 			// 현재 상품이 cart에 존재하는지 여부를 체크
 			ProductVo pvo = mapper.isCart(pcode, userid);
-			
+
 			if (pvo == null) { // 현재 상품이 장바구니에 없다
-				
+
 				mapper.cartAdd(pcode, su, userid);
 			} else {
 				int hap = pvo.getSu() + su;
 				mapper.cartUp(hap, pvo.getNo());
 			}
-			
-			return "0";			
-		} //else 끝
-		
+
+			return "0";
+
+		} catch (NullPointerException e) {
+			return "2";
+
+		} catch (Exception e) {
+			return "1";
+		}
 	}
 
 	@Override
-	public String cartView(HttpSession session, Model model, HttpServletRequest req) {
+	public String cartView(HttpSession session, Model model) {
 
-		ArrayList<HashMap> mapall = null;
-
-		if (session.getAttribute("userid") == null) {
-			
-			mapall =  new ArrayList<HashMap>();
-			
-			Cookie[] cookies = req.getCookies();
-
-			for (int i = 0; i < cookies.length; i++) {
-				if (cookies[i].getName().equals("cart")) {
-					String[] carts = cookies[i].getValue().split("/");
-
-					for (int j = 0; j < carts.length; j++) {
-						if (carts[i].length() != 0) {
-							String pcode = carts[j].substring(0, 12);
-
-							String su = carts[j].substring(13);
-
-							HashMap map = mapper.getCart(pcode);
-							map.put("su", su);
-							map.put("no", 0);
-							mapall.add(map);
-						}
-					}
-				}
-			}
-			model.addAttribute("mapall", mapall);
-		} else {
-
-			mapall = mapper.cartView(session.getAttribute("userid").toString());
-
-		}
+		ArrayList<HashMap> mapall = mapper.cartView(session.getAttribute("userid").toString());
 
 		// 자바스크립트에서 배열형태 값,값,값
 		String str = "";
@@ -415,7 +354,6 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		model.addAttribute("str", str);
-		
 		model.addAttribute("mapall", mapall);
 
 		return "/product/cartView";
@@ -437,32 +375,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String cartDel(HttpServletResponse response,HttpServletRequest request) {
+	public String cartDel(HttpServletRequest request) {
 		// 카트에 저장된 상품을 삭제하기(08/24)
 		try {
 			String no = request.getParameter("no");
-			String pcode= request.getParameter("pcode");
-			String su = request.getParameter("su");
-			// 쿠키에서 삭제
-			if(no.equals("0")) {  
-				Cookie[] cookies = request.getCookies();
-				for(int i=0; i<cookies.length; i++) {
-					if(cookies[i].getName().equals("cart")) {
-						String imsi = pcode+":"+su+"/";
-						String cart = cookies[i].getValue();
-						cart=cart.replace(imsi, "");
-						
-						// 클라이언트에 쿠키를 변경한 값으로 바꾸기
-						Cookie cookie = new Cookie("cart",cart);
-						cookie.setMaxAge(600);
-						response.addCookie(cookie);
-					}
-				}
-				
-			// 테이블에서 삭제
-			} else {
-				
-			}
 			mapper.cartDel(no);
 			return "0";
 		} catch (Exception e) {
@@ -529,82 +445,75 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public String progumae(HttpServletRequest request, HttpSession session, Model model) {
+		// 구매자 정보를 구하여 views에 전달 (이름, 이메일, 주소) : member
 		String pcode=request.getParameter("pcode");
+		System.out.println(pcode);
 		String su = request.getParameter("su");
 		
-		if(session.getAttribute("userid")==null) {
-			
-			return "redirect:/member/login?pcode="+pcode+"&su="+su;
-			
-		}else {
-			// 구매자 정보를 구하여 views에 전달 (이름, 이메일, 주소) : member
-			
-			model.addAttribute("pcode",pcode);
-			model.addAttribute("su",su);
-			
-			
-			String userid = session.getAttribute("userid").toString();
-			MemberVo mvo = mapper.getMember(userid);
-			model.addAttribute("mvo", mvo);
-			// 받는 사람의 정보를 구하여 views에 전달(이름, 주소, 연락처, 요청사항) : baesong
-			BaesongVo bvo = mapper.getBaesong(userid);
-			if (bvo == null) {
-				bvo = mapper.getBaesong2(userid);
-			}
-			model.addAttribute("bvo", bvo);
-			// 배송되는 상품에 관련된 내용(도착요일, 도착예정일, 상품명, 수량, 배송비) : product
-			String[] pcodee = pcode.split(",");
-			String[] sus = su.split(",");
-			ArrayList<ProductVo> plist = new ArrayList<ProductVo>(); 
-			
-			for(int i=0;i<pcodee.length;i++) {
-				ProductVo pvo=mapper.procontent(pcodee[i]);
-				pvo.setSu(Integer.parseInt(sus[i]));
-				
-				// 배송일자 및 요일 처리
-				int btime = pvo.getBtime(); // 주문후 몇일 뒤에 배송되는가를 저장한 값
-				LocalDate today = LocalDate.now();
-				LocalDate xday = today.plusDays(btime);
-				
-				pvo.setWriteday(xday.toString().substring(5).replace("-", "/"));
-				
-				int cc = xday.getDayOfWeek().getValue();
-				
-				String yoil = "";
-				
-				switch (cc) {
-				case 1:
-					yoil = "월";
-					break;
-				case 2:
-					yoil = "화";
-					break;
-				case 3:
-					yoil = "수";
-					break;
-				case 4:
-					yoil = "목";
-					break;
-				case 5:
-					yoil = "금";
-					break;
-				case 6:
-					yoil = "토";
-					break;
-				case 7:
-					yoil = "일";
-					break;
-				}
-				
-				pvo.setYoil(yoil);
-				
-				plist.add(pvo);
-			}
-			
-			model.addAttribute("plist", plist);
-			// 결제정보(상품가격, 적립금 사용여부(뒤에)) :
-			
+		model.addAttribute("pcode",pcode);
+		model.addAttribute("su",su);
+		
+		
+		String userid = session.getAttribute("userid").toString();
+		MemberVo mvo = mapper.getMember(userid);
+		model.addAttribute("mvo", mvo);
+		// 받는 사람의 정보를 구하여 views에 전달(이름, 주소, 연락처, 요청사항) : baesong
+		BaesongVo bvo = mapper.getBaesong(userid);
+		if (bvo == null) {
+			bvo = mapper.getBaesong2(userid);
 		}
+		model.addAttribute("bvo", bvo);
+		// 배송되는 상품에 관련된 내용(도착요일, 도착예정일, 상품명, 수량, 배송비) : product
+		String[] pcodee = pcode.split(",");
+		String[] sus = su.split(",");
+		ArrayList<ProductVo> plist = new ArrayList<ProductVo>(); 
+		
+		for(int i=0;i<pcodee.length;i++) {
+			ProductVo pvo=mapper.procontent(pcodee[i]);
+			pvo.setSu(Integer.parseInt(sus[i]));
+			
+			// 배송일자 및 요일 처리
+			int btime = pvo.getBtime(); // 주문후 몇일 뒤에 배송되는가를 저장한 값
+			LocalDate today = LocalDate.now();
+			LocalDate xday = today.plusDays(btime);
+			
+			pvo.setWriteday(xday.toString().substring(5).replace("-", "/"));
+			
+			int cc = xday.getDayOfWeek().getValue();
+
+			String yoil = "";
+
+			switch (cc) {
+			case 1:
+				yoil = "월";
+				break;
+			case 2:
+				yoil = "화";
+				break;
+			case 3:
+				yoil = "수";
+				break;
+			case 4:
+				yoil = "목";
+				break;
+			case 5:
+				yoil = "금";
+				break;
+			case 6:
+				yoil = "토";
+				break;
+			case 7:
+				yoil = "일";
+				break;
+			}
+
+			pvo.setYoil(yoil);
+			
+			plist.add(pvo);
+		}
+		
+		model.addAttribute("plist", plist);
+		// 결제정보(상품가격, 적립금 사용여부(뒤에)) :
 		return "/product/progumae";
 	}
 

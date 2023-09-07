@@ -281,6 +281,7 @@ footer {
 		<div id="middle">검색창</div>
 		<div id="right">
 			<c:if test="${userid==null}">
+				<a href="../product/cartView" class="carta"><img src="/static/product/cart.png" class="cart"></a>
 				<a href="../member/login">로그인</a>
 				<a href="../member/member">회원가입</a>
 			</c:if>

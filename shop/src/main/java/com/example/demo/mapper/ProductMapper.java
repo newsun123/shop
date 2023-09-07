@@ -51,4 +51,5 @@ public interface ProductMapper {
     public void productSubSu(String su, String pcode);
     public void cartGumaeDel(String pcode,String userid);
     public void addPansu(String su, String pcode);
+    public HashMap getCart(String pcode); // 로그인 없이 장바구니 넣은 값 보이기
 }

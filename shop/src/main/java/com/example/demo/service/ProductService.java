@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
@@ -15,10 +16,10 @@ public interface ProductService {
 	public String procontent(HttpServletRequest request,Model model,HttpSession session);
 	public String addjjim(HttpServletRequest request,HttpSession session);
 	public String deljjim(HttpServletRequest request,HttpSession session);
-	public String cartAdd(HttpServletRequest request,HttpSession session);
-	public String cartView(HttpSession session,Model model);
+	public String cartAdd(HttpServletRequest request,HttpSession session,HttpServletResponse response);
+	public String cartView(HttpSession session,Model model,HttpServletRequest req);
 	public String changeSu(HttpServletRequest request);
-	public String cartDel(HttpServletRequest request);
+	public String cartDel(HttpServletResponse response,HttpServletRequest request);
 	public String selectDel(HttpServletRequest request);
 	public String jjimView(HttpSession session, Model model);
 	public String jjimToCart(HttpServletRequest request,HttpSession session);

@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService{
 			session.setAttribute("userid", mvo.getUserid());
 			session.setAttribute("name", name);
 			
-			if(pcode.length()==12) {
+			if(pcode != null) {
 				//jjim테이블에 저장하기
 				
 				if(su.length()==0) { //찜인 경우
@@ -66,8 +66,8 @@ public class MemberServiceImpl implements MemberService{
 					return "redirect:/product/procontent?pcode="+pcode;
 					
 				}else {
-					mapper.addCart(pcode,su,mvo.getUserid());
-					return "redirect:/product/procontent?ct=1&pcode="+pcode;
+					
+					return "redirect:/product/progumae?&pcode="+pcode+"&su="+su;
 					//장바구니로 이동창을 보여주고 싶다
 					
 				}
