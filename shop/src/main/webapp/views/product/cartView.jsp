@@ -377,10 +377,17 @@ chk.send();
   	var len = sub.length;
   	var delsub="";
   	var delpro="";
+  	
+  	//쿠키에서 삭제할 상품의 pcode, su를 변수에 누적하기
+  	var pcode = "";
+  	var su = "";
+  	
   	for(i=0; i<len; i++) {
   		if(sub[i].checked) {
   			delsub = delsub + sub[i].value+",";
   			delpro = delpro + i + ",";
+  			pcode = pcode + document.getElementsByClassName("pcode")[i].value+",";
+  			su = su + document.getElementsByClassName("su1")[i].value+",";
   			
   			// document.getElementsByClassName("st")[i].remove(); 오동작
   		}
@@ -392,12 +399,45 @@ chk.send();
   		document.getElementsByClassName("st")[aaa[i]].remove();
   	}
   	
-  	var chk = new XMLHttpRequest();
-  	chk.onload=function() {
-  		total(); // 8월 24일 추가 - chongjumun 구하기용
+  	<c:if test="${userid!=null}">
+  		<c:set var="cc" value="false"/>
+  	</c:if>
+  	<c:if test="${userid==null}">
+  		<c:set var="cc" value="true"/>
+  	</c:if>
+  	
+  	
+  	// 로그인시, 아작스로 이동해서 선택 삭제하기
+  	if(${cc}) {
+  		
+  		var chk = new XMLHttpRequest();
+  	  	chk.onload=function() {
+  	  		
+  	  		if(chk.responseText==1)
+  	  			alert("오류");
+  	  		else
+  	  			total(); // 8월 24일 추가 - chongjumun 구하기용
+  	  	}
+  	  	chk.open("GET", "selectDel2?pcode="+pcode+"&su="+su);
+  	  	chk.send();  		
+  	// 로그인 안했을 시, 선택 삭제하기
+  	}else{
+  		
+  		var chk = new XMLHttpRequest();
+  	  	chk.onload=function() {
+  	  		
+  	  		if(chk.responseText==1)
+	  			alert("오류");
+	  		else
+	  			total(); // 8월 24일 추가 - chongjumun 구하기용
+  	  	}
+  	  	chk.open("GET", "selectDel?nos="+delsub);
+  	  	chk.send();  	
   	}
-  	chk.open("GET", "selectDel?nos="+delsub);
-  	chk.send();
+  		
+  	
+  	
+  	
   }
   
   function total() { // 선택된 상품의 가격, 수량, 배송비를 이용하여 결제금액에 대한 처리 (8월 24일)

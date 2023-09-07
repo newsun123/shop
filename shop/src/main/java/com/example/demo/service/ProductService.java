@@ -24,7 +24,7 @@ public interface ProductService {
 	public String jjimView(HttpSession session, Model model);
 	public String jjimToCart(HttpServletRequest request,HttpSession session);
 	public String jjimDel(HttpServletRequest request, HttpSession session);
-	public String selectDel2(HttpServletRequest request);
+	public String selectDel2(HttpServletRequest request,HttpServletResponse response);
 	public String progumae(HttpServletRequest request,HttpSession session,Model model);
 	public String chgPhone(HttpServletRequest request,HttpSession session);
 	public String baelist(HttpSession session,HttpServletRequest request,Model model);

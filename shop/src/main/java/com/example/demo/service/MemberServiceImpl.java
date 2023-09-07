@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService{
 			session.setAttribute("userid", mvo.getUserid());
 			session.setAttribute("name", name);
 			
-			if(pcode != null) {
+			if(pcode != null && pcode.length() != 0) {
 				//jjim테이블에 저장하기
 				
 				if(su.length()==0) { //찜인 경우

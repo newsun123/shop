@@ -109,6 +109,11 @@ public class ProductController {
 	public @ResponseBody String selectDel(HttpServletRequest request) {
 		return service.selectDel(request);
 	}
+	
+	@RequestMapping("/product/selectDel2")
+	public @ResponseBody String selectDel2(HttpServletRequest request,HttpServletResponse response) {
+		return service.selectDel2(request,response);
+	}
 
 	@RequestMapping("/product/jjimView")
 	public String jjimview(HttpSession session, Model model) {
@@ -123,11 +128,6 @@ public class ProductController {
 	@RequestMapping("/product/jjimDel")
 	public String jjimDel(HttpServletRequest request, HttpSession session) {
 		return service.jjimDel(request, session);
-	}
-
-	@RequestMapping("/product/selectDel2")
-	public String selectDel2(HttpServletRequest request) {
-		return service.selectDel2(request);
 	}
 
 	@RequestMapping("/product/progumae")

@@ -514,17 +514,32 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String selectDel2(HttpServletRequest request) {
-		try {
-			String nos = request.getParameter("nos");
-			String[] no = nos.split(",");
-			for (int i = 0; i < no.length; i++) {
-				mapper.jjimDel(no[i]);
+	public String selectDel2(HttpServletRequest request,HttpServletResponse response) {
+		String[] pcode = request.getParameter("pcode").split(",");
+		String[] su = request.getParameter("su").split(",");
+		System.out.println(pcode[0]);
+		System.out.println(su[0]);
+		//쿠키 읽어오기
+		String cart=null;
+		Cookie[] cookies = request.getCookies();
+		for(int i=0;i<cookies.length;i++) {
+			if(cookies[i].getName().equals("cart")) {
+				cart = cookies[i].getValue();
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		return "redirect:/product/jjimView";
+		
+		for(int i=0;i<pcode.length;i++) {
+			String imsi=pcode[i]+":"+su[i]+"/";
+			
+			cart = cart.replace(imsi, "");
+		}
+		Cookie cookie = new Cookie("cart",cart);
+		cookie.setMaxAge(600);
+		response.addCookie(cookie);
+		
+		
+		return "0";
 	}
 
 	@Override
