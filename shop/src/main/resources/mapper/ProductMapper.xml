@@ -143,4 +143,8 @@
 	     from  product as p 
 	     where p.pcode=#{pcode}
 	  </select>
+	   <insert id="setCart">
+	  	insert into cart(userid,pcode,su,writeday)
+	  	values(#{userid},#{pcode},#{su},curdate())
+		</insert>
 </mapper>

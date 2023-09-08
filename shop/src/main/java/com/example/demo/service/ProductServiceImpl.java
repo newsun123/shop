@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.util.WebUtils;
 
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.vo.BaesongVo;
@@ -836,6 +837,32 @@ public class ProductServiceImpl implements ProductService {
 		
 		return "/product/jumunView";
 	}
+
+	@Override
+	public String setCart(HttpServletResponse res, HttpServletRequest req, HttpSession ss) {
+		Cookie cart=WebUtils.getCookie(req, "cart");
+		String userid=ss.getAttribute("userid").toString();
+		if(cart!=null)
+		{	 
+	     	String[] carts=cart.getValue().split("/");
+					
+			for(int j=0;j<carts.length;j++)
+			{
+				String pcode=carts[j].substring(0,12);
+				String su=carts[j].substring(13);
+				//System.out.println(su);
+				mapper.setCart(pcode, userid, su);
+				
+			}
+			
+			// 기존 쿠키를 삭제하기
+			Cookie cookie=new Cookie("cart","");
+			cookie.setMaxAge(0);
+			res.addCookie(cookie);
+		 }
+	 		
+		return "redirect:/main/main";
+	}	
 	
 	
 	

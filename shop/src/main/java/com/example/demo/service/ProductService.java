@@ -36,4 +36,5 @@ public interface ProductService {
 	public String setReq(HttpServletRequest request);
 	public String progumaeOk(GumaeVo gvo,HttpSession session);
 	public String jumunView(HttpServletRequest request,Model model);
+	public String setCart(HttpServletResponse res,HttpServletRequest req,HttpSession ss);
 }

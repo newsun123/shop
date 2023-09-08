@@ -19,6 +19,6 @@ public interface MemberMapper {
 	public ArrayList<HashMap> getCal(String day);
 	public ArrayList<HashMap> getCal2(String day);
 	
-	// 쿠키에 있던 상품을 cart에 저장 0908
-	public void setCart(String pcode, String userid, String su);
+	// 쿠키에 있던 상품을 cart에 저장 0908 -> product로 이동
+	//public void setCart(String pcode, String userid, String su);
 }

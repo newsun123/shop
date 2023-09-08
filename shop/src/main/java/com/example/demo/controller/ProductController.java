@@ -183,4 +183,10 @@ public class ProductController {
 	public String jumunView(HttpServletRequest request,Model model) {
 		return service.jumunView(request,model);
 	}
+	
+	@RequestMapping("/product/setCart")
+	public String setCart(HttpServletResponse res,HttpServletRequest req,HttpSession ss) {
+		
+		return service.setCart(res,req,ss);
+	}
 }
