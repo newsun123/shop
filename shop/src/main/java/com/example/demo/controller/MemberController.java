@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import com.example.demo.service.MemberService;
 import com.example.demo.vo.MemberVo;
@@ -46,8 +48,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/loginOk")
-	public String loginOk(MemberVo mvo,HttpSession session,String pcode,String su) {
-		return service.loginOk(mvo,session,pcode,su);
+	public String loginOk(MemberVo mvo,HttpSession session,String pcode,String su,HttpServletRequest req) {
+		Cookie cart = WebUtils.getCookie(req, "cart");
+		
+		return service.loginOk(mvo,session,pcode,su,req);
 	}
 	
 	@RequestMapping("/member/logout")

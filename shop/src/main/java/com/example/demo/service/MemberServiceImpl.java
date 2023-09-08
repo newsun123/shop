@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -47,7 +48,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public String loginOk(MemberVo mvo,HttpSession session,String pcode,String su) {
+	public String loginOk(MemberVo mvo,HttpSession session,String pcode,String su,HttpServletRequest req) {
 		
 		String name=mapper.loginOk(mvo);
 		
@@ -57,6 +58,23 @@ public class MemberServiceImpl implements MemberService{
 		}else {
 			session.setAttribute("userid", mvo.getUserid());
 			session.setAttribute("name", name);
+			
+			// 쿠키에 있는 장바구니 상품을 cart테이블에 저장 쿠키는 지우기 0908
+			
+			Cookie[] cookies = req.getCookies(); 
+			for(int i=0;i<cookies.length;i++) {
+				if(cookies[i].getName().equals("cart")) {
+					String imsi = cookies[i].getValue();
+					String[] cart = imsi.split(",");
+					
+					for(int j=0;j<cart.length;j++) {
+						String pcode2 = cart[j].substring(0,12);
+						String su2 = cart[j].substring(13);
+						
+						mapper.setCart(pcode2, mvo.getUserid(), su2);
+					}
+				}
+			} // 쿠키 저장 완료 0908
 			
 			if(pcode != null && pcode.length() != 0) {
 				//jjim테이블에 저장하기

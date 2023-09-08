@@ -517,8 +517,7 @@ public class ProductServiceImpl implements ProductService {
 	public String selectDel2(HttpServletRequest request,HttpServletResponse response) {
 		String[] pcode = request.getParameter("pcode").split(",");
 		String[] su = request.getParameter("su").split(",");
-		System.out.println(pcode[0]);
-		System.out.println(su[0]);
+		
 		//쿠키 읽어오기
 		String cart=null;
 		Cookie[] cookies = request.getCookies();

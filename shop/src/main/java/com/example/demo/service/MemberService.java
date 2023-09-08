@@ -13,6 +13,6 @@ public interface MemberService {
 	public int useridCheck(MemberVo mvo);
 	public String memberOk(MemberVo mvo);
 	public String login(HttpServletRequest request,Model model);
-	public String loginOk(MemberVo mvo,HttpSession session,String pcode,String su);
+	public String loginOk(MemberVo mvo,HttpSession session,String pcode,String su,HttpServletRequest req);
 	public String logout(HttpSession session);
 }
