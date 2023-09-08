@@ -29,8 +29,5 @@
   	 <select id="getCal2" resultType="HashMap">
      select chk, right(xday,2) as xday from cal where xday like concat(#{day},'%') and chk=1
   </select> <!-- chk=1인 레코드만 가져온다 -->
-  <insert id="setCart">
-  	insert into cart(userid,pcode,su,writeday)
-  	values(#{userid},#{pcode},#{su},curdate())
-  </insert>
+ 
 </mapper>
