@@ -20,6 +20,7 @@ import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.ReviewVo;
 
 @Service
 @Qualifier("ps")
@@ -273,6 +274,25 @@ public class ProductServiceImpl implements ProductService {
 		// 로그인을 하지 않고 장바구니 담기를 했을 때 로그인을 실행하고
 		// cart에 담은 후 proconent로 이동시 ct=1값이 존재
 		model.addAttribute("ct", request.getParameter("ct"));
+		
+		
+		// 0909 현재 상품의 review를 읽어와서 view에 전달
+		ArrayList<ReviewVo> rlist =mapper.getReview(pcode);
+		
+		for(int i=0;i<rlist.size();i++) {
+			rlist.get(i).setContent(rlist.get(i).getContent().replace("\n\r", "<br>"));
+			String imsi = rlist.get(i).getUserid();
+			int len = imsi.length();
+			String ss ="";
+			for(int j=1;j<=len-3;j++) {
+				ss=ss+"*";
+			}
+			imsi = imsi.substring(0,3)+ss;
+			
+			rlist.get(i).setUserid(imsi);
+		}
+		
+		model.addAttribute("rlist",rlist);
 
 		return "/product/procontent";
 

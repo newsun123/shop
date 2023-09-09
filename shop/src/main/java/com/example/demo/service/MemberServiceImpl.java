@@ -82,7 +82,7 @@ public class MemberServiceImpl implements MemberService{
 			     // 같다면 여기에  return
 			}
 			else
-			{
+			{	// 이 부분에 쿠키정보를 cart 테이블로 이동시킨다. > 패키지가 달라 쿠키정보를 못 읽어오기 때문에
 				return "redirect:/product/setCart";
 				 //return "/main/main";
 			}

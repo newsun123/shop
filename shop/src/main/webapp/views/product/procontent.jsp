@@ -216,7 +216,18 @@
 		color:red;
 		font-weight: 600;
 	}
+	#munform {
+		position:absolute;
+		width:300px;
+		height:200px;
+		border:1px solid black;
+		background:white;
+		visibility:hidden;
+	}
 </style>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
 <script>
 	$(function(){
        	 
@@ -303,6 +314,20 @@
 	function delcartmove(){
 		document.getElementById("cartmove").style.visibility="hidden";
 	}
+	
+	/* function openMun() {
+		// 브라우저 중간에 두기
+		var w = document.documentElement.clientWidth;
+		var h = document.documentElement.clientHeight;
+		w=w/2;
+		h=h/2;
+		w=w-150;
+		h=h-100;
+		h=h+document.documentElement.scrollTop;
+		document.getElementById("munform").style.visibility="visible";
+		document.getElementById("munform").style.left=w+"px";
+		document.getElementById("munform").style.top=h+"px";
+	} */
 </script>
 </head>
 <body>
@@ -384,10 +409,50 @@
 			<div id="prodetail"> <!-- 제품상세 -->
 				<img src="/static/pro/${pvo.dimg}">
 			</div> 
-			<div id="review"></div> <!-- 상품평 -->
-			<div id="mun"></div> <!-- 상품문의 -->
-			<div id="info"></div> <!-- 교환/반품안내 -->
+			<div id="review">
+				<c:forEach items="${rlist}" var="rvo">
+					<div class="rv">
+						<ul>
+							<li>
+								<c:forEach begin="1" end="${rvo.star}">
+									<img src="/static/product/star1.png" width="16">
+								</c:forEach>
+								<c:forEach begin="1" end="${5-rvo.star}">
+									<img src="/static/product/star2.png" width="16">
+								</c:forEach>
+							</li>
+							<li>${rvo.userid} (${rvo.writeday})</li>
+							<li>${rvo.title}</li>
+							<li>${rvo.content}</li>
+						</ul>
+					</div>
+				</c:forEach>
+			</div> <!-- 상품평 -->
+			<div id="mun">
+				<h2>
+					<div>상품 문의</div>	
+					<div><a href="#ex1" rel="model:open">문의하기</a></div>
+				</h2>
+				
+			</div> <!-- 상품문의 -->
+			<div id="info">
+				<img src="/static/product/exch.png">
+			</div> <!-- 교환/반품안내 - coupang 따라하기 -->
 		</form>
+		
 	</section>
+		<!-- 문의하기 폼 만들기 -->
+		<div id="ex1" class="model">
+			<form method="post" action="munOk">
+				<select>
+					<option>상품관련</option>
+					<option>결제관련</option>
+					<option>배송관련</option>
+					<option>그 외</option>
+				</select> <p>
+				<textarea name="content"></textarea> <p>
+				<input type="submit" value="문의 등록"> <a href="#" rel="model:close">문의 취소</a>
+			</form>
+		</div>
 </body>
 </html>
