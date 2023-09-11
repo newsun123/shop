@@ -16,6 +16,7 @@ import com.example.demo.service.ProductService;
 import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.QuestVo;
 
 @Controller
 public class ProductController {
@@ -189,4 +190,10 @@ public class ProductController {
 		
 		return service.setCart(res,req,ss);
 	}
+	
+	 @RequestMapping("/product/munOk")
+	 public String munOk(QuestVo qvo, HttpSession session)  // 상품문의하기
+	 {
+		 return service.munOk(qvo,session);
+	 }
 }

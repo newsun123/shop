@@ -9,6 +9,7 @@ import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.QuestVo;
 import com.example.demo.vo.ReviewVo;
 
 @Mapper
@@ -55,4 +56,5 @@ public interface ProductMapper {
     public HashMap getCart(String pcode); // 로그인 없이 장바구니 넣은 값 보이기
     public void setCart(String pcode, String userid, String su);
     public ArrayList<ReviewVo> getReview(String pcode);
+    public void munOk(QuestVo qvo);
 }

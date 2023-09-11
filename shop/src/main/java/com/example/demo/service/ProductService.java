@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.QuestVo;
 
 public interface ProductService {
 	public String prolist(Model model,HttpServletRequest request);
@@ -37,4 +38,5 @@ public interface ProductService {
 	public String progumaeOk(GumaeVo gvo,HttpSession session);
 	public String jumunView(HttpServletRequest request,Model model);
 	public String setCart(HttpServletResponse res,HttpServletRequest req,HttpSession ss);
+	public String munOk(QuestVo qvo,HttpSession session);
 }

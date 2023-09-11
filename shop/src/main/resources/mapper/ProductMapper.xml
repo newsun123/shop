@@ -150,4 +150,8 @@
 <select id="getReview" resultType="com.example.demo.vo.ReviewVo">
 	select * from review where pcode=#{pcode}
 </select>
+<insert id="munOk" parameterType="com.example.demo.vo.QuestVo">
+     insert into quest(title,content,writeday,userid,pcode)
+     values(#{title},#{content},now(),#{userid},#{pcode})
+  </insert>
 </mapper>

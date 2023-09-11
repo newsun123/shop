@@ -10,6 +10,9 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style>
 	section{
 		width: 1100px;
@@ -211,23 +214,89 @@
 	    object-fit: contain;
 	    padding: 20px;
 	}
-	#msg {
-		font-size:12px;
-		color:red;
-		font-weight: 600;
+	#msg{
+		font-size: 12px;
+	    color: #cb1400;
+	    margin-left: 10px;
 	}
-	#munform {
-		position:absolute;
-		width:300px;
-		height:200px;
-		border:1px solid black;
-		background:white;
-		visibility:hidden;
+	.rv{
+		border-bottom: 1px solid #ddd;
+    	padding: 10px;
+    	font-size: 14px;
+	}
+	.rv > div{
+		height: 30px;
+	}
+	.rv .ml10{
+		margin-left: 10px;
+	}
+	.fwb{
+		font-weight: bold;
+	}
+	.ha{
+		height: auto!important;
+	}
+	#review,
+	#info,
+	#mun{
+		margin-top:50px;
+	}
+	#btn1{
+		outline:none;
+		border:1px solid #346aff;
+		color:#346aff;
+		padding: 7px 10px;
+		background: #fff;
+		cursor: pointer;
+	}
+	#munform{
+		width:auto;
+		padding:10px;
+		height: auto;
+		border: 1px solid #ddd;
+		background: #fff;
+		padding:10px;
+	}
+	h3{
+		font-size: 25px;
+	    border-bottom: 3px solid #777;
+	    height: 60px;	
+	}
+	#munform > form > *{
+		display:block;
+		margin-bottom: 10px;
+	}
+	#munform select{
+		outline: none;
+	    width: 150px;
+	    height: 35px;
+	    border: 1px solid #ddd;
+	}
+	#munform textarea{
+		width: 400px;
+	    resize: none;
+	    height: 250px;
+	    border: 1px solid #ddd;
+	}
+	.btnWrap{
+		text-align: center;
+		margin-bottom: 0!important;
+	}
+	.btnWrap input,
+	.btnWrap a{
+		background: #fff;
+	    border: 1px solid #ddd;
+	    font-size: 13px;
+	    padding: 6px 13px;
+	    cursor: pointer;
+	}
+	#mun a{
+		cursor: pointer;
+	    border: 1px solid #ddd;
+	    font-size: 13px;
+	    padding: 8px 11px;
 	}
 </style>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
 <script>
 	$(function(){
        	 
@@ -290,44 +359,45 @@
     	var y=event.clientY;
 		
 		//ajax를 통해 cart테이블에 상품코드,수량,아이디를 저장하는 것
-		var chk=new XMLHttpRequest();
 		var pcode=document.pform.pcode.value;
-		var su=document.pform.su.value;
+    	var su=document.pform.su.value;
+    	var chk=new XMLHttpRequest();
 		
 		chk.onload=function(){
 			
-			if(chk.responseText==1){
+			if(chk.responseText=="1"){
 				alert("오류발생");	
 				
 			}else{
+				
 				//장바구니 이동 레이어를 보이게 하기
 				document.getElementById("cartmove").style.visibility="visible";
 		        
 		        setTimeout(function() {
 		        	document.getElementById("cartmove").style.visibility="hidden";
-		        },3000);
+		        	
+		        },3000)
 			}
 		}
+		
 		chk.open("get","cartAdd?pcode="+pcode+"&su="+su);
 		chk.send();
 	}
 	function delcartmove(){
 		document.getElementById("cartmove").style.visibility="hidden";
 	}
-	
-	/* function openMun() {
-		// 브라우저 중간에 두기
-		var w = document.documentElement.clientWidth;
-		var h = document.documentElement.clientHeight;
-		w=w/2;
-		h=h/2;
-		w=w-150;
-		h=h-100;
-		h=h+document.documentElement.scrollTop;
-		document.getElementById("munform").style.visibility="visible";
-		document.getElementById("munform").style.left=w+"px";
-		document.getElementById("munform").style.top=h+"px";
-	} */
+	function openMun(){
+		var w=document.documentElement.clientWidth;
+    	var h=document.documentElement.clientHeight;
+    	w=w/2;
+    	h=h/2;
+    	w=w-214;
+    	h=h-187;
+        h=h+document.documentElement.scrollTop;
+    	document.getElementById("munform").style.visibility="visible";
+    	document.getElementById("munform").style.left=w+"px";
+    	document.getElementById("munform").style.top=h+"px";
+	}
 </script>
 </head>
 <body>
@@ -337,7 +407,7 @@
 			<span class="cbtn" onclick="delcartmove()">X</span>
 			<input type="button" value="장바구니 이동" onclick="location='cartView'">
 		</div>
-		<form method="post" action="/product/progumae" name="pform">
+		<form method="post" action="progumae" name="pform">
 			<input type="hidden" name="pcode" value="${pvo.pcode}">
 			<div id="content">
 				<div id="left">
@@ -384,12 +454,9 @@
 					<div id="suouter"> <!-- 구입수량 -->
 						<div class="lf">
 							<input type="text" name="su" size="1" value="1" id="su" readonly>
-							<c:if test="${pvo.su<10}">
-								<span id="msg"> 품절임박! 잔여 : ${pvo.su}개</span>
-							</c:if>
-							<c:if test="${pvo.su==0}">
-								<span id="msg"> 품절!</span>
-							</c:if>
+						<c:if test="${pvo.su<10}">
+							<span id="msg">품절임박 잔여:${pvo.su}개</span>
+						</c:if>
 						</div>
 					</div>
 					<div id="btn">
@@ -406,53 +473,49 @@
 					<li>교환/반품안내</li>
 				</ul>			
 			</div>
-			<div id="prodetail"> <!-- 제품상세 -->
+			<div id="prodetail"><!-- 상품상세 -->
 				<img src="/static/pro/${pvo.dimg}">
 			</div> 
-			<div id="review">
-				<c:forEach items="${rlist}" var="rvo">
-					<div class="rv">
-						<ul>
-							<li>
-								<c:forEach begin="1" end="${rvo.star}">
-									<img src="/static/product/star1.png" width="16">
-								</c:forEach>
-								<c:forEach begin="1" end="${5-rvo.star}">
-									<img src="/static/product/star2.png" width="16">
-								</c:forEach>
-							</li>
-							<li>${rvo.userid} (${rvo.writeday})</li>
-							<li>${rvo.title}</li>
-							<li>${rvo.content}</li>
-						</ul>
-					</div>
-				</c:forEach>
-			</div> <!-- 상품평 -->
-			<div id="mun">
-				<h2>
-					<div>상품 문의</div>	
-					<div><a href="#ex1" rel="model:open">문의하기</a></div>
-				</h2>
-				
-			</div> <!-- 상품문의 -->
-			<div id="info">
+			<div id="review"><!-- 상품평 -->
+				<h3>상품평</h3>
+			<c:forEach items="${rlist}" var="rvo">
+				<div class="rv">
+				<c:forEach begin="1" end="${rvo.star}">
+                	<img src="/static/product/star1.png" width="16">
+                </c:forEach>
+                <c:forEach begin="1" end="${5-rvo.star}">
+                    <img src="/static/product/star2.png" width="16">
+                </c:forEach>
+					<div>${rvo.userid}<span class="ml10">(${rvo.writeday})</span></div>
+					<div class="fwb">${rvo.title}</div>
+					<div class="ha">${rvo.content}</div>
+				</div>
+			</c:forEach>
+			</div> 
+			<div id="mun"><!-- 상품문의 -->
+				<h3>상품문의</h3>
+				<div><a href="#munform" rel="modal:open">문의하기</a></div>
+			</div> 
+			<div id="info"><!-- 교환/반품안내 -->
+				<h3>교환/반품안내</h3>
 				<img src="/static/product/exch.png">
-			</div> <!-- 교환/반품안내 - coupang 따라하기 -->
+			</div>
 		</form>
-		
 	</section>
-		<!-- 문의하기 폼 만들기 -->
-		<div id="ex1" class="model">
-			<form method="post" action="munOk">
-				<select>
-					<option>상품관련</option>
-					<option>결제관련</option>
-					<option>배송관련</option>
-					<option>그 외</option>
-				</select> <p>
-				<textarea name="content"></textarea> <p>
-				<input type="submit" value="문의 등록"> <a href="#" rel="model:close">문의 취소</a>
-			</form>
-		</div>
+	<div id="munform" class="modal">
+		<form method="post" action="munOk">
+			<input type="hidden" name="pcode" value="${pcode}">
+			<select name="title">
+				<option value="0">상품관련</option>
+				<option value="1">결제관련</option>
+				<option value="2">배송관련</option>
+				<option value="3">그 외</option>
+			</select>
+			<textarea name="content"></textarea>
+			<div class="btnWrap">
+				<input type="submit" value="문의등록">
+			</div>
+		</form>
+	</div>
 </body>
 </html>

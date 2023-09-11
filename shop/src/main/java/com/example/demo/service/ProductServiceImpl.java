@@ -20,6 +20,7 @@ import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.QuestVo;
 import com.example.demo.vo.ReviewVo;
 
 @Service
@@ -884,7 +885,13 @@ public class ProductServiceImpl implements ProductService {
 		return "redirect:/main/main";
 	}	
 	
-	
+	@Override
+	public String munOk(QuestVo qvo, HttpSession session) {
+		String userid=session.getAttribute("userid").toString();
+		qvo.setUserid(userid);
+		mapper.munOk(qvo);
+		return "redirect:/product/procontent?pcode="+qvo.getPcode();
+	}
 	
 	
 	
