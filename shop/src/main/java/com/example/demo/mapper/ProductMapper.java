@@ -57,4 +57,6 @@ public interface ProductMapper {
     public void setCart(String pcode, String userid, String su);
     public ArrayList<ReviewVo> getReview(String pcode);
     public void munOk(QuestVo qvo);
+    public int getGroup();
+    public ArrayList<QuestVo> getQuest(String pcode);
 }

@@ -121,6 +121,7 @@
 	    font-weight: bold;
 	    padding-top: 2px;
     	display: block;
+    	
 	}
 	.juk{
 		box-sizing: border-box;
@@ -494,7 +495,40 @@
 			</div> 
 			<div id="mun"><!-- 상품문의 -->
 				<h3>상품문의</h3>
-				<div><a href="#munform" rel="modal:open">문의하기</a></div>
+				<div style="margin-bottom:15px;"><a href="#munform" rel="modal:open">문의하기</a></div>
+				<table id="muntable" width="1100px" style="border-spacing:0;">
+				<c:forEach items="${qlist }" var="qvo">
+					<c:if test="${qvo.title==0}">
+						<c:set var ="title" value="상품관련"/>
+					</c:if>
+					<c:if test="${qvo.title==1}">
+						<c:set var ="title" value="결제관련"/>
+					</c:if>
+					<c:if test="${qvo.title==2}">
+						<c:set var ="title" value="배송관련"/>
+					</c:if>
+					<c:if test="${qvo.title==3}">
+						<c:set var ="title" value="그 외"/>
+					</c:if>
+					<tr>
+						<td style="border-bottom:2px solid #ccc;padding-bottom:10px;">
+							<c:if test="${qvo.seq==0}">
+								<span id="q" style="border:1px solid gray;background:gray;color:white;font-size:12px;">질문</span>
+							</c:if>
+							<c:if test="${qvo.seq==1}">
+								&nbsp;&nbsp;<span id="a" style="border:1px solid #346aff;background:#346aff;color:white;font-size:12px;">답변</span>
+							</c:if>
+							${title}
+						</td>
+						<td style="text-align:right;font-size:14px;border-bottom:2px solid #ccc;">${qvo.writeday}</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="height:50px;padding-bottom:20px;">
+							${qvo.content}
+							</td>
+					</tr>
+				</c:forEach>
+				</table>
 			</div> 
 			<div id="info"><!-- 교환/반품안내 -->
 				<h3>교환/반품안내</h3>

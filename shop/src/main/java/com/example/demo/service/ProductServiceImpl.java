@@ -294,6 +294,15 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 		model.addAttribute("rlist",rlist);
+		
+		// 0911 문의하기 내용을 읽어와서 뷰에 전달
+		ArrayList<QuestVo> qlist = mapper.getQuest(pcode);
+		for(int i=0; i<qlist.size();i++) {
+			// 줄넘는 것 칸 내리기
+			String imsi = qlist.get(i).getContent().replace("\n\r", "<br>");
+			qlist.get(i).setContent(imsi);
+		}
+		model.addAttribute("qlist",qlist);
 
 		return "/product/procontent";
 
@@ -889,6 +898,8 @@ public class ProductServiceImpl implements ProductService {
 	public String munOk(QuestVo qvo, HttpSession session) {
 		String userid=session.getAttribute("userid").toString();
 		qvo.setUserid(userid);
+		int grp = mapper.getGroup();
+		qvo.setGrp(grp);
 		mapper.munOk(qvo);
 		return "redirect:/product/procontent?pcode="+qvo.getPcode();
 	}

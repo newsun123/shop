@@ -151,7 +151,13 @@
 	select * from review where pcode=#{pcode}
 </select>
 <insert id="munOk" parameterType="com.example.demo.vo.QuestVo">
-     insert into quest(title,content,writeday,userid,pcode)
-     values(#{title},#{content},now(),#{userid},#{pcode})
+     insert into quest(title,content,writeday,userid,pcode,seq,grp)
+     values(#{title},#{content},now(),#{userid},#{pcode},0,#{grp})
   </insert>
+  <select id="getGroup" resultType="int">
+  	select ifnull(max(grp),0)+1 from quest
+  </select>
+  <select id="getQuest" resultType="com.example.demo.vo.QuestVo">
+  	select * from quest where pcode=#{pcode} order by grp desc , seq asc
+  </select>
 </mapper>
