@@ -196,4 +196,9 @@ public class ProductController {
 	 {
 		 return service.munOk(qvo,session);
 	 }
+	 
+	 @RequestMapping("/product/questDel")
+	 public String questDel(HttpServletRequest req) {
+		 return service.questDel(req);
+	 }
 }

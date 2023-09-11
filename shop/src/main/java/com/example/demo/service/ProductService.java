@@ -39,4 +39,5 @@ public interface ProductService {
 	public String jumunView(HttpServletRequest request,Model model);
 	public String setCart(HttpServletResponse res,HttpServletRequest req,HttpSession ss);
 	public String munOk(QuestVo qvo,HttpSession session);
+	public String questDel(HttpServletRequest req);
 }

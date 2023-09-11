@@ -182,6 +182,10 @@
 	}
 	#submenu{
 		margin-top:50px;
+		position:relative;
+		background:white;
+		z-index:100;
+		width:1100px;
 	}
 	#submenu > ul {
 		padding:0;
@@ -399,6 +403,30 @@
     	document.getElementById("munform").style.left=w+"px";
     	document.getElementById("munform").style.top=h+"px";
 	}
+	function moveMenu() {
+		var top = document.documentElement.scrollTop;
+		
+		if(top >= 693) {
+			document.getElementById("submenu").style.position="fixed";
+			document.getElementById("submenu").style.marginTop=0+"px";
+			document.getElementById("submenu").style.top=0+"px";
+			
+		}else {
+			document.getElementById("submenu").style.position="relative";
+			document.getElementById("submenu").style.marginTop=50+"px";
+		}
+	}
+	document.onscroll=moveMenu;
+	
+	function menuClick(my) {
+		// 모두 하얗게
+		var limenu = document.getElementsByClassName("limenu");
+		for(i=0;i<limenu.length;i++) {
+			limenu[i].style.background="#fafafa";
+		}
+		// 선택된 메뉴의 배경색을 변경
+		my.style.background="#ccc";
+	}
 </script>
 </head>
 <body>
@@ -468,15 +496,17 @@
 			</div>
 			<div id="submenu">
 				<ul>
-					<li>상품상세</li>
-					<li>상품평</li>
-					<li>상품문의</li>
-					<li>교환/반품안내</li>
+					<li onclick="menuClick(this)" class="limenu"><a href="#menu1">상품상세</a></li>
+					<li onclick="menuClick(this)" class="limenu"><a href="#menu2">상품평</a></li>
+					<li onclick="menuClick(this)" class="limenu"><a href="#menu3">상품문의</a></li>
+					<li onclick="menuClick(this)" class="limenu"><a href="#menu4">교환/반품안내</a></li>
 				</ul>			
 			</div>
+			<div id="menu1" style="height:20px;"></div>
 			<div id="prodetail"><!-- 상품상세 -->
 				<img src="/static/pro/${pvo.dimg}">
 			</div> 
+			<div id="menu2" style="height:20px;"></div>
 			<div id="review"><!-- 상품평 -->
 				<h3>상품평</h3>
 			<c:forEach items="${rlist}" var="rvo">
@@ -492,7 +522,8 @@
 					<div class="ha">${rvo.content}</div>
 				</div>
 			</c:forEach>
-			</div> 
+			</div>
+			<div id="menu3" style="height:20px;"></div>
 			<div id="mun"><!-- 상품문의 -->
 				<h3>상품문의</h3>
 				<div style="margin-bottom:15px;"><a href="#munform" rel="modal:open">문의하기</a></div>
@@ -523,13 +554,19 @@
 						<td style="text-align:right;font-size:14px;border-bottom:2px solid #ccc;">${qvo.writeday}</td>
 					</tr>
 					<tr>
-						<td colspan="2" style="height:50px;padding-bottom:20px;">
+						<td style="height:50px;padding-bottom:20px;">
 							${qvo.content}
+							</td>
+							<td style="text-align:right;">
+								<c:if test="${qvo.userid == userid && qvo.userid != admin}">
+									<img src="/static/product/del.png" style="cursor:pointer;" onclick="location='questDel?no=${qvo.no}&pcode=${pcode}'">
+								</c:if>
 							</td>
 					</tr>
 				</c:forEach>
 				</table>
-			</div> 
+			</div>
+			<div id="menu4" style="height:20px;"></div>
 			<div id="info"><!-- 교환/반품안내 -->
 				<h3>교환/반품안내</h3>
 				<img src="/static/product/exch.png">

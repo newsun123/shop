@@ -59,4 +59,5 @@ public interface ProductMapper {
     public void munOk(QuestVo qvo);
     public int getGroup();
     public ArrayList<QuestVo> getQuest(String pcode);
+    public void questDel(String no);
 }

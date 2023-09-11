@@ -160,4 +160,7 @@
   <select id="getQuest" resultType="com.example.demo.vo.QuestVo">
   	select * from quest where pcode=#{pcode} order by grp desc , seq asc
   </select>
+  <delete id="questDel">
+  	delete from quest where no=#{no}
+  </delete>
 </mapper>

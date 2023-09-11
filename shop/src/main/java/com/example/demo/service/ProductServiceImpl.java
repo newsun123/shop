@@ -903,6 +903,14 @@ public class ProductServiceImpl implements ProductService {
 		mapper.munOk(qvo);
 		return "redirect:/product/procontent?pcode="+qvo.getPcode();
 	}
+
+	@Override
+	public String questDel(HttpServletRequest req) {
+		String no = req.getParameter("no");
+		String pcode= req.getParameter("pcode");
+		mapper.questDel(no);
+		return "redirect:/product/procontent?pcode="+pcode;
+	}
 	
 	
 	
