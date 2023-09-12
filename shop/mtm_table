@@ -1,0 +1,9 @@
+create table mtm(
+no int auto_increment primary key,
+title varchar(100),
+content text,
+answer int,
+phone char(16),
+email varchar(100),
+userid char(20),
+writeday date);

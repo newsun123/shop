@@ -43,4 +43,19 @@ order by g.writeday desc
 <update id="chgGumae">
 	update gumae set sangp=1 where no=#{no}
 </update>
+<insert id="mtmOk">
+	insert into mtm(userid,title,content,answer,phone,email,writeday)
+	values(#{userid},#{title},#{content},#{answer},#{phone},#{email},now())
+</insert>
+<select id="getReview" resultType="HashMap">
+	select r.*, p.title as ptitle from review as r inner join product as p
+	on r.pcode=p.pcode where userid=#{userid}
+</select>
+<select id="getQuest" resultType="HashMap">
+	select q.*, p.title as ptitle from quest as q inner join product as p
+	on q.pcode = p.pcode where userid=#{userid}
+</select>
+<select id="getMtm" resultType="HashMap">
+	select * from mtm where userid=#{userid}
+</select>
 </mapper>

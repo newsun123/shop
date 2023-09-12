@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
 
+import com.example.demo.vo.MtmVo;
 import com.example.demo.vo.ReviewVo;
 
 public interface MypageService {
@@ -19,4 +20,7 @@ public interface MypageService {
 	public String stateChange(HttpServletRequest req);
 	public String review(HttpServletRequest req,Model model) ;
 	public String reviewOk(ReviewVo rvo,HttpSession ss);
+	public String mtm();
+	public String mtmOk(MtmVo mvo,HttpSession ss);
+	public String mylist(HttpSession ss, Model model);
 }

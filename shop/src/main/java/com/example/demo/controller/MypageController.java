@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.MypageService;
+import com.example.demo.vo.MtmVo;
 import com.example.demo.vo.ReviewVo;
 
 @Controller
@@ -68,6 +69,21 @@ public class MypageController {
 	@RequestMapping("/mypage/reviewOk")
 	public String reviewOk(ReviewVo rvo,HttpSession ss) {
 		return service.reviewOk(rvo,ss);
+	}
+	
+	@RequestMapping("/mypage/mtm")
+	public String mtm() {
+		return service.mtm();
+	}
+	
+	@RequestMapping("/mypage/mtmOk")
+	public String mtmOk(MtmVo mvo,HttpSession ss) {
+		return service.mtmOk(mvo,ss);
+	}
+	
+	@RequestMapping("/mypage/mylist")
+	public String mylist(HttpSession ss,Model model) {
+		return service.mylist(ss,model);
 	}
 	
 }

@@ -296,12 +296,12 @@ footer {
 					<ul id="mypagemenu">
 						<li><a href="../mypage/myinfo">회원정보</a></li>
 						<li><a href="../mypage/mygumae">구매내역</a></li>
-						<li>나의글</li>
-						<li>찜확인</li>
+						<li><a href="../mypage/mylist">나의글</a></li>
+						<li><a href="../product/jjimView"></a>찜확인</li>
 					</ul>
 				</span>
 			</c:if>
-			<a>고객센터</a>
+			<a href="../mypage/mtm">고객센터</a>
 		</div>
 	</header>
 	<nav>

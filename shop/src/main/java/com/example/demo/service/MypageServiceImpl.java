@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 
 import com.example.demo.mapper.MypageMapper;
 import com.example.demo.vo.MemberVo;
+import com.example.demo.vo.MtmVo;
 import com.example.demo.vo.ReviewVo;
 
 @Service
@@ -149,6 +150,50 @@ public class MypageServiceImpl implements MypageService{
 		// 상품평을 등록했으면 gumae 테이블에 sangp필드의 값을 1로 변경한다.
 		mapper.chgGumae(rvo.getGumaeno());
 		return "redirect:/mypage/mygumae";
+	}
+
+	@Override
+	public String mtm() {
+		// TODO Auto-generated method stub
+		return "/mypage/mtm";
+	}
+
+	@Override
+	public String mtmOk(MtmVo mvo, HttpSession ss) {
+		
+		String userid = ss.getAttribute("userid").toString();
+		mvo.setUserid(userid);
+		mapper.mtmOk(mvo);
+		return "/mypage/mtmOk";
+	}
+
+	@Override
+	public String mylist(HttpSession ss, Model model) {
+		String userid = ss.getAttribute("userid").toString();
+		
+		// 상품평
+		ArrayList<HashMap> reviewmap =mapper.getReview(userid);
+		model.addAttribute("reviewmap",reviewmap);
+		//상품문의
+		ArrayList<HashMap> questmap = mapper.getQuest(userid);
+		String imsi = "";
+		for(int i=0;i<questmap.size();i++) {
+			String chk = questmap.get(i).get("title").toString();
+			switch(chk) {
+			case "0": imsi="상품 관련"; break;
+			case "1": imsi="결제 관련"; break;
+			case "2": imsi="배송 관련"; break;
+			case "3": imsi="그 외"; break;
+			default: imsi="오류"; break;
+			}
+			questmap.get(i).put("title", imsi); 
+		}
+		model.addAttribute("questmap",questmap);
+		//고객센터
+		ArrayList<HashMap> mtmmap = mapper.getMtm(userid);
+		model.addAttribute("mtmamp",mtmmap);
+		
+		return "/mypage/mylist";
 	}
 	
 	
