@@ -153,7 +153,7 @@
 	#comp{
 		font-size: 14px;
 	}
-	#su{
+	#su{cs
 		text-align: center;
     	padding: 8px 6px;
 	}
@@ -426,6 +426,7 @@
 		// 선택된 메뉴의 배경색을 변경
 		my.style.background="#ccc";
 	}
+	
 </script>
 </head>
 <body>

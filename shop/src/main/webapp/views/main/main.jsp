@@ -50,7 +50,9 @@
 			<img src="/static/main/1.jpg">
 		</div>
 		<!-- 신규상품 -->
-		<div id="newpro"></div>
+		<div id="newpro">
+		
+		</div>
 		<!-- 인기상품 -->
 		<div id="best"></div>
 		<!-- 특가상품 -->

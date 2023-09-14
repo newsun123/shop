@@ -27,4 +27,8 @@ public interface MypageMapper {
 	public ArrayList<HashMap> getReview(String userid);
 	public ArrayList<HashMap> getQuest(String userid);
 	public ArrayList<HashMap> getMtm(String userid);
+	public void reviewUpdate(ReviewVo rvo);
+	public void proChgStar(String pcode);
+	public void reviewDel(int no);
+	public void setSangp(int no);
 }

@@ -191,9 +191,26 @@ public class MypageServiceImpl implements MypageService{
 		model.addAttribute("questmap",questmap);
 		//고객센터
 		ArrayList<HashMap> mtmmap = mapper.getMtm(userid);
-		model.addAttribute("mtmamp",mtmmap);
-		
+		model.addAttribute("mtmmap",mtmmap);
 		return "/mypage/mylist";
+	}
+
+	@Override
+	public String reviewUpdate(ReviewVo rvo) {
+		mapper.reviewUpdate(rvo);
+		mapper.proChgStar(rvo.getPcode());
+		return "redirect:/mypage/mylist";
+	}
+
+	@Override
+	public String reviewDel(ReviewVo rvo) {
+		//review 테이블 삭제
+		mapper.reviewDel(rvo.getNo());
+		//product에서 star 필드 수정
+		mapper.proChgStar(rvo.getPcode());
+		//gumae테이블에서 해당 구매건의 sangp를 0으로 만들기
+		mapper.setSangp(rvo.getGumaeno());
+		return "redirect:/mypage/mylist";
 	}
 	
 	

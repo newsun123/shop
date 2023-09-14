@@ -58,4 +58,20 @@ order by g.writeday desc
 <select id="getMtm" resultType="HashMap">
 	select * from mtm where userid=#{userid}
 </select>
+<update id="reviewUpdate">
+	update review set star=#{star}, title=#{title}, content=#{content}
+	where no=#{no}
+</update>
+<!-- 상품평 수정시 발생하는 별점 평균값 다시 product에 수정하기 -->
+<update id="proChgStar">
+	update product set
+	star=(select avg(star) from review where pcode=#{pcode})
+	where pcode=#{pcode}
+</update>
+<delete id="reviewDel">
+	delete from review where no=#{no}
+</delete>
+<update id="setSangp">
+	update gumae set sangp=0 where no=#{no}
+</update>
 </mapper>

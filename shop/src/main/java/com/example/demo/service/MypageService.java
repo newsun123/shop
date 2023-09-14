@@ -23,4 +23,6 @@ public interface MypageService {
 	public String mtm();
 	public String mtmOk(MtmVo mvo,HttpSession ss);
 	public String mylist(HttpSession ss, Model model);
+	public String reviewUpdate(ReviewVo rvo);
+	public String reviewDel(ReviewVo rvo);
 }

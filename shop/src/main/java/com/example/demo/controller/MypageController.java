@@ -25,7 +25,7 @@ public class MypageController {
 	public String myinfo(HttpSession session,Model model) {
 		return service.myinfo(session,model);
 	}
-	
+	 
 	@RequestMapping("/mypage/mynamechg")
 	public String mynamechg(HttpSession session, HttpServletRequest req) {
 		return service.mynamechg(session,req);
@@ -86,4 +86,13 @@ public class MypageController {
 		return service.mylist(ss,model);
 	}
 	
+	@RequestMapping("/mypage/reviewUpdate")
+	public String reviewUpdate(ReviewVo rvo) {
+		return service.reviewUpdate(rvo);
+	}
+	
+	@RequestMapping("/mypage/reviewDel")
+	public String reviewDel(ReviewVo rvo) {
+		return service.reviewDel(rvo);
+	}
 }
