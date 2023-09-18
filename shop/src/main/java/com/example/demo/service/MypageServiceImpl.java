@@ -212,6 +212,13 @@ public class MypageServiceImpl implements MypageService{
 		mapper.setSangp(rvo.getGumaeno());
 		return "redirect:/mypage/mylist";
 	}
+
+	@Override
+	public String memberout(HttpSession session) {
+		String userid = session.getAttribute("userid").toString();
+		mapper.memberout(userid);
+		return "redirect:/member/logout";
+	}
 	
 	
 	

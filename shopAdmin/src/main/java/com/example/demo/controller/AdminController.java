@@ -20,10 +20,6 @@ public class AdminController {
 	@Qualifier("as")
 	private AdminService as;
 	
-	@RequestMapping("/")
-	public String home() {
-		return "redirect:/product/productAdd";
-	}
 	
 	@RequestMapping("/product/productAdd")
 	public String productAdd(Model model) {
@@ -76,6 +72,28 @@ public class AdminController {
 		return as.stateChange(req);
 	}
 	
+	@RequestMapping("main/main")
+	public String main() {
+		return "main/main";
+	}
 	
+	@RequestMapping("/top")
+	public String top() {
+		return "/top";
+	}
 	
+	@RequestMapping("/")
+	public String home() {
+		return "redirect:/main/main";
+	}
+	
+	@RequestMapping("/member/memberlist")
+	public String memberlist(Model model) {
+		return as.memberlist(model);
+	}
+	
+	@RequestMapping("/member/memberout")
+	public String memberout(HttpServletRequest req) {
+		return as.memberout(req);
+	}
 }

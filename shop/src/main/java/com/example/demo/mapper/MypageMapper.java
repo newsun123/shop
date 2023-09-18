@@ -31,4 +31,5 @@ public interface MypageMapper {
 	public void proChgStar(String pcode);
 	public void reviewDel(int no);
 	public void setSangp(int no);
+	public void memberout(String userid);
 }

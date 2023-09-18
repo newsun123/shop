@@ -15,4 +15,6 @@ public interface MemberService {
 	public String login(HttpServletRequest request,Model model);
 	public String loginOk(MemberVo mvo,HttpSession session,String pcode,String su,HttpServletRequest req);
 	public String logout(HttpSession session);
+	public String reState(HttpServletRequest req,Model model);
+	public String chgState(HttpServletRequest req);
 }

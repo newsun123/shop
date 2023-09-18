@@ -92,6 +92,14 @@ function chkpwd2()	{
 		document.getElementById("pwdmsg").style.color="red";
 	}
 }
+
+function out() {
+	if(confirm("정말탈퇴하겠습니까?")) {
+		location="memberout";	
+	}else {
+		return false;
+	}
+}
 </script>
 </head>
 <body>
@@ -154,6 +162,9 @@ function chkpwd2()	{
 				</div>
 				<span id="pwdmsg" style="font-size:12px;"></span>
 			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"> <input type="button" value="탈퇴신청하기" onclick="out()"> </td>
 		</tr>
 	</table>
 </section>

@@ -151,6 +151,19 @@ public class AdminServiceImpl implements AdminService {
 		return "redirect:/gumae/gumaeState";
 	}
 
+	@Override
+	public String memberlist(Model model) {
+		model.addAttribute("mlist",mapper.memberlist());
+		return "/member/memberlist";
+	}
+
+	@Override
+	public String memberout(HttpServletRequest req) {
+		String no = req.getParameter("no");
+		mapper.memberout(no);
+		return "redirect:/member/memberlist";
+	}
+
 	
 	
 	

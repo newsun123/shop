@@ -10,8 +10,10 @@
 		insert into member(userid,name,pwd,phone,email,writeday)
 		values(#{userid},#{name},#{pwd},#{phone},#{email},now())
 	</insert>
-	<select id="loginOk" resultType="String">
-		select name from member where userid=#{userid} and pwd=#{pwd}
+	<select id="loginOk" resultType="com.example.demo.vo.MemberVo">
+	<![CDATA[
+		select name,state,no,userid from member where userid=#{userid} and pwd=#{pwd} and state<>2
+	]]>
 	</select>
 	<insert id="addjjim">
   		insert into jjim(pcode,userid,writeday)
@@ -29,5 +31,7 @@
   	 <select id="getCal2" resultType="HashMap">
      select chk, right(xday,2) as xday from cal where xday like concat(#{day},'%') and chk=1
   </select> <!-- chk=1인 레코드만 가져온다 -->
- 
+  <update id="chgState">
+  	update member set state=0 where no=#{no}
+  </update>
 </mapper>

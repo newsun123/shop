@@ -95,4 +95,9 @@ public class MypageController {
 	public String reviewDel(ReviewVo rvo) {
 		return service.reviewDel(rvo);
 	}
+	
+	@RequestMapping("/mypage/memberout")
+	public String memberout(HttpSession session) {
+		return service.memberout(session);
+	}
 }

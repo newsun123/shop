@@ -19,4 +19,7 @@ public interface AdminService {
 	public ProductVo getProduct(HttpServletRequest req);
 	public BaesongVo getBaesong(HttpServletRequest req);
 	public String stateChange(HttpServletRequest req);
+	public String memberlist(Model model);
+	public String memberout(HttpServletRequest req);
+	
 }

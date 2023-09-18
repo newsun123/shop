@@ -58,4 +58,14 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		return service.logout(session);
 	}
+	
+	@RequestMapping("/member/reState")
+	public String reState(HttpServletRequest req,Model model) {
+		return service.reState(req,model);
+	}
+	
+	@RequestMapping("/member/chgState")
+	public String chgState(HttpServletRequest req) {
+		return service.chgState(req);
+	}
 }

@@ -49,17 +49,18 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public String loginOk(MemberVo mvo,HttpSession session,String pcode,String su,HttpServletRequest req) {
-		String name=mapper.loginOk(mvo);
-		System.out.println("pcode: "+pcode);
+		// System.out.println(mvo.getUserid()+"/"+mvo.getPwd());
+		mvo = mapper.loginOk(mvo);
+		// System.out.println(mvo);
 		
-		if(name==null)
+		if(mvo.getName()==null)
 		{
 			return "redirect:/member/login?chk=1&pcode="+pcode+"&su="+su;
-		}
-		else
-		{
+		} else if(mvo.getState()==1) {
+			return "redirect:/member/reState?no="+mvo.getNo();
+		} else {
 			session.setAttribute("userid", mvo.getUserid());
-			session.setAttribute("name", name);
+			session.setAttribute("name", mvo.getName());
 			
 			
 			
@@ -82,7 +83,9 @@ public class MemberServiceImpl implements MemberService{
 			     // 같다면 여기에  return
 			}
 			else
-			{	// 이 부분에 쿠키정보를 cart 테이블로 이동시킨다. > 패키지가 달라 쿠키정보를 못 읽어오기 때문에
+			{	
+				
+				// 이 부분에 쿠키정보를 cart 테이블로 이동시킨다. > 패키지가 달라 쿠키정보를 못 읽어오기 때문에
 				return "redirect:/product/setCart";
 				 //return "/main/main";
 			}
@@ -97,5 +100,19 @@ public class MemberServiceImpl implements MemberService{
 		
 		session.invalidate();
 		return "redirect:/main/main";
+	}
+
+	@Override
+	public String reState(HttpServletRequest req, Model model) {
+		String no = req.getParameter("no");
+		model.addAttribute("no",no);
+		return "member/reState";
+	}
+
+	@Override
+	public String chgState(HttpServletRequest req) {
+		String no= req.getParameter("no");
+		mapper.chgState(no);
+		return "/member/login";
 	}
 }

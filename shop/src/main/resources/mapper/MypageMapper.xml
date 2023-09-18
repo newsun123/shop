@@ -74,4 +74,8 @@ order by g.writeday desc
 <update id="setSangp">
 	update gumae set sangp=0 where no=#{no}
 </update>
+<update id="memberout">
+	update member set state=1 where userid=#{userid}
+</update>
+
 </mapper>

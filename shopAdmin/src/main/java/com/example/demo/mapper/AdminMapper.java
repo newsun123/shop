@@ -9,6 +9,7 @@ import com.example.demo.vo.CompVo;
 import com.example.demo.vo.DaeVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.JungVo;
+import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
 import com.example.demo.vo.SoVo;
 
@@ -26,4 +27,6 @@ public interface AdminMapper {
 	public ProductVo getProduct(String pcode);
 	public BaesongVo getBaesong(String no);
 	public void stateChange(String state,String no);
+	public ArrayList<MemberVo> memberlist();
+	public void memberout(String no);
 }

@@ -38,4 +38,10 @@
 <update id="stateChange">
 	update gumae set state=#{state} where no=#{no}
 </update>
+<select id="memberlist" resultType="com.example.demo.vo.MemberVo">
+	select * from member order by no desc
+</select>
+<update id="memberout">
+	update member set state=2 where no=#{no}
+</update>
 </mapper>
