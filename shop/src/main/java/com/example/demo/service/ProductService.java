@@ -40,4 +40,5 @@ public interface ProductService {
 	public String setCart(HttpServletResponse res,HttpServletRequest req,HttpSession ss);
 	public String munOk(QuestVo qvo,HttpSession session);
 	public String questDel(HttpServletRequest req);
+	public String singo(HttpServletRequest req);
 }

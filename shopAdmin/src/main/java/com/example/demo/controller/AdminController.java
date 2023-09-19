@@ -96,4 +96,25 @@ public class AdminController {
 	public String memberout(HttpServletRequest req) {
 		return as.memberout(req);
 	}
+	
+	@RequestMapping("/product/plist")
+	public String plist(Model model)
+	{
+		return as.plist(model);
+	}
+	
+	@RequestMapping("/product/adminReview")
+	public String adminReview(HttpServletRequest req,Model model) {
+		return as.adminReview(req,model);
+	}
+	
+	@RequestMapping("/product/reviewDel")
+	public @ResponseBody String reviewDel(HttpServletRequest req) {
+		return as.reviewDel(req);
+	}
+	
+	@RequestMapping("/answer/answerlist")
+	public String answerlist(Model model) {
+		return as.answerlist(model);
+	}
 }

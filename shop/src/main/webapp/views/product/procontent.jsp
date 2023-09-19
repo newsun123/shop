@@ -457,6 +457,7 @@
 					<c:forEach begin="1" end="${pvo.gstar}">
 						<img src="/static/product/star2.png">
 					</c:forEach> <!-- 별점 끝 -->
+					
 						<span>${pvo.review}개의 상품평</span>
 					</div>
 					<div class="price">
@@ -517,6 +518,7 @@
                 <c:forEach begin="1" end="${5-rvo.star}">
                     <img src="/static/product/star2.png" width="16">
                 </c:forEach>
+                <input type="button" value="신고" onclick="location='singo?no=${rvo.no}&pcode=${rvo.pcode}'"> 
 					<div>${rvo.userid}<span class="ml10">(${rvo.writeday})</span></div>
 					<div class="fwb">${rvo.title}</div>
 					<div class="ha">${rvo.content}</div>

@@ -22,10 +22,10 @@ li {
 </head>
 <body>
 	<ul>
-		<li><a href="../product/productAdd">상품 관리</a></li>
+		<li><a href="../product/plist">상품 관리</a></li>
 		<li><a href="../member/memberlist">회원 관리</a></li>
 		<li><a href="../gumae/gumaeState">구매 관리</a></li>
-		<li><a href="">답변 관리</a></li>
+		<li><a href="../answer/answerlist">답변 관리</a></li>
 	</ul>
 </body>
 </html>

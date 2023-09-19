@@ -21,5 +21,8 @@ public interface AdminService {
 	public String stateChange(HttpServletRequest req);
 	public String memberlist(Model model);
 	public String memberout(HttpServletRequest req);
-	
+	public String plist(Model model);
+	public String adminReview(HttpServletRequest req,Model model);
+	public String reviewDel(HttpServletRequest req);
+	public String answerlist(Model model);
 }

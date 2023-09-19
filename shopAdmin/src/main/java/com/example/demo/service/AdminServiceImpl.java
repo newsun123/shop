@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,7 @@ import com.example.demo.vo.DaeVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.JungVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.ReviewVo;
 import com.example.demo.vo.SoVo;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -164,7 +166,44 @@ public class AdminServiceImpl implements AdminService {
 		return "redirect:/member/memberlist";
 	}
 
-	
+	@Override
+	public String plist(Model model) {
+
+		model.addAttribute("plist", mapper.plist());
+        return "/product/plist";
+	}
+
+	@Override
+	public String adminReview(HttpServletRequest req,Model model) {
+		String pcode= req.getParameter("pcode");
+		
+		ArrayList<ReviewVo> rlist = mapper.adminReview(pcode);
+		for(int i=0;i<rlist.size();i++) {
+			String imsi = rlist.get(i).getContent().replace("\r\n", "<br>");
+		}
+		model.addAttribute("rlist",rlist);
+		return "/product/adminReview";
+	}
+
+	@Override
+	public String reviewDel(HttpServletRequest req) {
+		String no = req.getParameter("no");
+		System.out.println(no);
+		mapper.reviewDel(no);
+		return "0";
+	}
+
+	@Override
+	public String answerlist(Model model) {
+		ArrayList<HashMap> mapall = mapper.answerlist();
+		for(int i=0; i<mapall.size();i++) {
+			String imsi = mapall.get(i).get("content").toString();
+			mapall.get(i).put("content", imsi.replace("\r\n","<br>"));
+		}
+		model.addAttribute("mapall",mapall);
+		return null;
+	}
+
 	
 	
 	

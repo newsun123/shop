@@ -163,4 +163,7 @@
   <delete id="questDel">
   	delete from quest where no=#{no}
   </delete>
+  <update id="singo">
+  	update review set singo=singo+1 where no=#{no}
+  </update>
 </mapper>

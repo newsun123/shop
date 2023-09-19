@@ -60,4 +60,5 @@ public interface ProductMapper {
     public int getGroup();
     public ArrayList<QuestVo> getQuest(String pcode);
     public void questDel(String no);
+    public void singo(String no);
 }

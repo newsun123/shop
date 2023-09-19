@@ -911,6 +911,16 @@ public class ProductServiceImpl implements ProductService {
 		mapper.questDel(no);
 		return "redirect:/product/procontent?pcode="+pcode;
 	}
+
+	@Override
+	public String singo(HttpServletRequest req) {
+		String no = req.getParameter("no");
+		String pcode = req.getParameter("pcode");
+		
+		mapper.singo(no);
+		
+		return "redirect:/product/procontent?pcode="+pcode;
+	}
 	
 	
 	

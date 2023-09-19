@@ -201,4 +201,9 @@ public class ProductController {
 	 public String questDel(HttpServletRequest req) {
 		 return service.questDel(req);
 	 }
+	 
+	 @RequestMapping("/product/singo")
+	 public String singo(HttpServletRequest req) {
+		 return service.singo(req);
+	 }
 }

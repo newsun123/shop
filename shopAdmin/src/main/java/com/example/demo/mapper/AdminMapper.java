@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,6 +12,7 @@ import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.JungVo;
 import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.ReviewVo;
 import com.example.demo.vo.SoVo;
 
 @Mapper
@@ -29,4 +31,8 @@ public interface AdminMapper {
 	public void stateChange(String state,String no);
 	public ArrayList<MemberVo> memberlist();
 	public void memberout(String no);
+	public ArrayList<ProductVo> plist();
+	public ArrayList<ReviewVo> adminReview(String pcode);
+	public void reviewDel(String no);
+	public ArrayList<HashMap> answerlist();
 }
