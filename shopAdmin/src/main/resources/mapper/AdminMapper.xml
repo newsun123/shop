@@ -62,4 +62,12 @@
 	from quest as q inner join product as p
 	on q.pcode=p.pcode order by grp desc, seq asc
 </select>
+<insert id="questOk">
+	insert into
+	quest(title,content,writeday,userid,pcode,grp,seq)
+	values(#{title},#{content},now(),#{userid},#{pcode},#{grp},1)
+</insert>
+<select id="getMtm" resultType="com.example.demo.vo.MtmVo">
+	select * from mtm order by no desc
+</select>
 </mapper>

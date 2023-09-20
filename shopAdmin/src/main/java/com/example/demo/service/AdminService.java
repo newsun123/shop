@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 
 import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.QuestVo;
 
 public interface AdminService {
 
@@ -25,4 +26,5 @@ public interface AdminService {
 	public String adminReview(HttpServletRequest req,Model model);
 	public String reviewDel(HttpServletRequest req);
 	public String answerlist(Model model);
+	public String questOk(QuestVo qvo);
 }

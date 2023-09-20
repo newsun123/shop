@@ -36,6 +36,7 @@ function close() {
 </head>
 <body>
 <section>
+<h2>상품평</h2>
 	<table width="1000" align="center">
 		<tr>
 			<th>문의자</th>
@@ -78,6 +79,35 @@ function close() {
 		</tr>
 		</c:forEach>
 	</table>
+	<h2>1:1문의</h2>
+	<table width="800" align="center">
+		<tr>
+			<th>아이디</th>
+			<th>제목</th>
+			<th>내용</th>
+			<th>방법</th>
+			<th>작성일</th>
+		</tr>
+		<c:forEach items="${mlist }" var="mvo">
+		<tr align="center">
+			<td>${mvo.userid }</td>
+			<td>${mvo.title }</td>
+			<td style="text-align:left;"><div>${mvo.content }</div></td>
+			<td>
+			<c:if test="${mvo.answer==1}">
+				전화번호
+			</c:if>
+			<c:if test="${mvo.answer==2}">
+				이메일
+			</c:if>
+			<c:if test="${mvo.answer==3}">
+				<a href="javascript:mtm">홈페이지</a>	
+			</c:if>
+			</td>
+			<td>${mvo.writeday }</td>
+		</tr>
+		</c:forEach>
+	</table>
 	<div id="qForm">
 	<form method="post" action="questOk" name="qForm">
 		<input type="hidden" name="title">
@@ -86,6 +116,11 @@ function close() {
 		<textarea name="content"></textarea><p>
 		<input type="submit" value="답변 달기">
 		<input type="button" value="닫기" onclick="close()">
+	</form>
+	</div>
+	<div id="mform">
+	<form method="post" action="mtmOk">
+	
 	</form>
 	</div>
 </section>

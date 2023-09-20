@@ -18,7 +18,9 @@ import com.example.demo.vo.CompVo;
 import com.example.demo.vo.DaeVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.JungVo;
+import com.example.demo.vo.MtmVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.QuestVo;
 import com.example.demo.vo.ReviewVo;
 import com.example.demo.vo.SoVo;
 import com.oreilly.servlet.MultipartRequest;
@@ -201,7 +203,23 @@ public class AdminServiceImpl implements AdminService {
 			mapall.get(i).put("content", imsi.replace("\r\n","<br>"));
 		}
 		model.addAttribute("mapall",mapall);
-		return null;
+		
+		// 1:1문의
+		ArrayList<MtmVo> mlist = mapper.getMtm();
+		for(int i=0;i<mlist.size();i++) {
+			String imsi = mlist.get(i).getContent().replace("\r\n", "<br>");
+			mlist.get(i).setContent(imsi);
+			
+		}
+		model.addAttribute("mlist",mlist);
+		
+		return "/answer/answerlist";
+	}
+
+	@Override
+	public String questOk(QuestVo qvo) {
+		mapper.questOk(qvo);
+		return "redirect:/answer/answerlist";
 	}
 
 	

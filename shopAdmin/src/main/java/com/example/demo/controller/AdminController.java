@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.AdminService;
 import com.example.demo.vo.BaesongVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.QuestVo;
 
 @Controller
 public class AdminController {
@@ -117,4 +118,10 @@ public class AdminController {
 	public String answerlist(Model model) {
 		return as.answerlist(model);
 	}
+	
+	@RequestMapping("/answer/questOk")
+	public String questOk(QuestVo qvo) {
+		return as.questOk(qvo);
+	}
+	
 }

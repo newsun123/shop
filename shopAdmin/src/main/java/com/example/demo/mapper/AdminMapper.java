@@ -11,7 +11,9 @@ import com.example.demo.vo.DaeVo;
 import com.example.demo.vo.GumaeVo;
 import com.example.demo.vo.JungVo;
 import com.example.demo.vo.MemberVo;
+import com.example.demo.vo.MtmVo;
 import com.example.demo.vo.ProductVo;
+import com.example.demo.vo.QuestVo;
 import com.example.demo.vo.ReviewVo;
 import com.example.demo.vo.SoVo;
 
@@ -35,4 +37,6 @@ public interface AdminMapper {
 	public ArrayList<ReviewVo> adminReview(String pcode);
 	public void reviewDel(String no);
 	public ArrayList<HashMap> answerlist();
+	public void questOk(QuestVo qvo);
+	public ArrayList<MtmVo> getMtm();
 }
